@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Summer Cut">
+<meta name="theme-color" content="#050505">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Crect width='180' height='180' fill='%23050505'/%3E%3Ctext x='90' y='118' font-size='90' text-anchor='middle' fill='%23ff3d00' font-family='Arial' font-weight='bold'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
+<title>Summer Cut 2026 · V2</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#050505; --card:#0e0e0e; --card2:#141414; --border:#1c1c1c; --border2:#252525;
+    --accent:#ff3d00; --accent2:#ff8f00; --accent3:#ffd600;
+    --text:#efefef; --muted:#4a4a4a; --muted2:#787878;
+    --green:#00e676; --blue:#40c4ff; --purple:#ce93d8; --yellow:#ffd740; --teal:#1de9b6; --red:#ff5252;
+    --push:#ff3d00; --pull:#40c4ff; --legs:#00e676; --upper:#ce93d8; --lower:#1de9b6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh;padding-bottom:100px;}
+
+  /* ── HEADER ── */
+  header{background:#070707;border-bottom:1px solid var(--border);padding:22px 18px 16px;position:relative;overflow:hidden;}
+  header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 85% 50%, rgba(255,61,0,0.08) 0%, transparent 70%);pointer-events:none;}
+  .hd-badge{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+  .hd-badge::before{content:'';width:18px;height:1px;background:var(--accent);}
+  header h1{font-family:'Bebas Neue',cursive;font-size:52px;letter-spacing:3px;line-height:0.95;background:linear-gradient(110deg,#fff 0%,#ff8f00 60%,#ff3d00 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .hd-v{font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:2px;color:var(--accent2);font-weight:600;margin-top:2px;}
+  .stats-bar{display:flex;gap:20px;margin-top:14px;flex-wrap:wrap;}
+  .stat-item{display:flex;flex-direction:column;}
+  .stat-val{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.5px;}
+  .stat-lbl{font-size:9px;color:var(--muted2);letter-spacing:2px;text-transform:uppercase;margin-top:1px;}
+
+  /* ── NAV ── */
+  .nav-tabs{display:flex;background:var(--card);border-bottom:2px solid var(--border);}
+  .nav-tab{flex:1;padding:13px 8px;text-align:center;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s;}
+  .nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+  /* ── SCHEDULE STRIP ── */
+  .schedule-strip{display:flex;overflow-x:auto;gap:6px;padding:12px 14px;scrollbar-width:none;border-bottom:1px solid var(--border);background:var(--card2);}
+  .schedule-strip::-webkit-scrollbar{display:none;}
+  .day-chip{flex-shrink:0;padding:9px 14px;border-radius:6px;border:1px solid var(--border2);background:var(--card);cursor:pointer;text-align:center;transition:all .2s;}
+  .day-chip.active{border-color:var(--accent);background:rgba(255,61,0,0.1);}
+  .chip-day{font-family:'Bebas Neue',cursive;font-size:18px;letter-spacing:1px;}
+  .chip-type{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;margin-top:1px;color:var(--muted);}
+  .day-chip[data-col="push"] .chip-day{color:var(--push)} .day-chip[data-col="pull"] .chip-day{color:var(--pull)}
+  .day-chip[data-col="legs"] .chip-day{color:var(--legs)} .day-chip[data-col="upper"] .chip-day{color:var(--upper)}
+  .day-chip[data-col="lower"] .chip-day{color:var(--lower)} .day-chip[data-col="rest"] .chip-day{color:var(--muted)}
+  .day-chip[data-col="push"].active{border-color:var(--push);background:rgba(255,61,0,0.12);}
+  .day-chip[data-col="pull"].active{border-color:var(--pull);background:rgba(64,196,255,0.1);}
+  .day-chip[data-col="legs"].active{border-color:var(--legs);background:rgba(0,230,118,0.1);}
+  .day-chip[data-col="upper"].active{border-color:var(--upper);background:rgba(206,147,216,0.1);}
+  .day-chip[data-col="lower"].active{border-color:var(--lower);background:rgba(29,233,182,0.1);}
+
+  /* ── MAIN ── */
+  .main{padding:14px 16px;max-width:640px;margin:0 auto;}
+  .day-hdr{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .day-badge{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;padding:4px 11px;border-radius:3px;text-transform:uppercase;}
+  .day-title{font-family:'Bebas Neue',cursive;font-size:32px;letter-spacing:2px;}
+  .day-sub{font-size:10px;color:var(--muted2);letter-spacing:2px;text-transform:uppercase;margin:-8px 0 12px 2px;}
+
+  .coach-box{background:rgba(255,143,0,0.07);border:1px solid rgba(255,143,0,0.18);border-left:3px solid var(--accent2);border-radius:0 8px 8px 0;padding:11px 13px;margin-bottom:12px;}
+  .coach-box .cb-label{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--accent2);font-weight:700;margin-bottom:4px;}
+  .coach-box p{font-size:12px;color:#c8c8c8;line-height:1.55;}
+
+  .cardio-block{background:rgba(0,230,118,0.05);border:1px solid rgba(0,230,118,0.18);border-left:3px solid var(--green);border-radius:0 8px 8px 0;padding:11px 13px;margin-bottom:14px;}
+  .cardio-block .cb-label{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:4px;}
+  .cardio-block p{font-size:12px;color:#c8c8c8;line-height:1.55;}
+
+  .sec-label{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--muted2);margin-bottom:8px;padding-left:2px;display:flex;align-items:center;gap:8px;}
+  .sec-line{flex:1;height:1px;background:var(--border2);}
+  .ex-list{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+
+  .ex-card{background:var(--card);border:1px solid var(--border2);border-radius:8px;overflow:hidden;transition:border-color .2s;}
+  .ex-card.done{border-color:var(--green);background:rgba(0,230,118,0.04);}
+  .ex-card-top{display:flex;align-items:center;padding:11px 13px;gap:10px;}
+  .ex-num{font-family:'Bebas Neue',cursive;font-size:18px;color:var(--muted);flex-shrink:0;width:20px;line-height:1;}
+  .ex-card.done .ex-num{color:var(--green);}
+  .ex-info{flex:1;cursor:pointer;}
+  .ex-name{font-weight:600;font-size:13.5px;margin-bottom:3px;}
+  .ex-card.done .ex-name{color:var(--muted);text-decoration:line-through;}
+  .ex-meta{display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+  .ex-detail{font-size:11px;color:var(--muted2);}
+  .ex-tag{font-size:8px;padding:2px 6px;border-radius:2px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+  .tag-compound{background:rgba(255,61,0,0.12);color:var(--accent)}
+  .tag-isolation{background:rgba(64,196,255,0.12);color:var(--blue)}
+  .tag-cardio{background:rgba(0,230,118,0.12);color:var(--green)}
+  .tag-bowflex{background:rgba(206,147,216,0.12);color:var(--purple)}
+  .tag-core{background:rgba(29,233,182,0.12);color:var(--teal)}
+  .tag-variation{background:rgba(255,214,0,0.12);color:var(--yellow)}
+  .int-tag{font-size:8px;padding:2px 6px;border-radius:2px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;}
+  .int-rir{background:rgba(255,215,64,0.12);color:var(--yellow);}
+  .int-fail{background:rgba(255,82,82,0.15);color:var(--red);}
+  .ex-actions{display:flex;align-items:center;gap:7px;}
+  .tip-btn{font-size:9px;padding:4px 9px;border-radius:4px;border:1px solid var(--border2);background:transparent;color:var(--muted2);cursor:pointer;white-space:nowrap;transition:all .2s;font-family:'Barlow',sans-serif;font-weight:600;letter-spacing:0.5px;}
+  .tip-btn.open{border-color:var(--accent2);color:var(--accent2);}
+  .check-circle{width:22px;height:22px;border-radius:50%;border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;transition:all .2s;flex-shrink:0;cursor:pointer;}
+  .ex-card.done .check-circle{background:var(--green);border-color:var(--green);color:#000;}
+  .squeeze-panel{background:rgba(255,143,0,0.05);border-top:1px solid rgba(255,143,0,0.12);padding:10px 13px;display:none;}
+  .squeeze-panel.open{display:block;}
+  .squeeze-panel .sq-label{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--accent2);font-weight:700;margin-bottom:5px;}
+  .squeeze-panel p{font-size:12px;color:#c0c0c0;line-height:1.55;}
+
+  .rest-card{background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:50px 20px;text-align:center;}
+  .rest-icon{font-size:50px;margin-bottom:12px;}
+  .rest-card h2{font-family:'Bebas Neue',cursive;font-size:30px;color:var(--muted2);letter-spacing:3px;margin-bottom:10px;}
+  .rest-card p{font-size:13px;color:var(--muted2);line-height:1.6;max-width:280px;margin:0 auto;}
+
+  /* ── STRETCHING ── */
+  .stretch-toggle-btn{width:100%;background:transparent;border:1px solid var(--border2);border-radius:8px;padding:11px 15px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:'Barlow',sans-serif;text-align:left;margin-bottom:6px;transition:all .2s;display:flex;justify-content:space-between;align-items:center;}
+  .stretch-panel-outer{display:none;background:var(--card);border:1px solid var(--border2);border-radius:8px;margin-bottom:14px;overflow:hidden;}
+  .stretch-panel-outer.open{display:block;}
+  .stretch-row{padding:10px 13px;border-bottom:1px solid var(--border);}
+  .stretch-row:last-child{border-bottom:none;}
+  .stretch-row-top{display:flex;align-items:flex-start;gap:10px;margin-bottom:3px;}
+  .stretch-num{font-family:'Bebas Neue',cursive;font-size:16px;color:var(--accent2);flex-shrink:0;line-height:1.3;width:18px;}
+  .stretch-name{font-weight:600;font-size:13px;}
+  .stretch-reps{font-size:10px;color:var(--muted2);margin-top:1px;}
+  .stretch-cue{font-size:11.5px;color:#b0b0b0;line-height:1.5;padding-left:28px;}
+
+  /* ── PROGRESS LOG ── */
+  .log-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:6px;padding:11px 17px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Barlow',sans-serif;letter-spacing:0.5px;white-space:nowrap;}
+  .log-btn:active{opacity:0.85;}
+  .weight-input{flex:1;background:var(--card2);border:1px solid var(--border2);border-radius:6px;padding:11px 13px;color:var(--text);font-size:16px;font-family:'Barlow',sans-serif;-webkit-appearance:none;}
+  .weight-input:focus{outline:none;border-color:var(--accent);}
+  .weight-row{display:flex;gap:8px;align-items:center;}
+  .unit-hint{font-size:10px;color:var(--muted);margin-top:7px;line-height:1.5;}
+  .log-card{background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:15px;margin-bottom:14px;}
+  .log-card h4{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted2);margin-bottom:11px;}
+  .chart-card{background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:14px 11px 10px;margin-bottom:14px;}
+  .chart-card h4{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted2);margin-bottom:8px;padding-left:4px;}
+  .chart-empty{text-align:center;color:var(--muted);font-size:13px;padding:28px 10px;line-height:1.5;}
+  .weighin-list{display:flex;flex-direction:column;gap:5px;}
+  .weighin-row{display:flex;justify-content:space-between;align-items:center;background:var(--card2);border:1px solid var(--border);border-radius:6px;padding:8px 11px;}
+  .wr-date{font-size:11px;color:var(--muted2);}
+  .wr-weight{font-size:14px;font-weight:600;}
+  .wr-del{background:none;border:none;color:var(--muted);font-size:15px;cursor:pointer;padding:0 4px;}
+  .wr-del:active{color:var(--red);}
+  .pstats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
+  .pstat{background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:12px 8px;text-align:center;}
+  .pstat .ps-val{font-family:'Bebas Neue',cursive;font-size:26px;letter-spacing:1px;line-height:1;}
+  .pstat .ps-lbl{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+  .pstat.loss .ps-val{color:var(--green);} .pstat.gain .ps-val{color:var(--accent);}
+  .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px;}
+  .wday{background:var(--card2);border:1px solid var(--border);border-radius:6px;padding:7px 2px;text-align:center;}
+  .wday.done{border-color:var(--green);background:rgba(0,230,118,0.1);}
+  .wday.rest{opacity:0.4;}
+  .wday.today{box-shadow:0 0 0 1px var(--accent2);}
+  .wday-name{font-size:8px;color:var(--muted);}
+  .wday-type{font-family:'Bebas Neue',cursive;font-size:12px;margin-top:2px;}
+  .wday-check{font-size:11px;margin-top:2px;height:13px;color:var(--green);}
+  .session-list{display:flex;flex-direction:column;gap:5px;margin-top:8px;}
+  .session-row{display:flex;justify-content:space-between;align-items:center;background:var(--card2);border:1px solid var(--border);border-radius:6px;padding:8px 11px;}
+  .sr-left{font-size:13px;font-weight:600;}
+  .sr-date{font-size:10px;color:var(--muted2);}
+  .log-workout-bar{background:linear-gradient(135deg,var(--green),#00b050);color:#000;border:none;border-radius:8px;padding:14px;font-size:13px;font-weight:700;cursor:pointer;width:100%;font-family:'Barlow',sans-serif;margin:6px 0 2px;letter-spacing:0.5px;}
+  .log-workout-bar.logged{background:var(--card);border:1px solid var(--green);color:var(--green);}
+  .log-workout-bar:active{opacity:0.88;}
+
+  /* ── DIET PAGE ── */
+  .diet-page{padding:14px 16px;max-width:640px;margin:0 auto;}
+  .cal-banner{background:linear-gradient(135deg,rgba(255,61,0,0.12) 0%,rgba(255,143,0,0.08) 100%);border:1px solid rgba(255,61,0,0.2);border-radius:10px;padding:20px;margin-bottom:14px;text-align:center;}
+  .cal-banner .cb2-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:6px;}
+  .cal-banner h2{font-family:'Bebas Neue',cursive;font-size:52px;letter-spacing:2px;line-height:1;}
+  .cal-banner .cal-unit{font-size:12px;color:#aaa;margin-top:4px;}
+  .macro-section{background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:15px;margin-bottom:12px;}
+  .macro-section h4{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted2);margin-bottom:13px;}
+  .macro-row{display:flex;align-items:center;gap:10px;margin-bottom:11px;}
+  .macro-row:last-child{margin-bottom:0;}
+  .macro-name{font-size:13px;font-weight:600;width:60px;flex-shrink:0;}
+  .macro-bar-track{flex:1;background:var(--border2);border-radius:3px;height:6px;overflow:hidden;}
+  .macro-bar-fill{height:100%;border-radius:3px;}
+  .macro-g{font-size:13px;font-weight:600;width:46px;text-align:right;flex-shrink:0;}
+  .macro-cal{font-size:10px;color:var(--muted);width:44px;text-align:right;flex-shrink:0;}
+  .info-card{background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:13px;margin-bottom:12px;}
+  .info-card h4{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted2);margin-bottom:9px;}
+  .info-row{font-size:11.5px;color:#c0c0c0;padding:5px 0;border-bottom:1px solid var(--border);display:flex;gap:8px;line-height:1.45;}
+  .info-row:last-child{border-bottom:none;}
+  .info-dot{flex-shrink:0;font-weight:700;}
+  .fail-card{background:rgba(255,82,82,0.05);border:1px solid rgba(255,82,82,0.18);border-left:3px solid var(--red);border-radius:0 8px 8px 0;padding:13px;margin-bottom:12px;}
+  .fail-card h4{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:9px;}
+  .fail-row{font-size:11.5px;color:#c0c0c0;padding:5px 0;border-bottom:1px solid rgba(255,82,82,0.1);display:flex;gap:8px;line-height:1.45;}
+  .fail-row:last-child{border-bottom:none;}
+  .fail-dot{color:var(--red);flex-shrink:0;font-weight:700;}
+  .def-tips{background:rgba(206,147,216,0.05);border:1px solid rgba(206,147,216,0.18);border-left:3px solid var(--purple);border-radius:0 8px 8px 0;padding:13px;}
+  .def-tips h4{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--purple);font-weight:700;margin-bottom:9px;}
+  .def-row{font-size:11.5px;color:#c0c0c0;padding:5px 0;border-bottom:1px solid rgba(206,147,216,0.1);display:flex;gap:8px;line-height:1.45;}
+  .def-row:last-child{border-bottom:none;}
+  .def-dot{color:var(--purple);flex-shrink:0;font-weight:700;}
+
+  /* ── BOWFLEX GUIDE ── */
+  .bf-guide{background:rgba(206,147,216,0.05);border:1px solid rgba(206,147,216,0.2);border-radius:8px;padding:14px;margin-bottom:12px;}
+  .bf-guide h4{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--purple);font-weight:700;margin-bottom:10px;}
+  .bf-row{font-size:11.5px;color:#c0c0c0;padding:5px 0;border-bottom:1px solid rgba(206,147,216,0.1);display:flex;gap:8px;line-height:1.5;}
+  .bf-row:last-child{border-bottom:none;}
+  .bf-dot{color:var(--purple);flex-shrink:0;font-weight:700;}
+
+  .page{display:none;} .page.active{display:block;}
+  .prog-page{padding:14px 16px;max-width:640px;margin:0 auto;}
+
+  /* PHOTO GALLERY */
+  .photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;}
+  .photo-item{position:relative;border-radius:8px;overflow:hidden;border:1px solid var(--border2);aspect-ratio:3/4;background:var(--card2);}
+  .photo-item img{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer;}
+  .photo-del{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;border:none;background:rgba(0,0,0,0.65);color:#fff;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;}
+  .photo-del:active{background:var(--red);}
+  .photo-cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.8));color:#fff;font-size:9px;padding:10px 6px 4px;letter-spacing:0.3px;}
+  .install-hint{background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.2);border-radius:8px;padding:11px 13px;margin-bottom:14px;font-size:11.5px;color:#c0c0c0;line-height:1.5;}
+  .install-hint strong{color:var(--green);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd-badge">Summer Cut 2026 · PPL + Upper/Lower</div>
+  <h1>WORKOUT PLAN</h1>
+  <div class="hd-v">V2.1 — + SUPPLEMENT PROTOCOL</div>
+  <div class="stats-bar">
+    <div class="stat-item"><span class="stat-val">~184 lbs</span><span class="stat-lbl">Start Weight</span></div>
+    <div class="stat-item"><span class="stat-val">5'8–5'9</span><span class="stat-lbl">Height</span></div>
+    <div class="stat-item"><span class="stat-val">PPL + U/L</span><span class="stat-lbl">Split</span></div>
+    <div class="stat-item"><span class="stat-val">1,900 Cal</span><span class="stat-lbl">Daily Target</span></div>
+    <div class="stat-item"><span class="stat-val">Bowflex PR1000</span><span class="stat-lbl">Equipment</span></div>
+  </div>
+</header>
+
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="switchTab('workout')">Workout</div>
+  <div class="nav-tab" onclick="switchTab('progress')">Progress</div>
+  <div class="nav-tab" onclick="switchTab('diet')">Diet & Tips</div>
+</div>
+
+<div class="page active" id="page-workout">
+  <div class="schedule-strip" id="scheduleStrip"></div>
+  <div id="mainContent"></div>
+</div>
+<div class="page" id="page-progress">
+  <div class="prog-page" id="progContent"></div>
+</div>
+<div class="page" id="page-diet">
+  <div class="diet-page">
+    <div class="cal-banner">
+      <div class="cb2-label">Daily Calorie Target</div>
+      <h2>1,900</h2>
+      <div class="cal-unit">calories per day — your set deficit</div>
+    </div>
+    <div class="macro-section">
+      <h4>Daily Macros (Optimised for Fat Loss at 1,900 Cal)</h4>
+      <div class="macro-row">
+        <span class="macro-name" style="color:var(--accent)">Protein</span>
+        <div class="macro-bar-track"><div class="macro-bar-fill" style="width:42%;background:var(--accent)"></div></div>
+        <span class="macro-g">185g</span><span class="macro-cal">740</span>
+      </div>
+      <div class="macro-row">
+        <span class="macro-name" style="color:var(--yellow)">Carbs</span>
+        <div class="macro-bar-track"><div class="macro-bar-fill" style="width:35%;background:var(--yellow)"></div></div>
+        <span class="macro-g">160g</span><span class="macro-cal">640</span>
+      </div>
+      <div class="macro-row">
+        <span class="macro-name" style="color:var(--blue)">Fats</span>
+        <div class="macro-bar-track"><div class="macro-bar-fill" style="width:23%;background:var(--blue)"></div></div>
+        <span class="macro-g">58g</span><span class="macro-cal">520</span>
+      </div>
+      <p style="font-size:11px;color:var(--muted2);margin-top:11px;line-height:1.5">Protein (~1g/lb bodyweight) protects muscle while cutting. Carbs are timed around training; fats fill the rest. A scoop of protein powder post-workout makes hitting 185g easy — it counts the same as food protein.</p>
+    </div>
+
+    <div class="info-card" style="border-color:rgba(255,143,0,0.3);background:rgba(255,143,0,0.05)">
+      <h4 style="color:var(--accent2)">💊 Supplement Protocol — Creatine + Protein</h4>
+      <p style="font-size:12px;color:#ccc;line-height:1.55;margin-bottom:12px">You have the two supplements that actually matter for body composition. Everything else is optional. Here's how to use them to maximise the plan.</p>
+
+      <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent2);font-weight:700;margin:12px 0 8px">🔋 Creatine Monohydrate</div>
+      <div class="info-row"><span class="info-dot" style="color:var(--accent2)">→</span><strong style="color:#fff">5g every single day</strong> — training AND rest days. Consistency saturates the muscle; skipping days lets levels drop.</div>
+      <div class="info-row"><span class="info-dot" style="color:var(--accent2)">→</span><strong style="color:#fff">No loading phase needed.</strong> Straight 5g/day fully saturates in 3–4 weeks. Timing doesn't matter — stir it into your post-workout shake out of habit.</div>
+      <div class="info-row"><span class="info-dot" style="color:var(--accent2)">→</span><strong style="color:#fff">Expect +1–3 lbs scale weight</strong> in week 1–2. That's water pulled into the muscle (makes you look fuller), NOT fat. Don't panic on the Progress tab — judge fat loss by the waist measurement and photos instead.</div>
+      <div class="info-row"><span class="info-dot" style="color:var(--accent2)">→</span><strong style="color:#fff">Drink more water.</strong> Creatine increases intramuscular water demand — aim for 3+ litres a day, especially while cutting.</div>
+      <div class="info-row"><span class="info-dot" style="color:var(--accent2)">→</span><strong style="color:#fff">What it does:</strong> more reps before failure, faster strength recovery between sets, slightly better muscle retention in a deficit. It's the most studied, most effective legal supplement there is.</div>
+
+      <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent2);font-weight:700;margin:16px 0 8px">🥤 Protein Powder</div>
+      <div class="info-row"><span class="info-dot" style="color:var(--accent2)">→</span><strong style="color:#fff">Use it to hit 185g</strong>, not to replace whole-food meals. Food keeps you fuller on a cut — powder fills the gap when you're short for the day.</div>
+      <div class="info-row"><span class="info-dot" style="color:var(--accent2)">→</span><strong style="color:#fff">Post-workout scoop</strong> = convenient protein + the carrier for your creatine. One shake, both supplements.</div>
+      <div class="info-row"><span class="info-dot" style="color:var(--accent2)">→</span><strong style="color:#fff">A scoop before bed</strong> (if short on protein) helps overnight muscle repair — slow-digesting if it's casein, but whey is fine too.</div>
+    </div>
+
+    <div class="info-card" style="border-color:rgba(255,215,64,0.3);background:rgba(255,215,64,0.05)">
+      <h4 style="color:var(--yellow)">⏱️ Nutrient Timing — Squeeze Out Extra Gains</h4>
+      <p style="font-size:12px;color:#ccc;line-height:1.55;margin-bottom:12px">Total daily calories and protein drive 90% of results. But timing the remaining details well gives you a real edge on a cut where every bit of muscle retention counts.</p>
+      <div class="info-row"><span class="info-dot" style="color:var(--yellow)">1</span><strong style="color:#fff">Carbs around training.</strong> Put the bulk of your 160g carbs in the meal before and the meal after your workout — fuels performance and refills muscle glycogen where it matters.</div>
+      <div class="info-row"><span class="info-dot" style="color:var(--yellow)">2</span><strong style="color:#fff">Protein every 3–4 hours.</strong> Spread your 185g across 4–5 feedings (~40g each) rather than two big hits. Keeps muscle protein synthesis elevated all day.</div>
+      <div class="info-row"><span class="info-dot" style="color:var(--yellow)">3</span><strong style="color:#fff">Pre-workout meal:</strong> protein + carbs 1–2 hours before lifting. Even a banana + shake beats training fasted for strength.</div>
+      <div class="info-row"><span class="info-dot" style="color:var(--yellow)">4</span><strong style="color:#fff">Post-workout shake:</strong> whey + creatine within an hour. The "anabolic window" is wider than people claim, but on a cut it's an easy win to just do it.</div>
+      <div class="info-row"><span class="info-dot" style="color:var(--yellow)">5</span><strong style="color:#fff">Sleep is the real multiplier.</strong> 7–9 hours. Creatine and protein do nothing if you're under-recovering — most muscle repair and fat-loss hormone regulation happens during deep sleep.</div>
+    </div>
+
+    <div class="bf-guide">
+      <h4>🟣 Bowflex PR1000 — Exercise Reference</h4>
+      <div class="bf-row"><span class="bf-dot">→</span><strong style="color:#fff">Lat Pulldown:</strong> Attach overhead bar. Sit facing away, pull bar to upper chest driving elbows down into pockets. Max rod count for heaviest sets.</div>
+      <div class="bf-row"><span class="bf-dot">→</span><strong style="color:#fff">Seated Cable Row:</strong> Use the low-cable position. Sit on the floor or bench facing the machine, pull handles to lower ribs, hold 2 sec.</div>
+      <div class="bf-row"><span class="bf-dot">→</span><strong style="color:#fff">Chest Press (Cable):</strong> Attach handles at chest height. Stand or sit facing away, press forward and cross hands slightly at lockout for peak contraction.</div>
+      <div class="bf-row"><span class="bf-dot">→</span><strong style="color:#fff">Tricep Pushdown:</strong> High cable attachment, rope or bar. Pin elbows to sides, extend fully and hold 1 sec.</div>
+      <div class="bf-row"><span class="bf-dot">→</span><strong style="color:#fff">Face Pull:</strong> High cable, rope handle. Pull toward forehead, elbows flared wide and high. Rear delts + external rotation.</div>
+      <div class="bf-row"><span class="bf-dot">→</span><strong style="color:#fff">Leg Curl:</strong> Use the leg attachment. Seated or lying position — seated version loads hamstring in a stretch for more growth. Curl, hold 1 sec peak, lower in 3.</div>
+      <div class="bf-row"><span class="bf-dot">→</span><strong style="color:#fff">Leg Press (Belt):</strong> Attach the leg press belt from the lower cable. Drive feet forward against the resistance, full extension, slow return.</div>
+      <div class="bf-row"><span class="bf-dot">→</span><strong style="color:#fff">Bicep Curl (Cable):</strong> Low cable, straight bar. Stand back slightly so the cable pulls your arms forward — keeps tension at the top unlike free-weight curls.</div>
+      <div class="bf-row"><span class="bf-dot">→</span><strong style="color:#fff">Rod resistance:</strong> Each rod adds ~5 lbs. Engage rods from the outside in. Never jerk the connection — clip firmly before releasing.</div>
+    </div>
+
+    <div class="fail-card">
+      <h4>🔴 Training To Failure — Rules</h4>
+      <div class="fail-row"><span class="fail-dot">1</span>Failure = the point where you physically cannot complete another full rep with good form. Not "it's burning" — actual failure.</div>
+      <div class="fail-row"><span class="fail-dot">2</span>Reserve failure for the LAST set of an exercise unless noted otherwise. Earlier sets stay at RIR 1–2 (1–2 reps shy of failure).</div>
+      <div class="fail-row"><span class="fail-dot">3</span>Never go to failure on the big compound barbell lifts (squat, deadlift, bench) — too risky. Failure is for machines, cables, and isolation moves.</div>
+      <div class="fail-row"><span class="fail-dot">4</span>Once you can get the top rep count for 2 sets in a row, add 5 lbs next session.</div>
+    </div>
+
+    <div class="info-card" style="border-color:rgba(29,233,182,0.25);background:rgba(29,233,182,0.04)">
+      <h4 style="color:var(--teal)">⚡ Progressive Overload Rules</h4>
+      <div class="info-row"><span class="info-dot" style="color:var(--teal)">1</span><strong style="color:#fff">Add weight before reps.</strong> If the rep range is 8–12, load so you hit 8 with good form. Once you hit 12 clean, add weight next session.</div>
+      <div class="info-row"><span class="info-dot" style="color:var(--teal)">2</span><strong style="color:#fff">Track your weights.</strong> Use the notes app or a notebook. Mindlessly repeating the same weight for weeks = no progress.</div>
+      <div class="info-row"><span class="info-dot" style="color:var(--teal)">3</span><strong style="color:#fff">Compound lifts first,</strong> always. Never do isolation before compound — you'll be pre-fatigued where it matters most.</div>
+      <div class="info-row"><span class="info-dot" style="color:var(--teal)">4</span><strong style="color:#fff">Rest periods matter.</strong> Shorter rest = more metabolic stress (good for fat loss). Longer rest = more strength recovered. Follow the listed times.</div>
+    </div>
+
+    <div class="def-tips">
+      <h4>🟣 Variation Exercises — Why They're In Here</h4>
+      <div class="def-row"><span class="def-dot">▸</span><strong style="color:#fff">African (Drag) Curl</strong> — Targets the long head (bicep peak) by pulling elbows back. Different stimulus from standard curls.</div>
+      <div class="def-row"><span class="def-dot">▸</span><strong style="color:#fff">Lean-Away Lateral Raise</strong> — Loads the side delt in the stretched position for more growth vs standard raises.</div>
+      <div class="def-row"><span class="def-dot">▸</span><strong style="color:#fff">Deficit RDL</strong> — Standing on a small elevation extends the hamstring stretch range beyond standard RDL for more growth.</div>
+      <div class="def-row"><span class="def-dot">▸</span><strong style="color:#fff">Heel-Elevated Goblet Squat</strong> — Shifts load to quads, allows deeper knee flexion, great stretch-biased finisher for quad detail.</div>
+      <div class="def-row"><span class="def-dot">▸</span><strong style="color:#fff">Zottman Curl</strong> — Combines a supinated curl up with a pronated (reverse) curl down, hitting bicep AND brachioradialis/forearm in one move.</div>
+      <div class="def-row"><span class="def-dot">▸</span><strong style="color:#fff">Incline Curl</strong> — Arms hang behind the body, creating a deep bicep stretch at the bottom — the most growth-efficient curl variation.</div>
+      <div class="def-row"><span class="def-dot">▸</span><strong style="color:#fff">Meadows Row (1-arm)</strong> — Loaded stretch on the lat, extreme range of motion. Better back thickness builder than standard rows alone.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============ DATA ============
+const schedule = [
+  { label:'MON', type:'Push',  col:'push'  },
+  { label:'TUE', type:'Pull',  col:'pull'  },
+  { label:'WED', type:'Legs',  col:'legs'  },
+  { label:'THU', type:'Rest',  col:'rest'  },
+  { label:'FRI', type:'Upper', col:'upper' },
+  { label:'SAT', type:'Lower', col:'lower' },
+  { label:'SUN', type:'Rest',  col:'rest'  },
+];
+
+// int: 'rir'=RIR 1-2, 'fail'=to failure on last set
+const workouts = {
+  Push: {
+    badge:'MON', sub:'CHEST · SHOULDERS · TRICEPS',
+    color:'var(--push)',
+    tip:"Take a 3-second eccentric on every press — this is where most muscle damage and growth occurs. Chest is hit from both flat and incline angles; shoulders get front, side and rear activation; triceps are attacked from two different joint angles for complete development.",
+    cardio:"10 min treadmill brisk walk (2–3% incline) to warm up. Optional 15 min incline-walk cooldown for extra fat burn.",
+    sections:[
+      { label:"Compound Push", musc:"Chest · Front Delts · Triceps", exercises:[
+        { name:"Barbell Bench Press",         detail:"4 × 8–10 | 90s rest", tag:"compound", int:"rir",  squeeze:"Drive your elbows slightly in toward each other throughout the press — this protects the shoulder and maximises chest engagement. Pause at the top and squeeze before lowering at 3 seconds. Arch naturally, feet flat." },
+        { name:"Incline Dumbbell Press",       detail:"3 × 10–12 | 75s rest", tag:"compound", int:"rir", squeeze:"Set the bench at 30–45°. Bring the dumbbells together at the top and squeeze the upper chest hard — like you're trying to touch your knuckles. Let them flare wide at the bottom for a full stretch every rep." },
+        { name:"Seated Dumbbell Shoulder Press", detail:"3 × 8–10 | 90s rest", tag:"compound", int:"rir", squeeze:"Press up and slightly in, locking out fully at the top so the front delts fire. Brace your core — do not arch your lower back to cheat reps. Control the lowering on every set." },
+      ]},
+      { label:"Isolation & Finishers", musc:"Side Delts · Chest · Triceps", exercises:[
+        { name:"Lean-Away Dumbbell Lateral Raise", detail:"3 × 12–15 | 60s rest", tag:"variation", int:"fail", squeeze:"Hold a rack with your free hand and lean your torso away from the working arm. This loads the side delt in the fully stretched position at the bottom — where peak tension occurs. Raise to shoulder height, pinky leading, then lower fully. Every last set to failure." },
+        { name:"Dumbbell Chest Fly",          detail:"3 × 12 | 60s rest",    tag:"isolation", int:"fail", squeeze:"Slight elbow bend locked throughout. Open wide for a deep chest stretch at the bottom, then 'hug a tree' back to the top. 3-second lowering every rep — the stretch is where this exercise does its work." },
+        { name:"Bowflex Cable Chest Press",   detail:"3 × 12 | 60s rest",    tag:"bowflex",   int:"fail", squeeze:"Cables keep constant tension through the entire rep — unlike dumbbells which unload at the top. Cross your hands slightly at full extension for a peak pec contraction, then control back. Last set to failure." },
+        { name:"Bowflex Tricep Pushdown",     detail:"3 × 12–15 | 60s rest", tag:"bowflex",   int:"fail", squeeze:"Pin your elbows tight to your sides — they must not move. Fully extend and squeeze the tricep hard for 1 second at the bottom. Use a rope handle if available to flare the hands outward on extension." },
+        { name:"Overhead Dumbbell Tricep Extension", detail:"3 × 12 | 60s rest", tag:"isolation", int:"fail", squeeze:"The long head (the biggest tricep head) only fully contracts when the arm is overhead. Lower the weight behind your skull for a deep stretch, extend fully to lockout. Only your forearms move — elbows stay pointing at the ceiling." },
+      ]},
+    ]
+  },
+
+  Pull: {
+    badge:'TUE', sub:'BACK · REAR DELTS · TRAPS · BICEPS',
+    color:'var(--pull)',
+    tip:"Initiate every pulling movement by setting your shoulder blades first, then drive with your elbows (not your hands). This session covers back width (lats via pulldown), back thickness (rows via deadlift, bent-over row), rear delts, traps, and all three major bicep curl patterns.",
+    cardio:"10 min treadmill warm-up. After lifting: 20 min incline walk (8–10%, 3.5 mph) — maximises weekly fat burn with zero recovery cost.",
+    sections:[
+      { label:"Compound Pull", musc:"Full Back · Lats · Hamstrings", exercises:[
+        { name:"Barbell Deadlift",         detail:"3 × 5–6 | 2 min rest",  tag:"compound", int:"rir", squeeze:"Push the floor away rather than thinking 'pull'. At lockout, squeeze your glutes and lats hard simultaneously. Keep the bar dragging against your legs the entire way up and down. Never round the lower back." },
+        { name:"Barbell Bent-Over Row",    detail:"4 × 8–10 | 90s rest",   tag:"compound", int:"rir", squeeze:"Hinge to about 45°. Pull the bar into your lower chest and hold 1 second — elbows drive back behind your body, not up toward your ears. This is a mid-back and lat thickness builder. Last set to failure." },
+        { name:"Bowflex Lat Pulldown",     detail:"3 × 10–12 | 75s rest",  tag:"bowflex",  int:"rir", squeeze:"Chest up, lean slightly back. Pull the bar to your upper chest by driving your elbows down toward your hips — think 'elbows into back pockets'. Squeeze the lats hard 1 second at the bottom." },
+      ]},
+      { label:"Isolation & Finishers", musc:"Mid-Back · Rear Delts · Traps · Biceps", exercises:[
+        { name:"Bowflex Seated Cable Row",      detail:"3 × 12 | 60s rest",   tag:"bowflex",   int:"fail", squeeze:"Pull elbows back hard, pinch your shoulder blades together and hold 2 full seconds. Let the lats stretch forward fully on every release — don't shortcut the return." },
+        { name:"Dumbbell Meadows Row (1-Arm)", detail:"3 × 10 each | 60s rest", tag:"variation", int:"fail", squeeze:"Stand alongside a bench, one hand braced. Let the dumbbell hang to get a deep lat stretch at the bottom, then row it to your hip (not your chest). The extreme range of motion builds back thickness that standard rows miss." },
+        { name:"Bowflex Face Pull",             detail:"3 × 15 | 45s rest",  tag:"bowflex",   int:"fail", squeeze:"High cable, rope attachment. Pull toward your forehead with elbows flared wide and high — not just back. This fires the rear delts and external rotators, fixing posture and protecting your shoulder in pressing movements." },
+        { name:"Dumbbell Shrug",                detail:"3 × 15 | 45s rest",   tag:"isolation", int:"fail", squeeze:"Shrug straight UP toward your ears — no rolling. Hold the top 2 full seconds every rep. Traps respond to the pause and loaded stretch, not to heavy swinging." },
+        { name:"Incline Dumbbell Curl",         detail:"3 × 10–12 | 60s rest", tag:"variation", int:"fail", squeeze:"Sit back on an incline bench so your arms hang behind your body. This puts the bicep in a deep stretch at the bottom on every rep — the position that drives the most growth. Curl without letting your elbows drift forward. Get the full stretch at the bottom every rep." },
+        { name:"African (Drag) Curl",           detail:"3 × 10–12 | 60s rest", tag:"variation", int:"fail", squeeze:"As you curl, drag the dumbbells up your body while pulling your elbows BACK behind your torso. This targets the long head (the bicep peak). At the top, fully pronate (rotate palms down) and lower slowly as a reverse curl, hitting the forearms and brachialis. Use lighter weight, control every inch." },
+        { name:"Zottman Curl",                  detail:"3 × 10 | 60s rest",   tag:"variation", int:"fail", squeeze:"Curl up with palms supinated (facing up) for a full bicep contraction. At the top, rotate palms to face DOWN (pronated), then lower as a reverse curl. This one move works the bicep, brachialis AND brachioradialis — maximum arm development efficiency." },
+      ]},
+    ]
+  },
+
+  Legs: {
+    badge:'WED', sub:'QUADS · GLUTES · CALVES · ABS · OBLIQUES',
+    color:'var(--legs)',
+    tip:"Quad-dominant day — Saturday hits the posterior chain, so together they cover your legs completely. Core is trained directly here: abs need loaded work to become visible, not just planks. The treadmill incline walk at the end doubles as fat-burning cardio.",
+    cardio:"5 min light walk warm-up. Optional 10 min walk cooldown (or replace with incline walk finisher below).",
+    sections:[
+      { label:"Compound Leg", musc:"Quads · Glutes", exercises:[
+        { name:"Barbell Back Squat",             detail:"4 × 8–10 | 2 min rest", tag:"compound", int:"rir", squeeze:"Feet shoulder-width, toes slightly out. Pause at the bottom, then 'spread the floor' with your feet as you drive up. Squeeze quads and glutes hard at lockout. Brace core the whole rep, never relax at the top." },
+        { name:"Dumbbell Bulgarian Split Squat", detail:"3 × 10 each | 90s rest", tag:"compound", int:"rir", squeeze:"Rear foot elevated. Lower in 3 seconds, drive through your front heel. Deep rear hip stretch at the bottom, hard quad squeeze at the top. This is the best single-leg quad and glute builder in existence." },
+        { name:"Heel-Elevated Goblet Squat",     detail:"3 × 15 | 60s rest",    tag:"variation", int:"fail", squeeze:"Elevate heels on plates or a wedge — this removes ankle restriction and shifts load entirely onto the quads with a deeper stretch at the bottom. Hold a dumbbell at your chest, drop until hip crease is below knee. High-rep quad burnout; last set to failure." },
+      ]},
+      { label:"Accessories & Core", musc:"Hamstrings · Calves · Abs · Obliques", exercises:[
+        { name:"Bowflex Seated Leg Curl",        detail:"3 × 12–15 | 60s rest", tag:"bowflex",   int:"fail", squeeze:"Use seated position (hips bent) — it loads the hamstring in a deeper stretch than lying, growing more muscle. Curl to full peak, hold 1 second, lower in 3. Feel the back of your thigh working every rep." },
+        { name:"Standing Calf Raise (Dumbbell)", detail:"4 × 15–20 | 45s rest", tag:"isolation", int:"fail", squeeze:"Hold dumbbells, feet on a step edge. Full pause at the top (calf squeeze), deep stretch at the bottom — heel drops below the step. No bouncing, ever. Every set to failure. Calves need extreme ranges and loads to grow." },
+        { name:"Weighted Dumbbell Crunch",       detail:"3 × 15 | 45s rest",   tag:"core",      int:"fail", squeeze:"Hold a dumbbell on your chest or extended overhead (harder). Crunch ribs toward pelvis using your abs — not a hip-flex or neck-pull. Squeeze hard at the peak, lower slowly. Adding load is what makes abs thicker and visible — endless crunches without weight don't do this." },
+        { name:"Russian Twist (Dumbbell)",       detail:"3 × 20 each side | 30s rest", tag:"core", int:"fail", squeeze:"Lean back to ~45°, feet elevated for more difficulty. Rotate your torso fully side to side, touching the dumbbell beside each hip. Drive the rotation from your obliques, not your arms." },
+        { name:"Treadmill Incline Walk",         detail:"15 min | 8–10% | 3.5 mph", tag:"cardio", int:"", squeeze:"Hands off the rails — forces glutes and core to work on every stride. Burns serious calories with zero muscle recovery cost." },
+      ]},
+    ]
+  },
+
+  Upper: {
+    badge:'FRI', sub:'CHEST · BACK · SHOULDERS · ARMS',
+    color:'var(--upper)',
+    tip:"A second hit on the upper body at different angles and rep ranges — this drives the full, dense look and allows two-per-week frequency on each muscle. You've already done heavy compounds early in the week; this session fills in the gaps and finishes everything off.",
+    cardio:"10 min treadmill warm-up. Finish with 20 min moderate jog (5–6 mph) or incline walk for maximum weekly calorie burn.",
+    sections:[
+      { label:"Compound Mix", musc:"Shoulders · Back · Chest", exercises:[
+        { name:"Standing Barbell Overhead Press", detail:"4 × 8–10 | 90s rest", tag:"compound", int:"rir", squeeze:"Strict reps — brace your core hard (no leg drive). Press overhead and shrug slightly at lockout to fully engage the traps and delts. Full lockout every rep." },
+        { name:"Dumbbell Chest-Supported Row",    detail:"3 × 12 | 60s rest",   tag:"compound", int:"rir", squeeze:"Lie chest-down on an incline bench to eliminate all momentum. Row to your hips, squeeze lats 1 sec at the top. The bench support means every rep is honest." },
+        { name:"Bowflex Cable Chest Press",       detail:"3 × 12 | 60s rest",   tag:"bowflex",  int:"fail", squeeze:"Constant cable tension through the whole movement. Cross hands slightly at lockout for a peak pec contraction. Control the return fully. Last set to failure." },
+      ]},
+      { label:"Arms & Shoulder Finisher", musc:"Biceps · Triceps · Rear Delts · Side Delts", exercises:[
+        { name:"Incline Curl + Overhead Extension Superset", detail:"3 rounds × 12 each | 60s rest", tag:"isolation", int:"fail", squeeze:"Back-to-back for a massive arm pump. Incline curl: hang the arms back, deep bicep stretch at the bottom, curl without letting elbows drift. Overhead extension: lower behind your head for a deep long-head tricep stretch, extend fully. Run both exercises with no rest between them, then rest 60s." },
+        { name:"Bowflex Face Pull",               detail:"3 × 15 | 45s rest",   tag:"bowflex",   int:"fail", squeeze:"High cable, rope handle. Pull to forehead, elbows wide and high. The most important shoulder health exercise in this entire plan — do not skip it. External rotators and rear delts prevent injury from all the pressing work." },
+        { name:"Dumbbell Lateral Raise Drop Set", detail:"3 drop sets | 60s rest", tag:"isolation", int:"fail", squeeze:"Go to failure, drop weight by ~30%, keep going immediately. Lead with pinkies, raise to shoulder height only — going higher uses traps. Three drops = massive side delt pump. Responsible for shoulder width." },
+        { name:"Hammer Curl",                     detail:"3 × 12 | 60s rest",   tag:"isolation", int:"fail", squeeze:"Thumbs pointing up the entire rep. Targets the brachialis — a muscle underneath the bicep that, when developed, pushes the bicep up and makes your arms look much bigger. Squeeze at the top, control down." },
+      ]},
+    ]
+  },
+
+  Lower: {
+    badge:'SAT', sub:'HAMSTRINGS · GLUTES · CALVES · ABS · OBLIQUES',
+    color:'var(--lower)',
+    tip:"Posterior-chain day — balances Wednesday's quad work. Strong hamstrings and glutes are the biggest driver of body composition change in the lower body. Calves and core get their second weekly hit here. This session is the backbone of your 'toned' look.",
+    cardio:"5 min walk warm-up. Optional 15 min incline walk at the end if energy allows.",
+    sections:[
+      { label:"Compound Posterior", musc:"Hamstrings · Glutes", exercises:[
+        { name:"Deficit Romanian Deadlift",    detail:"4 × 10–12 | 90s rest", tag:"variation", int:"rir", squeeze:"Stand on a weight plate or low step — the extra depth extends the hamstring stretch beyond what a standard RDL can achieve. Hinge at the hips (not a squat), push your hips back, bar close to your legs, then drive hips through and squeeze glutes hard at the top." },
+        { name:"Barbell Hip Thrust",           detail:"4 × 12 | 75s rest",    tag:"compound", int:"rir", squeeze:"Upper back on a bench, bar across hip crease with padding. Drive up to a straight line from knees to shoulders, chin tucked. Squeeze your glutes as hard as you physically can and hold for 2 full seconds. Last set to failure." },
+        { name:"Dumbbell Sumo Squat",          detail:"3 × 12–15 | 60s rest", tag:"compound", int:"fail", squeeze:"Wide stance, toes out 45°. Drive knees outward as you lower. Drive through your heels and squeeze inner thighs and glutes hard at the top. Loaded inner thigh stretch at the bottom every rep." },
+      ]},
+      { label:"Accessories & Core", musc:"Hamstrings · Glutes · Calves · Abs · Obliques", exercises:[
+        { name:"Bowflex Lying Leg Curl",       detail:"3 × 12–15 | 60s rest", tag:"bowflex",   int:"fail", squeeze:"Flex your feet (toes toward shins) before initiating the curl — pre-loads the hamstrings. Curl fully, hold peak 2 seconds, lower in 3. The slow negative is where the hamstring growth happens." },
+        { name:"Dumbbell Single-Leg RDL",      detail:"3 × 10 each | 60s rest", tag:"compound", int:"fail", squeeze:"Balance on one leg, hinge until torso is parallel to the floor (deep hamstring stretch), drive through the heel and squeeze the glute hard at the top. Excellent for glute-hamstring connection and balance." },
+        { name:"Seated Calf Raise (Dumbbell)", detail:"4 × 15–20 | 45s rest", tag:"isolation", int:"fail", squeeze:"Sit on a bench with a heavy dumbbell resting on each knee. Raise your heels — the bent knee targets the soleus (deeper calf muscle). Full pause at the top, deep stretch at the bottom. Every set to failure." },
+        { name:"Weighted Dumbbell Crunch",     detail:"3 × 15 | 45s rest",   tag:"core",      int:"fail", squeeze:"Second weekly hit on upper abs. Hold dumbbell overhead for max difficulty. Crunch ribs to pelvis, squeeze at peak, lower slowly. The weight is what makes abs grow and become visible — low bodyfat reveals them, loaded training shapes them." },
+        { name:"Dumbbell Woodchopper",         detail:"3 × 15 each side | 30s rest", tag:"core", int:"fail", squeeze:"Hold one dumbbell in both hands, start by one shoulder, chop diagonally down to the opposite hip. Let your back foot pivot. Power from the trunk rotation — oblique dominant. Controlled return." },
+        { name:"Dumbbell Side Bend",           detail:"3 × 15 each side | 30s rest", tag:"core", int:"fail", squeeze:"One dumbbell in one hand. Bend sideways at the waist letting it slide down your thigh, then contract the opposite oblique to pull you back up. Slow and controlled — no swinging. All reps one side, then switch." },
+        { name:"Treadmill Incline Walk",       detail:"15 min optional | 10% | 3.5 mph", tag:"cardio", int:"", squeeze:"Hands-free walk fires glutes and core every stride. Perfect fat-burning cooldown that reinforces what you just trained." },
+      ]},
+    ]
+  }
+};
+
+const stretches = {
+  Push:{
+    warmup:[
+      {name:"Arm Circles",reps:"10 each direction",cue:"Start small, gradually wider. Lubricates the shoulder joint before any pressing."},
+      {name:"Cross-Body Arm Swings",reps:"15 reps",cue:"Wide open then cross over chest alternately. Activates chest and rear delts."},
+      {name:"Chest Opener",reps:"10 reps",cue:"Clasp hands behind back, open your chest and look slightly up. Pre-activates the pecs."},
+      {name:"Shoulder Rolls",reps:"10 forward, 10 back",cue:"Slow and deliberate — gets blood moving through traps and shoulder capsule."},
+      {name:"Wrist Circles",reps:"10 each direction",cue:"Essential before pressing — never skip. Preps wrists for load."},
+    ],
+    cooldown:[
+      {name:"Doorway Chest Stretch",hold:"30s each side",cue:"Forearm on doorframe at 90°, step forward until you feel deep pec stretch."},
+      {name:"Cross-Body Shoulder Stretch",hold:"30s each arm",cue:"Pull arm across chest with other hand. Releases front and rear delt tension."},
+      {name:"Overhead Tricep Stretch",hold:"30s each arm",cue:"Reach behind head, gently push elbow down. Deep long-head tricep stretch."},
+      {name:"Neck Side Stretch",hold:"20s each side",cue:"Ear toward shoulder, other shoulder pressed down. Releases trap tension from pressing."},
+    ]
+  },
+  Pull:{
+    warmup:[
+      {name:"Arm Circles",reps:"10 each direction",cue:"Full range — loosens shoulder before pulling."},
+      {name:"Torso Rotations",reps:"10 each side",cue:"Feet hip-width, rotate upper body side to side. Wakes up spine and mid-back."},
+      {name:"Slow Hip Hinge",reps:"10 controlled reps",cue:"Hinge at hip, flat back, feel hamstrings load. Primes the deadlift pattern."},
+      {name:"Shoulder Rolls",reps:"10 forward, 10 back",cue:"Wide and deliberate. Activates traps and rear delts."},
+      {name:"Cat-Cow",reps:"10 reps",cue:"On hands and knees — round up (cat), arch down (cow). Essential spinal mobility before deadlift."},
+    ],
+    cooldown:[
+      {name:"Lat Overhead Lean",hold:"30s each side",cue:"Reach one arm overhead, lean to opposite side. Full lat lengthening."},
+      {name:"Child's Pose",hold:"45s",cue:"Hips toward heels, arms stretched out. Full back and lat decompression after heavy pulling."},
+      {name:"Bicep Wall Stretch",hold:"30s each arm",cue:"Palm flat on wall fingers pointing down, rotate body away. Deep bicep and forearm stretch."},
+      {name:"Seated Forward Fold",hold:"45s",cue:"Legs straight, fold forward. Releases hamstrings and lower back loaded by the deadlift."},
+    ]
+  },
+  Legs:{
+    warmup:[
+      {name:"Leg Swings (front/back)",reps:"10 each leg",cue:"Hold wall for balance. Opens hip flexors and hamstrings."},
+      {name:"Leg Swings (side to side)",reps:"10 each leg",cue:"Across the body and back out. Opens groin and abductors."},
+      {name:"Hip Circles",reps:"10 each direction",cue:"Hands on hips, big slow circles. Lubricates hip joint before loading."},
+      {name:"Squat to Stand",reps:"10 reps",cue:"Squat, hold at bottom, stand and reach overhead. Opens quads, hips, thoracic spine."},
+      {name:"Ankle Circles",reps:"10 each direction",cue:"Critical for squat depth — tight ankles force knees to cave. Never skip."},
+    ],
+    cooldown:[
+      {name:"Quad Stretch",hold:"30s each leg",cue:"Standing or lying. Pull heel toward glute. Full quad and hip flexor release."},
+      {name:"Seated Hamstring Stretch",hold:"45s each leg",cue:"One leg extended, lean forward from hips. Releases hamstrings after squats and leg curls."},
+      {name:"Pigeon Pose",hold:"45s each side",cue:"Best glute and hip flexor stretch. Front shin across the floor, lean forward for more intensity."},
+      {name:"Seated Calf Stretch",hold:"30s each foot",cue:"Leg straight, pull toes toward you with a band or towel. Calves take load all session."},
+    ]
+  },
+  Upper:{
+    warmup:[
+      {name:"Arm Circles",reps:"10 each direction",cue:"Full range shoulder warm-up."},
+      {name:"Band Pull-Apart (or arm swings)",reps:"15 reps",cue:"Opens rear delts and activates upper back before pressing."},
+      {name:"Shoulder Rolls",reps:"10 forward, 10 back",cue:"Deliberate, full range. Primes the whole shoulder complex."},
+      {name:"Wrist Circles",reps:"10 each direction",cue:"Prep the wrists for both pressing and pulling loads."},
+    ],
+    cooldown:[
+      {name:"Doorway Chest Stretch",hold:"30s each side",cue:"Deep pec stretch — essential after chest pressing."},
+      {name:"Lat Overhead Lean",hold:"30s each side",cue:"Arm overhead, lean opposite. Full lat lengthening after rows."},
+      {name:"Cross-Body Shoulder Stretch",hold:"30s each arm",cue:"Releases front and rear delt tension."},
+      {name:"Bicep Wall Stretch",hold:"30s each arm",cue:"After curls — deep bicep and forearm release."},
+    ]
+  },
+  Lower:{
+    warmup:[
+      {name:"Hip Circles",reps:"10 each direction",cue:"Lubricates hip joint before posterior-chain loading."},
+      {name:"Leg Swings (front/back)",reps:"10 each leg",cue:"Opens hip flexors and hamstrings for RDL and hip thrust."},
+      {name:"Glute Bridge (bodyweight)",reps:"15 slow reps",cue:"Activates glutes before hip thrusts — ensures glutes fire, not lower back."},
+      {name:"Slow Hip Hinge",reps:"10 reps",cue:"Hinge with flat back, feel hamstrings load. Primes RDL pattern."},
+    ],
+    cooldown:[
+      {name:"Pigeon Pose",hold:"45s each side",cue:"Best glute and hip stretch after hip thrusts. Let your hips fully open."},
+      {name:"Seated Hamstring Stretch",hold:"45s each leg",cue:"Releases hamstrings after leg curls and RDLs."},
+      {name:"Supine Figure-4 Stretch",hold:"30s each side",cue:"Lie on back, ankle over opposite knee. Gentle glute and piriformis release."},
+      {name:"Seated Calf Stretch",hold:"30s each foot",cue:"Calves take load on calf raises — always stretch after."},
+    ]
+  }
+};
+
+// ============ STATE ============
+let currentDay = 0;
+let weights = [], sessions = [], waists = [];
+
+// ============ STORAGE (IndexedDB) ============
+// Persistent, survives browser-data clears (with persistent storage granted),
+// syncs across refreshes, and holds photos that localStorage can't.
+let db=null;
+let photos=[]; // {id, date, label, blob}
+
+function openDB(){
+  return new Promise((resolve,reject)=>{
+    const req=indexedDB.open('SummerCut2026',1);
+    req.onupgradeneeded=(e)=>{
+      const d=e.target.result;
+      if(!d.objectStoreNames.contains('kv')) d.createObjectStore('kv');
+      if(!d.objectStoreNames.contains('photos')) d.createObjectStore('photos',{keyPath:'id'});
+    };
+    req.onsuccess=(e)=>resolve(e.target.result);
+    req.onerror=(e)=>reject(e.target.error);
+  });
+}
+function kvGet(key,def){
+  return new Promise((resolve)=>{
+    try{
+      const tx=db.transaction('kv','readonly');
+      const r=tx.objectStore('kv').get(key);
+      r.onsuccess=()=>resolve(r.result===undefined?def:r.result);
+      r.onerror=()=>resolve(def);
+    }catch(e){resolve(def);}
+  });
+}
+function kvSet(key,val){
+  return new Promise((resolve)=>{
+    try{
+      const tx=db.transaction('kv','readwrite');
+      tx.objectStore('kv').put(val,key);
+      tx.oncomplete=()=>resolve(true);
+      tx.onerror=()=>resolve(false);
+    }catch(e){resolve(false);}
+  });
+}
+function photosAll(){
+  return new Promise((resolve)=>{
+    try{
+      const tx=db.transaction('photos','readonly');
+      const r=tx.objectStore('photos').getAll();
+      r.onsuccess=()=>resolve(r.result||[]);
+      r.onerror=()=>resolve([]);
+    }catch(e){resolve([]);}
+  });
+}
+function photoPut(rec){
+  return new Promise((resolve)=>{
+    try{
+      const tx=db.transaction('photos','readwrite');
+      tx.objectStore('photos').put(rec);
+      tx.oncomplete=()=>resolve(true);
+      tx.onerror=()=>resolve(false);
+    }catch(e){resolve(false);}
+  });
+}
+function photoDel(id){
+  return new Promise((resolve)=>{
+    try{
+      const tx=db.transaction('photos','readwrite');
+      tx.objectStore('photos').delete(id);
+      tx.oncomplete=()=>resolve(true);
+      tx.onerror=()=>resolve(false);
+    }catch(e){resolve(false);}
+  });
+}
+
+// Migrate any old localStorage data into IndexedDB once
+async function migrateFromLocalStorage(){
+  try{
+    const map={weights:'summercut2026v2_weights',sessions:'summercut2026v2_sessions',waists:'summercut2026v2_waists'};
+    for(const [k,lk] of Object.entries(map)){
+      const existing=await kvGet(k,null);
+      if(existing===null){
+        const raw=localStorage.getItem(lk);
+        if(raw){ try{ await kvSet(k,JSON.parse(raw)); }catch(e){} }
+      }
+    }
+  }catch(e){}
+}
+
+async function saveData(){
+  await kvSet('weights',weights);
+  await kvSet('sessions',sessions);
+  await kvSet('waists',waists);
+}
+
+async function init(){
+  try{ db=await openDB(); }catch(e){ db=null; }
+  // Ask the browser to keep this data even under storage pressure
+  if(navigator.storage&&navigator.storage.persist){ try{ await navigator.storage.persist(); }catch(e){} }
+  if(db){
+    await migrateFromLocalStorage();
+    weights=await kvGet('weights',[]);
+    sessions=await kvGet('sessions',[]);
+    waists=await kvGet('waists',[]);
+    photos=await photosAll();
+  }
+  const d=new Date().getDay();
+  const map={1:0,2:1,3:2,4:3,5:4,6:5,0:6};
+  currentDay=map[d]??0;
+  renderStrip();
+  renderWorkout();
+}
+
+// ============ TABS ============
+function switchTab(tab){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+tab).classList.add('active');
+  event.target.classList.add('active');
+  if(tab==='progress') renderProgress();
+}
+
+// ============ STRIP ============
+function renderStrip(){
+  const el=document.getElementById('scheduleStrip');
+  el.innerHTML=schedule.map((d,i)=>`
+    <div class="day-chip ${i===currentDay?'active':''}" data-col="${d.col}" onclick="selectDay(${i})">
+      <div class="chip-day">${d.label}</div>
+      <div class="chip-type">${d.type}</div>
+    </div>`).join('');
+}
+function selectDay(i){ currentDay=i; renderStrip(); renderWorkout(); }
+
+// ============ WORKOUT RENDER ============
+function renderWorkout(){
+  const el=document.getElementById('mainContent');
+  const day=schedule[currentDay];
+  if(day.type==='Rest'){
+    el.innerHTML=`<div class="main"><div class="rest-card">
+      <div class="rest-icon">🌙</div>
+      <h2>Rest Day</h2>
+      <p>Your muscles grow during recovery, not during training. Sleep 7–9 hours, hit your protein target, and come back stronger tomorrow. Light walking is fine.</p>
+    </div></div>`;
+    return;
+  }
+  const w=workouts[day.type];
+  const todayStr=()=>{const n=new Date();return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}`;};
+  const alreadyLogged=sessions.some(s=>s.date===todayStr()&&s.day===day.type);
+
+  let secNum=0;
+  const sectionsHTML=w.sections.map(sec=>`
+    <div class="sec-label">${sec.label} <span class="sec-line"></span> <span style="font-size:9px;color:var(--muted2);text-transform:none;letter-spacing:0">${sec.musc}</span></div>
+    <div class="ex-list">
+      ${sec.exercises.map(ex=>{
+        secNum++;
+        const n=secNum;
+        const tagClass='tag-'+ex.tag;
+        const intTag=ex.int==='rir'?'<span class="int-tag int-rir">RIR 1–2</span>':ex.int==='fail'?'<span class="int-tag int-fail">TO FAILURE</span>':'';
+        return `<div class="ex-card" id="excard-${n}">
+          <div class="ex-card-top">
+            <div class="ex-num">${n}</div>
+            <div class="ex-info" onclick="toggleTip(${n})">
+              <div class="ex-name">${ex.name}</div>
+              <div class="ex-meta">
+                <span class="ex-detail">${ex.detail}</span>
+                <span class="ex-tag ${tagClass}">${ex.tag}</span>
+                ${intTag}
+              </div>
+            </div>
+            <div class="ex-actions">
+              <button class="tip-btn" id="tipbtn-${n}" onclick="toggleTip(${n})">💡 Tip</button>
+              <div class="check-circle" id="check-${n}" onclick="toggleDone(${n})">✓</div>
+            </div>
+          </div>
+          <div class="squeeze-panel" id="tip-${n}">
+            <div class="sq-label">Execution Cue</div>
+            <p>${ex.squeeze}</p>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`).join('');
+
+  const stretchData=stretches[day.type];
+  const warmupHTML=stretchData?stretchData.warmup.map((s,i)=>`
+    <div class="stretch-row">
+      <div class="stretch-row-top"><span class="stretch-num">${i+1}</span><div>
+        <div class="stretch-name">${s.name}</div>
+        <div class="stretch-reps">${s.reps||s.hold}</div>
+      </div></div>
+      <div class="stretch-cue">${s.cue}</div>
+    </div>`).join(''):'';
+  const cooldownHTML=stretchData?stretchData.cooldown.map((s,i)=>`
+    <div class="stretch-row">
+      <div class="stretch-row-top"><span class="stretch-num">${i+1}</span><div>
+        <div class="stretch-name">${s.name}</div>
+        <div class="stretch-reps">${s.reps||s.hold}</div>
+      </div></div>
+      <div class="stretch-cue">${s.cue}</div>
+    </div>`).join(''):'';
+
+  const badgeStyle=`background:rgba(0,0,0,0.3);color:${w.color};border:1px solid ${w.color}40;`;
+  const titleStyle=`color:${w.color};`;
+
+  el.innerHTML=`
+    <div class="main">
+      <div class="day-hdr">
+        <div class="day-badge" style="${badgeStyle}">${w.badge}</div>
+        <div class="day-title" style="${titleStyle}">${day.type} Day</div>
+      </div>
+      <div class="day-sub">${w.sub}</div>
+      <div class="coach-box"><div class="cb-label">Coach's Note</div><p>${w.tip}</p></div>
+      <div class="cardio-block"><div class="cb-label">🏃 Cardio Protocol</div><p>${w.cardio}</p></div>
+
+      ${stretchData?`
+      <button class="stretch-toggle-btn" style="color:var(--green);border-color:rgba(0,230,118,0.3);" onclick="toggleStretch('warmup')">
+        🔥 Warm-Up Protocol (${stretchData.warmup.length} movements) <span id="warmup-arrow">▼</span>
+      </button>
+      <div class="stretch-panel-outer" id="stretch-warmup">${warmupHTML}</div>`:''}
+
+      ${sectionsHTML}
+
+      ${stretchData?`
+      <button class="stretch-toggle-btn" style="color:var(--blue);border-color:rgba(64,196,255,0.3);" onclick="toggleStretch('cooldown')">
+        🧊 Cool-Down & Stretch (${stretchData.cooldown.length} stretches) <span id="cooldown-arrow">▼</span>
+      </button>
+      <div class="stretch-panel-outer" id="stretch-cooldown">${cooldownHTML}</div>`:''}
+
+      <button class="log-workout-bar ${alreadyLogged?'logged':''}" onclick="logSession('${day.type}','${todayStr()}')">
+        ${alreadyLogged?'✓ Logged for Today':'✅ Log This Workout'}
+      </button>
+    </div>`;
+}
+
+function toggleTip(n){
+  const panel=document.getElementById('tip-'+n);
+  const btn=document.getElementById('tipbtn-'+n);
+  const open=panel.classList.toggle('open');
+  btn.classList.toggle('open',open);
+  btn.textContent=open?'✕ Close':'💡 Tip';
+}
+function toggleDone(n){
+  const card=document.getElementById('excard-'+n);
+  card.classList.toggle('done');
+}
+function toggleStretch(id){
+  const panel=document.getElementById('stretch-'+id);
+  const arrow=document.getElementById(id+'-arrow');
+  const open=panel.classList.toggle('open');
+  if(arrow) arrow.textContent=open?'▲':'▼';
+}
+function logSession(type,date){
+  const existing=sessions.findIndex(s=>s.date===date&&s.day===type);
+  if(existing>=0) sessions.splice(existing,1);
+  else sessions.push({date,day:type});
+  kvSet('sessions',sessions);
+  renderWorkout();
+}
+
+// ============ PROGRESS ============
+function todayStr(){const n=new Date();return`${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}`;}
+function prettyDate(d){const p=d.split('-');const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return`${parseInt(p[2])} ${months[parseInt(p[1])-1]}`;}
+
+function logWeight(){
+  const inp=document.getElementById('weightInput');
+  const v=parseFloat(inp.value);
+  if(isNaN(v)||v<50||v>500){inp.style.borderColor='var(--red)';return;}
+  const d=todayStr();
+  const idx=weights.findIndex(w=>w.date===d);
+  if(idx>=0) weights[idx].weight=v; else weights.push({date:d,weight:v});
+  kvSet('weights',weights);
+  inp.value='';
+  renderProgress();
+}
+function deleteWeight(d){weights=weights.filter(w=>w.date!==d);kvSet('weights',weights);renderProgress();}
+function logWaist(){
+  const inp=document.getElementById('waistInput');
+  const v=parseFloat(inp.value);
+  if(isNaN(v)||v<15||v>80){inp.style.borderColor='var(--red)';return;}
+  const d=todayStr();
+  const idx=waists.findIndex(w=>w.date===d);
+  if(idx>=0) waists[idx].waist=v; else waists.push({date:d,waist:v});
+  kvSet('waists',waists);
+  inp.value='';
+  renderProgress();
+}
+function deleteWaist(d){waists=waists.filter(w=>w.date!==d);kvSet('waists',waists);renderProgress();}
+
+// ============ PHOTOS ============
+// Downscale to max 1000px and compress to JPEG so photos stay small in the DB
+function processImage(file){
+  return new Promise((resolve,reject)=>{
+    const img=new Image();
+    const url=URL.createObjectURL(file);
+    img.onload=()=>{
+      const max=1000;
+      let {width,height}=img;
+      if(width>height&&width>max){height=Math.round(height*max/width);width=max;}
+      else if(height>max){width=Math.round(width*max/height);height=max;}
+      const canvas=document.createElement('canvas');
+      canvas.width=width;canvas.height=height;
+      canvas.getContext('2d').drawImage(img,0,0,width,height);
+      URL.revokeObjectURL(url);
+      canvas.toBlob(b=>b?resolve(b):reject('compress failed'),'image/jpeg',0.82);
+    };
+    img.onerror=()=>{URL.revokeObjectURL(url);reject('load failed');};
+    img.src=url;
+  });
+}
+async function handlePhotoUpload(e){
+  const files=Array.from(e.target.files||[]);
+  if(!files.length) return;
+  const label=document.getElementById('photoLabel')?.value||'';
+  for(const f of files){
+    try{
+      const blob=await processImage(f);
+      const rec={id:'p_'+Date.now()+'_'+Math.random().toString(36).slice(2,7),date:todayStr(),label,blob};
+      await photoPut(rec);
+      photos.push(rec);
+    }catch(err){}
+  }
+  e.target.value='';
+  renderProgress();
+}
+async function deletePhoto(id){
+  await photoDel(id);
+  photos=photos.filter(p=>p.id!==id);
+  renderProgress();
+}
+let _photoUrls=[];
+function revokePhotoUrls(){ _photoUrls.forEach(u=>URL.revokeObjectURL(u)); _photoUrls=[]; }
+
+function buildChart(points){
+  if(points.length<2) return `<div class="chart-empty">Log at least 2 weigh-ins to see your trend</div>`;
+  const sorted=[...points].sort((a,b)=>a.date.localeCompare(b.date));
+  const vals=sorted.map(p=>p.weight||p.waist);
+  const min=Math.min(...vals)-2, max=Math.max(...vals)+2;
+  const W=300,H=80;
+  const px=(i)=>Math.round((i/(sorted.length-1))*W);
+  const py=(v)=>Math.round(H-((v-min)/(max-min))*H);
+  const pathD=sorted.map((p,i)=>`${i===0?'M':'L'}${px(i)},${py(vals[i])}`).join(' ');
+  const dots=sorted.map((p,i)=>`<circle cx="${px(i)}" cy="${py(vals[i])}" r="3" fill="var(--accent)" />`).join('');
+  return `<svg viewBox="0 0 ${W} ${H+20}" style="width:100%;height:auto;display:block;">
+    <path d="${pathD}" stroke="var(--accent)" stroke-width="2" fill="none" />
+    ${dots}
+    <text x="${px(0)}" y="${H+15}" text-anchor="middle" font-size="9" fill="var(--muted2)">${prettyDate(sorted[0].date)}</text>
+    <text x="${px(sorted.length-1)}" y="${H+15}" text-anchor="middle" font-size="9" fill="var(--muted2)">${prettyDate(sorted[sorted.length-1].date)}</text>
+  </svg>`;
+}
+
+function getWeekDates(){
+  const t=new Date(); const d=t.getDay(); const mon=new Date(t);
+  mon.setDate(t.getDate()-(d===0?6:d-1));
+  return Array.from({length:7},(_,i)=>{const x=new Date(mon);x.setDate(mon.getDate()+i);return`${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,'0')}-${String(x.getDate()).padStart(2,'0')}`;});
+}
+
+function renderProgress(){
+  const el=document.getElementById('progContent');
+  if(!el) return;
+  const sorted=[...weights].sort((a,b)=>a.date.localeCompare(b.date));
+  const startW=sorted.length?sorted[0].weight.toFixed(1):'—';
+  const curW=sorted.length?sorted[sorted.length-1].weight.toFixed(1):'—';
+  let change='—',changeClass='';
+  if(sorted.length>1){const d=sorted[sorted.length-1].weight-sorted[0].weight;change=(d>0?'+':'')+d.toFixed(1);changeClass=d<0?'loss':'gain';}
+  const chartHTML=buildChart(weights);
+  const recent=[...sorted].reverse().slice(0,5);
+  const weighinHTML=recent.length?recent.map(w=>`<div class="weighin-row">
+    <span class="wr-date">${prettyDate(w.date)}${w.date===todayStr()?' · Today':''}</span>
+    <span style="display:flex;align-items:center;gap:8px">
+      <span class="wr-weight">${w.weight} lbs</span>
+      <button class="wr-del" onclick="deleteWeight('${w.date}')">✕</button>
+    </span></div>`).join('')
+    :'<div class="chart-empty" style="padding:12px">No weigh-ins yet</div>';
+
+  const wSorted=[...waists].sort((a,b)=>a.date.localeCompare(b.date));
+  let waistCur='—', waistChange='';
+  if(wSorted.length){waistCur=wSorted[wSorted.length-1].waist;if(wSorted.length>1){const d=wSorted[wSorted.length-1].waist-wSorted[0].waist;waistChange=d===0?'· no change yet':`· ${d>0?'+':''}${d.toFixed(1)}" since start`;}}
+  const waistRecent=[...wSorted].reverse().slice(0,4);
+  const waistListHTML=waistRecent.length?waistRecent.map(w=>`<div class="weighin-row">
+    <span class="wr-date">${prettyDate(w.date)}${w.date===todayStr()?' · Today':''}</span>
+    <span style="display:flex;align-items:center;gap:8px">
+      <span class="wr-weight">${w.waist}"</span>
+      <button class="wr-del" onclick="deleteWaist('${w.date}')">✕</button>
+    </span></div>`).join('')
+    :'<div class="chart-empty" style="padding:11px">No measurements yet — measure around your belly button, relaxed</div>';
+
+  const weekDates=getWeekDates();
+  const t=todayStr();
+  const weekGrid=schedule.map((d,i)=>{
+    const date=weekDates[i]; const isRest=d.type==='Rest';
+    const done=sessions.some(s=>s.date===date&&s.day===d.type);
+    const cls=[isRest?'rest':'',done?'done':'',date===t?'today':''].filter(Boolean).join(' ');
+    return`<div class="wday ${cls}">
+      <div class="wday-name">${d.label}</div>
+      <div class="wday-type">${isRest?'—':d.type.slice(0,3)}</div>
+      <div class="wday-check">${done?'✓':''}</div>
+    </div>`;
+  }).join('');
+  const weekCount=sessions.filter(s=>weekDates.includes(s.date)).length;
+  const recentSessions=[...sessions].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,8);
+  const sessionHTML=recentSessions.length?recentSessions.map(s=>`<div class="session-row">
+    <span class="sr-left">${s.day} Day</span>
+    <span class="sr-date">${prettyDate(s.date)}${s.date===t?' · Today':''}</span></div>`).join('')
+    :'<div class="chart-empty" style="padding:12px">Log a workout from the Workout tab to see it here</div>';
+
+  // Photo gallery — newest first, with object URLs
+  revokePhotoUrls();
+  const sortedPhotos=[...photos].sort((a,b)=>(b.id>a.id?1:-1));
+  const photoGalleryHTML=sortedPhotos.length?`<div class="photo-grid">${sortedPhotos.map(p=>{
+    const url=URL.createObjectURL(p.blob); _photoUrls.push(url);
+    return `<div class="photo-item">
+      <img src="${url}" onclick="window.open('${url}','_blank')" />
+      <button class="photo-del" onclick="deletePhoto('${p.id}')">✕</button>
+      <div class="photo-cap">${prettyDate(p.date)}${p.label?' · '+p.label:''}</div>
+    </div>`;
+  }).join('')}</div>`
+    :'<div class="chart-empty" style="padding:18px">No photos yet — add your first one above to start your transformation log</div>';
+
+  el.innerHTML=`
+    <div style="padding-top:14px"></div>
+    <div class="install-hint" id="installHint">
+      <strong>📲 Install as an app:</strong> <span id="installText">On iPhone, tap the Share button in Safari, then "Add to Home Screen". It'll open full-screen like a real app and your data stays saved.</span>
+    </div>
+    <div class="pstats">
+      <div class="pstat"><div class="ps-val">${startW}</div><div class="ps-lbl">Start (lbs)</div></div>
+      <div class="pstat"><div class="ps-val">${curW}</div><div class="ps-lbl">Current (lbs)</div></div>
+      <div class="pstat ${changeClass}"><div class="ps-val">${change}</div><div class="ps-lbl">Change (lbs)</div></div>
+    </div>
+    <div class="log-card">
+      <h4>⚖️ Log Today's Weight</h4>
+      <div class="weight-row">
+        <input class="weight-input" id="weightInput" type="number" inputmode="decimal" step="0.1" placeholder="e.g. 183.5" />
+        <button class="log-btn" onclick="logWeight()">Save</button>
+      </div>
+      <div class="unit-hint">Weigh yourself first thing in the morning, after bathroom, before eating. One entry per day.</div>
+    </div>
+    <div class="chart-card">
+      <h4>📉 Weight Trend</h4>
+      ${chartHTML}
+    </div>
+    <div class="log-card">
+      <h4>Recent Weigh-Ins</h4>
+      <div class="weighin-list">${weighinHTML}</div>
+    </div>
+    <div class="log-card" style="border-color:rgba(206,147,216,0.25)">
+      <h4 style="color:var(--purple)">📏 Waist & 📸 Progress Photos</h4>
+      <div style="font-size:12px;color:#ccc;margin-bottom:11px;line-height:1.5">Waist measurement tracks fat loss better than the scale — especially if you're gaining muscle${waistCur!=='—'?` — <strong style="color:#fff">currently ${waistCur}"</strong> <span style="color:var(--muted2)">${waistChange}</span>`:''}</div>
+      <div class="weight-row">
+        <input class="weight-input" id="waistInput" type="number" inputmode="decimal" step="0.1" placeholder="waist inches, e.g. 34.5" />
+        <button class="log-btn" onclick="logWaist()">Save</button>
+      </div>
+      <div class="weighin-list" style="margin-top:9px">${waistListHTML}</div>
+    </div>
+
+    <div class="log-card" style="border-color:rgba(64,196,255,0.25)">
+      <h4 style="color:var(--blue)">📸 Progress Photos</h4>
+      <div style="font-size:12px;color:#ccc;margin-bottom:11px;line-height:1.5">Stored permanently in the app — they survive closing and reopening. Take front, side and back shots every 2 weeks in the same lighting. Photos catch what the scale misses.</div>
+      <input type="text" class="weight-input" id="photoLabel" placeholder="Label (optional) — e.g. Side, Front, Week 4" style="width:100%;margin-bottom:8px" />
+      <label class="log-btn" style="display:block;text-align:center;cursor:pointer">
+        + Add Photo(s)
+        <input type="file" accept="image/*" multiple onchange="handlePhotoUpload(event)" style="display:none" />
+      </label>
+      <div id="photoGallery" style="margin-top:12px">${photoGalleryHTML}</div>
+    </div>
+    <div class="log-card">
+      <h4>🗓️ This Week — ${weekCount}/5 Sessions</h4>
+      <div class="week-grid">${weekGrid}</div>
+      <div class="unit-hint">Green = logged. Aim for all 5 training days.</div>
+    </div>
+    <div class="log-card">
+      <h4>Workout History · ${sessions.length} Total</h4>
+      <div class="session-list">${sessionHTML}</div>
+    </div>`;
+
+  const wi=document.getElementById('weightInput');
+  if(wi) wi.addEventListener('focus',()=>wi.style.borderColor='var(--accent)');
+}
+
+// ============ PWA: inline manifest + service worker ============
+(function setupPWA(){
+  try{
+    const manifest={
+      name:"Summer Cut 2026",short_name:"Summer Cut",
+      start_url:".",display:"standalone",
+      background_color:"#050505",theme_color:"#050505",
+      icons:[{
+        src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Crect width='512' height='512' fill='%23050505'/%3E%3Ctext x='256' y='340' font-size='260' text-anchor='middle' fill='%23ff3d00' font-family='Arial' font-weight='bold'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E",
+        sizes:"512x512",type:"image/svg+xml",purpose:"any"
+      }]
+    };
+    const mBlob=new Blob([JSON.stringify(manifest)],{type:'application/manifest+json'});
+    const mLink=document.createElement('link');
+    mLink.rel='manifest';mLink.href=URL.createObjectURL(mBlob);
+    document.head.appendChild(mLink);
+
+    // Service worker enables offline use + full standalone install.
+    // Built from a blob so the whole app stays a single file.
+    if('serviceWorker' in navigator){
+      const swCode=`
+        const CACHE='summercut-v1';
+        self.addEventListener('install',e=>{self.skipWaiting();});
+        self.addEventListener('activate',e=>{e.waitUntil(self.clients.claim());});
+        self.addEventListener('fetch',e=>{
+          if(e.request.method!=='GET')return;
+          e.respondWith(
+            caches.open(CACHE).then(c=>
+              c.match(e.request).then(hit=>{
+                const net=fetch(e.request).then(res=>{
+                  try{c.put(e.request,res.clone());}catch(_){}
+                  return res;
+                }).catch(()=>hit);
+                return hit||net;
+              })
+            )
+          );
+        });`;
+      const swBlob=new Blob([swCode],{type:'text/javascript'});
+      navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(()=>{});
+    }
+  }catch(e){}
+})();
+
+init();
+</script>
+</body>
+</html>
