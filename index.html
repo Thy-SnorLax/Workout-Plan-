@@ -244,6 +244,28 @@ h1.hd-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:40px;lette
 /* CALENDAR */
 .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
 .cal-nav-btn{width:32px;height:32px;border-radius:9px;background:var(--card2);border:1px solid var(--line2);color:var(--txt2);font-size:14px;cursor:pointer;}
+.te-field{display:flex;flex-direction:column;gap:4px;}
+.te-field span{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--mut);}
+.act-chip{flex:1;padding:9px 4px;border-radius:9px;background:var(--card2);border:1px solid var(--line2);color:var(--mut);font-size:10px;font-weight:600;cursor:pointer;font-family:'Inter Tight';transition:all .2s;}
+.act-chip.on{background:rgba(52,224,161,0.12);border-color:var(--mint);color:var(--mint);}
+.rc-out{margin-top:13px;background:var(--card2);border:1px solid var(--line);border-radius:11px;padding:13px;}
+.rc-line{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:13px;}
+.rc-line:first-child{padding-top:0;} 
+.rc-line b{font-family:'Oswald';font-size:16px;}
+.goal-card{background:linear-gradient(150deg,rgba(52,224,161,0.08),rgba(79,195,247,0.04));border:1px solid rgba(52,224,161,0.25);border-radius:16px;padding:16px;margin-bottom:13px;}
+.goal-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+.goal-ring{position:relative;width:78px;height:78px;flex-shrink:0;}
+.goal-ring svg{width:100%;height:100%;transform:rotate(-90deg);}
+.goal-ring .gt{fill:none;stroke:var(--line2);stroke-width:7;}
+.goal-ring .gf{fill:none;stroke:var(--mint);stroke-width:7;stroke-linecap:round;filter:drop-shadow(0 0 6px rgba(52,224,161,0.5));transition:stroke-dashoffset 1s ease;}
+.goal-ring-c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.goal-ring-pct{font-family:'Oswald';font-size:17px;font-weight:700;color:var(--mint);}
+.goal-info{flex:1;}
+.goal-big{font-family:'Oswald';font-size:22px;font-weight:600;line-height:1;}
+.goal-sub{font-size:11px;color:var(--txt2);margin-top:4px;line-height:1.4;}
+.goal-eta{display:flex;gap:8px;margin-top:6px;}
+.goal-eta-chip{background:var(--card);border:1px solid var(--line2);border-radius:8px;padding:6px 10px;font-size:10px;color:var(--txt2);}
+.goal-eta-chip b{color:var(--mint);font-family:'Oswald';font-size:13px;}
 .cal-month{font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
 .cal-dow{text-align:center;font-size:8px;color:var(--mut);letter-spacing:1px;text-transform:uppercase;padding-bottom:4px;}
@@ -328,6 +350,13 @@ h1.hd-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:40px;lette
 @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 .stagger>*{animation:rise .4s ease backwards;}
 @keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+/* progress page card entrance */
+#progContent .card,#progContent .goal-card,#progContent .streak-banner,#progContent .kpi-grid,#dietContent .card,#dietContent .cal-hero{animation:rise .45s ease backwards;}
+#progContent>*:nth-child(1){animation-delay:.02s}#progContent>*:nth-child(2){animation-delay:.06s}#progContent>*:nth-child(3){animation-delay:.10s}#progContent>*:nth-child(4){animation-delay:.14s}#progContent>*:nth-child(5){animation-delay:.18s}
+.kpi-val,.streak-num,.goal-ring-pct,.ring-pct{font-variant-numeric:tabular-nums;}
+.btn-fire{position:relative;overflow:hidden;}
+.btn-fire::after{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent);transform:skewX(-20deg);animation:sheen 4s ease-in-out infinite;}
+@keyframes sheen{0%,100%{left:-60%}50%{left:120%}}
 </style>
 </head>
 <body>
@@ -572,6 +601,9 @@ let db=null, currentDay=0, photos=[];
 let weights=[], waists=[], sessions=[], logs={}, swapState={}, doneState={};
 // logs: { 'YYYY-MM-DD|exId': [{w,r,done}], ... }   sessions: [{date,type}]
 let restInterval=null, restRemaining=0;
+// user-editable targets + goal
+let targets={cal:1900,protein:185,carbs:160,fats:58,maintenance:2360,activity:'moderate'};
+let goal={weight:null,startWeight:null,startDate:null};
 
 /* ============ STORAGE (IndexedDB) ============ */
 function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open('FurnaceSC2026',1);
@@ -608,6 +640,7 @@ async function init(){
     await migrate();
     weights=await kvGet('weights',[]);waists=await kvGet('waists',[]);sessions=await kvGet('sessions',[]);
     logs=await kvGet('logs',{});swapState=await kvGet('swaps',{});doneState=await kvGet('done',{});
+    targets=await kvGet('targets',targets);goal=await kvGet('goal',goal);
     photos=await phAll();
   }
   const m={1:0,2:1,3:2,4:3,5:4,6:5,0:6};currentDay=m[new Date().getDay()]??0;
@@ -624,7 +657,7 @@ function renderHeader(){
   const streak=calcStreak();
   const week=sessions.filter(s=>weekDates().includes(s.date)).length;
   const cur=weights.length?[...weights].sort((a,b)=>a.date.localeCompare(b.date)).slice(-1)[0].weight:'—';
-  const stats=[['🔥 '+streak,'Day Streak'],[week+'/5','This Week'],[cur+(cur!=='—'?' lb':''),'Weight'],['1,900','Cal Target'],['185g','Protein']];
+  const stats=[['🔥 '+streak,'Day Streak'],[week+'/5','This Week'],[cur+(cur!=='—'?' lb':''),'Weight'],[targets.cal.toLocaleString(),'Cal Target'],[targets.protein+'g','Protein']];
   document.getElementById('statsBar').innerHTML=stats.map(s=>`<div class="stat-chip"><div class="stat-val">${s[0]}</div><div class="stat-lbl">${s[1]}</div></div>`).join('');
   renderRing();
 }
@@ -644,7 +677,14 @@ function renderRing(){
   fill.setAttribute('stroke-dashoffset',(C*(1-pct/100)).toFixed(1));
   fill.style.stroke=d.type==='Rest'?'var(--mut2)':HEX[d.type];
   fill.classList.toggle('complete',pct>=100&&d.type!=='Rest');
-  document.getElementById('ringPct').textContent=d.type==='Rest'?'😴':pct+'%';
+  const lbl=document.getElementById('ringPct');
+  if(d.type==='Rest'){lbl.textContent='😴';return;}
+  // count-up animation
+  const from=parseInt(lbl.dataset.v||'0')||0;
+  lbl.dataset.v=pct;
+  const t0=performance.now();const dur=500;
+  function step(now){const k=Math.min(1,(now-t0)/dur);const v=Math.round(from+(pct-from)*(k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2));lbl.textContent=v+'%';if(k<1)requestAnimationFrame(step);}
+  requestAnimationFrame(step);
 }
 
 /* ============ DAY STRIP ============ */
@@ -1048,18 +1088,23 @@ function buildChart(series){
   const dates=[...new Set(all.map(p=>p.date))].sort();
   const xs=d=>PAD+(dates.indexOf(d)/(dates.length-1||1))*(W-2*PAD);
   const vals=all.map(p=>p.val);let min=Math.min(...vals),max=Math.max(...vals);
+  // include goal weight in range so the goal line fits
+  const hasGoal=goal.weight&&series.some(s=>s.name==='Weight');
+  if(hasGoal){min=Math.min(min,goal.weight);max=Math.max(max,goal.weight);}
   const range=(max-min)||1;min-=range*0.12;max+=range*0.12;
   const ys=v=>PAD+(1-(v-min)/(max-min))*(H-2*PAD);
   let svg=`<svg viewBox="0 0 ${W} ${H+16}" style="width:100%;height:auto;display:block">`;
   // gridlines
   for(let g=0;g<=3;g++){const y=PAD+g/3*(H-2*PAD);svg+=`<line x1="${PAD}" y1="${y}" x2="${W-PAD}" y2="${y}" stroke="#241c18" stroke-width="0.5"/>`;}
+  // goal line
+  if(hasGoal){const gy=ys(goal.weight).toFixed(1);svg+=`<line x1="${PAD}" y1="${gy}" x2="${W-PAD}" y2="${gy}" stroke="var(--mint)" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/><text x="${W-PAD}" y="${(+gy-3)}" font-size="7" fill="var(--mint)" text-anchor="end">goal ${goal.weight}</text>`;}
   series.forEach(s=>{
     const pts=[...s.points].sort((a,b)=>a.date.localeCompare(b.date));if(pts.length<2)return;
     const d=pts.map((p,i)=>`${i?'L':'M'}${xs(p.date).toFixed(1)},${ys(p.val).toFixed(1)}`).join(' ');
     // area
     svg+=`<path d="${d} L${xs(pts[pts.length-1].date).toFixed(1)},${H-PAD} L${xs(pts[0].date).toFixed(1)},${H-PAD} Z" fill="${s.color}" opacity="0.08"/>`;
     svg+=`<path d="${d}" stroke="${s.color}" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
-    pts.forEach(p=>{svg+=`<circle cx="${xs(p.date).toFixed(1)}" cy="${ys(p.val).toFixed(1)}" r="2.5" fill="${s.color}"/>`;});
+    pts.forEach(p=>{svg+=`<circle cx="${xs(p.date).toFixed(1)}" cy="${ys(p.val).toFixed(1)}" r="2.5" fill="${s.color}"><title>${pretty(p.date)}: ${p.val}</title></circle>`;});
   });
   svg+=`<text x="${PAD}" y="${H+12}" font-size="8" fill="#6b5f57">${pretty(dates[0])}</text>`;
   svg+=`<text x="${W-PAD}" y="${H+12}" font-size="8" fill="#6b5f57" text-anchor="end">${pretty(dates[dates.length-1])}</text>`;
@@ -1119,6 +1164,8 @@ function renderProgress(){
     </div>
 
     <div class="card"><h4>📉 Trend</h4>${chartHTML}</div>
+
+    ${goalCardHTML()}
 
     <div class="card"><h4>⚖️ Log Weight</h4>
       <div class="inrow"><input class="in" id="wIn" type="number" inputmode="decimal" step="0.1" placeholder="e.g. 183.5"><button class="btn btn-fire" style="width:auto;padding:12px 18px" onclick="logWeight()">Save</button></div>
@@ -1192,52 +1239,171 @@ async function importData(e){
   e.target.value='';
 }
 
+/* ============ GOAL & PROJECTION ============ */
+function lossRate(){ // lb per week from linear fit of last ~21 days
+  const ws=[...weights].sort((a,b)=>a.date.localeCompare(b.date));
+  if(ws.length<2)return null;
+  const recent=ws.slice(-8); // last up-to-8 weigh-ins
+  const first=recent[0],last=recent[recent.length-1];
+  const days=(new Date(last.date)-new Date(first.date))/86400000;
+  if(days<3)return null;
+  const rate=(last.weight-first.weight)/days*7; // lb/week (negative = losing)
+  return rate;
+}
+function goalCardHTML(){
+  const ws=[...weights].sort((a,b)=>a.date.localeCompare(b.date));
+  const cur=ws.length?ws[ws.length-1].weight:null;
+  if(!goal.weight){
+    return `<div class="card"><h4>🎯 Set a Goal</h4>
+      <p style="font-size:11.5px;color:var(--txt2);line-height:1.5;margin-bottom:11px">Set a target weight and the app projects your arrival date from your actual rate of loss.</p>
+      <div class="inrow"><input class="in" id="goalIn" type="number" inputmode="decimal" placeholder="goal weight (lb)"><button class="btn btn-fire" style="width:auto;padding:12px 18px" onclick="setGoal()">Set</button></div>
+    </div>`;
+  }
+  const start=goal.startWeight||cur||goal.weight;
+  const pct=cur!=null?Math.max(0,Math.min(100,Math.round((start-cur)/(start-goal.weight)*100))):0;
+  const C=2*Math.PI*34;
+  const rate=lossRate();
+  const remain=cur!=null?(cur-goal.weight):null;
+  let eta='—',weeksTxt='—';
+  if(rate&&rate<-0.05&&remain>0){
+    const weeks=remain/Math.abs(rate);
+    weeksTxt=weeks<1?'<1 wk':weeks.toFixed(1).replace('.0','')+' wk';
+    const d=new Date();d.setDate(d.getDate()+Math.round(weeks*7));
+    eta=`${d.getDate()} ${MONTHS[d.getMonth()]}`;
+  } else if(remain<=0){weeksTxt='Done! 🎉';eta='Reached';}
+  return `<div class="goal-card">
+    <div class="goal-head">
+      <div class="goal-ring">
+        <svg viewBox="0 0 78 78"><circle class="gt" cx="39" cy="39" r="34"/><circle class="gf" cx="39" cy="39" r="34" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C*(1-pct/100)).toFixed(1)}"/></svg>
+        <div class="goal-ring-c"><div class="goal-ring-pct">${pct}%</div></div>
+      </div>
+      <div class="goal-info">
+        <div class="goal-big">${cur??'—'} → ${goal.weight} lb</div>
+        <div class="goal-sub">${remain>0?`${remain.toFixed(1)} lb to go`:'Goal reached — set a new one'}</div>
+        <div class="goal-eta">
+          <div class="goal-eta-chip">Rate <b>${rate?(Math.abs(rate)).toFixed(1)+' lb/wk':'—'}</b></div>
+          <div class="goal-eta-chip">ETA <b>${eta}</b></div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-ghost" style="padding:9px" onclick="clearGoal()">Change Goal</button>
+  </div>`;
+}
+function setGoal(){
+  const v=parseFloat(document.getElementById('goalIn').value);
+  if(isNaN(v)||v<80||v>500){toast('Enter a valid goal');return;}
+  const ws=[...weights].sort((a,b)=>a.date.localeCompare(b.date));
+  goal={weight:v,startWeight:ws.length?ws[ws.length-1].weight:v,startDate:today()};
+  kvSet('goal',goal);toast('Goal set 🎯');renderProgress();
+}
+function clearGoal(){goal={weight:null,startWeight:null,startDate:null};kvSet('goal',goal);renderProgress();}
+
 /* ============ DIET PAGE ============ */
+function macroPct(g,cals,kcalPerG){return Math.round((g*kcalPerG)/cals*100);}
 function renderDiet(){
   const el=document.getElementById('dietContent');
+  const T=targets;
+  const pP=Math.round(T.protein*4/T.cal*100),pC=Math.round(T.carbs*4/T.cal*100),pF=Math.round(T.fats*9/T.cal*100);
+  const defAmt=T.maintenance-T.cal;
   el.innerHTML=`
-    <div class="cal-hero"><div class="ch-lbl">Daily Calorie Target</div><h2>1,900</h2><div class="ch-unit">your set deficit for fat loss</div></div>
+    <div class="cal-hero">
+      <div class="ch-lbl">Daily Calorie Target</div>
+      <h2 id="calHeroNum">${T.cal.toLocaleString()}</h2>
+      <div class="ch-unit">${defAmt>0?`${defAmt} cal below your ${T.maintenance.toLocaleString()} maintenance`:'maintenance'}</div>
+      <button class="btn btn-ghost" style="margin-top:14px;padding:10px" onclick="toggleTargetEditor()">⚙️ Adjust Targets</button>
+    </div>
 
-    <div class="card"><h4>Macros · Optimised for the Cut</h4>
-      <div class="macro-row"><span class="macro-name" style="color:var(--ember)">Protein</span><div class="macro-track"><div class="macro-fill" style="width:42%;background:var(--ember)"></div></div><span class="macro-g">185g</span><span class="macro-cal">740</span></div>
-      <div class="macro-row"><span class="macro-name" style="color:var(--yellow)">Carbs</span><div class="macro-track"><div class="macro-fill" style="width:35%;background:var(--yellow)"></div></div><span class="macro-g">160g</span><span class="macro-cal">640</span></div>
-      <div class="macro-row"><span class="macro-name" style="color:var(--ice)">Fats</span><div class="macro-track"><div class="macro-fill" style="width:23%;background:var(--ice)"></div></div><span class="macro-g">58g</span><span class="macro-cal">520</span></div>
-      <p style="font-size:11px;color:var(--mut);margin-top:11px;line-height:1.5">Protein (~1g/lb) protects muscle while cutting. Carbs timed around training; fats fill the rest. A scoop of protein powder post-workout makes 185g easy.</p>
+    <div class="card" id="targetEditor" style="display:none;border-color:rgba(255,157,60,0.28)">
+      <h4 style="color:var(--ember2)">⚙️ Edit Targets</h4>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+        <label class="te-field"><span>Calories</span><input class="in" id="teCal" type="number" inputmode="numeric" value="${T.cal}"></label>
+        <label class="te-field"><span>Maintenance</span><input class="in" id="teMaint" type="number" inputmode="numeric" value="${T.maintenance}"></label>
+        <label class="te-field"><span>Protein (g)</span><input class="in" id="teP" type="number" inputmode="numeric" value="${T.protein}"></label>
+        <label class="te-field"><span>Carbs (g)</span><input class="in" id="teC" type="number" inputmode="numeric" value="${T.carbs}"></label>
+        <label class="te-field"><span>Fats (g)</span><input class="in" id="teF" type="number" inputmode="numeric" value="${T.fats}"></label>
+      </div>
+      <button class="btn btn-fire" style="margin-top:11px" onclick="saveTargets()">Save Targets</button>
+    </div>
+
+    <div class="card"><h4>Macros · ${defAmt>0?'Cutting':'Maintenance'} Split</h4>
+      <div class="macro-row"><span class="macro-name" style="color:var(--ember)">Protein</span><div class="macro-track"><div class="macro-fill" style="width:${pP}%;background:var(--ember)"></div></div><span class="macro-g">${T.protein}g</span><span class="macro-cal">${T.protein*4}</span></div>
+      <div class="macro-row"><span class="macro-name" style="color:var(--yellow)">Carbs</span><div class="macro-track"><div class="macro-fill" style="width:${pC}%;background:var(--yellow)"></div></div><span class="macro-g">${T.carbs}g</span><span class="macro-cal">${T.carbs*4}</span></div>
+      <div class="macro-row"><span class="macro-name" style="color:var(--ice)">Fats</span><div class="macro-track"><div class="macro-fill" style="width:${pF}%;background:var(--ice)"></div></div><span class="macro-g">${T.fats}g</span><span class="macro-cal">${T.fats*9}</span></div>
+      <p style="font-size:11px;color:var(--mut);margin-top:11px;line-height:1.5">Protein (~1g/lb) protects muscle while cutting. Carbs timed around training; fats fill the rest.</p>
+    </div>
+
+    <div class="card" style="border-color:rgba(52,224,161,0.25)"><h4 style="color:var(--mint)">🧮 Maintenance Recalculator</h4>
+      <p style="font-size:11.5px;color:var(--txt2);line-height:1.5;margin-bottom:12px">Maintenance drops as you lose weight. Recalculate every 10–15 lb so your deficit stays accurate and progress doesn't stall.</p>
+      <div class="inrow" style="margin-bottom:9px"><input class="in" id="rcWeight" type="number" inputmode="decimal" placeholder="current weight (lb)" value="${weights.length?[...weights].sort((a,b)=>a.date.localeCompare(b.date)).slice(-1)[0].weight:''}"></div>
+      <div style="display:flex;gap:6px;margin-bottom:11px" id="actBtns">
+        ${['sedentary','light','moderate','active'].map(a=>`<button class="act-chip ${T.activity===a?'on':''}" data-act="${a}" onclick="pickAct('${a}')">${a[0].toUpperCase()+a.slice(1)}</button>`).join('')}
+      </div>
+      <button class="btn btn-fire" onclick="recalc()">Calculate</button>
+      <div id="rcResult"></div>
     </div>
 
     <div class="card" style="border-color:rgba(255,157,60,0.28)"><h4 style="color:var(--ember2)">💊 Supplements</h4>
       <div style="font-family:'Oswald';font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ember2);margin:4px 0 7px">🔋 Creatine</div>
       <div class="irow"><span class="idot" style="color:var(--ember2)">→</span><b>5g every day</b> — training and rest. Consistency saturates the muscle.</div>
-      <div class="irow"><span class="idot" style="color:var(--ember2)">→</span>No loading needed. Timing doesn't matter — stir into your post-workout shake.</div>
-      <div class="irow"><span class="idot" style="color:var(--ember2)">→</span>Expect <b>+1–3 lb water weight</b> week 1–2. Not fat — judge fat loss by waist & photos.</div>
-      <div class="irow"><span class="idot" style="color:var(--ember2)">→</span>Drink 3+ litres of water a day.</div>
+      <div class="irow"><span class="idot" style="color:var(--ember2)">→</span>No loading needed. Timing doesn't matter — stir into your shake.</div>
+      <div class="irow"><span class="idot" style="color:var(--ember2)">→</span>Expect <b>+1–3 lb water weight</b> week 1–2. Not fat — judge by waist & photos.</div>
       <div style="font-family:'Oswald';font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ember2);margin:12px 0 7px">🥤 Protein Powder</div>
-      <div class="irow"><span class="idot" style="color:var(--ember2)">→</span>Use it to <b>hit 185g</b>, not to replace meals — food keeps you fuller on a cut.</div>
-      <div class="irow"><span class="idot" style="color:var(--ember2)">→</span>Post-workout scoop = protein + the carrier for your creatine. One shake, both.</div>
+      <div class="irow"><span class="idot" style="color:var(--ember2)">→</span>Use it to <b>hit ${T.protein}g</b>, not to replace meals.</div>
+      <div class="irow"><span class="idot" style="color:var(--ember2)">→</span>Post-workout scoop = protein + the carrier for your creatine.</div>
     </div>
 
     <div class="card" style="border-color:rgba(255,215,64,0.25)"><h4 style="color:var(--yellow)">⏱️ Nutrient Timing</h4>
-      <div class="irow"><span class="idot" style="color:var(--yellow)">1</span><b>Carbs around training</b> — most of your 160g in the meals before and after lifting.</div>
-      <div class="irow"><span class="idot" style="color:var(--yellow)">2</span><b>Protein every 3–4h</b> — spread 185g across 4–5 feedings (~40g each).</div>
-      <div class="irow"><span class="idot" style="color:var(--yellow)">3</span><b>Pre-workout</b> — protein + carbs 1–2h before. Beats training fasted.</div>
+      <div class="irow"><span class="idot" style="color:var(--yellow)">1</span><b>Carbs around training</b> — most of your ${T.carbs}g near your sessions.</div>
+      <div class="irow"><span class="idot" style="color:var(--yellow)">2</span><b>Protein every 3–4h</b> — spread ${T.protein}g across 4–5 feedings.</div>
+      <div class="irow"><span class="idot" style="color:var(--yellow)">3</span><b>Pre-workout</b> — protein + carbs 1–2h before.</div>
       <div class="irow"><span class="idot" style="color:var(--yellow)">4</span><b>Post-workout</b> — whey + creatine within an hour.</div>
-      <div class="irow"><span class="idot" style="color:var(--yellow)">5</span><b>Sleep 7–9h</b> — the real multiplier. Supplements do nothing if you under-recover.</div>
+      <div class="irow"><span class="idot" style="color:var(--yellow)">5</span><b>Sleep 7–9h</b> — the real multiplier.</div>
     </div>
 
     <div class="card" style="border-color:rgba(255,59,48,0.22)"><h4 style="color:var(--crimson)">🔴 Training To Failure</h4>
       <div class="irow"><span class="idot" style="color:var(--crimson)">1</span>Failure = cannot complete another full rep with good form.</div>
-      <div class="irow"><span class="idot" style="color:var(--crimson)">2</span>Reserve it for the <b>last set</b> unless noted. Earlier sets stay RIR 1–2.</div>
-      <div class="irow"><span class="idot" style="color:var(--crimson)">3</span>Never to failure on heavy barbell squat/deadlift/bench — too risky.</div>
+      <div class="irow"><span class="idot" style="color:var(--crimson)">2</span>Reserve it for the <b>last set</b> unless noted. Earlier sets RIR 1–2.</div>
+      <div class="irow"><span class="idot" style="color:var(--crimson)">3</span>Never to failure on heavy barbell squat/deadlift/bench.</div>
       <div class="irow"><span class="idot" style="color:var(--crimson)">4</span>Hit the top of the rep range for 2 sessions → add 5 lb.</div>
     </div>
-
-    <div class="card" style="border-color:rgba(179,136,255,0.22)"><h4 style="color:var(--violet)">⚡ Progressive Overload</h4>
-      <div class="irow"><span class="idot" style="color:var(--violet)">→</span><b>Log your sets</b> on the Train tab — tap any exercise → Log Sets. The app shows last time + your PR so you always know what to beat.</div>
-      <div class="irow"><span class="idot" style="color:var(--violet)">→</span>Add weight before reps. Hit the top of the range clean, then load up.</div>
-      <div class="irow"><span class="idot" style="color:var(--violet)">→</span>Compounds first, always. Isolation after.</div>
-      <div class="irow"><span class="idot" style="color:var(--violet)">→</span>Use the <b>Swap</b> tab on any exercise to switch to an alternative with the same stimulus.</div>
-    </div>
   `;
+}
+
+/* targets editing */
+function toggleTargetEditor(){const e=document.getElementById('targetEditor');e.style.display=e.style.display==='none'?'block':'none';haptic();}
+function saveTargets(){
+  const cal=parseInt(document.getElementById('teCal').value)||targets.cal;
+  const maint=parseInt(document.getElementById('teMaint').value)||targets.maintenance;
+  const p=parseInt(document.getElementById('teP').value)||targets.protein;
+  const c=parseInt(document.getElementById('teC').value)||targets.carbs;
+  const f=parseInt(document.getElementById('teF').value)||targets.fats;
+  targets={...targets,cal,maintenance:maint,protein:p,carbs:c,fats:f};
+  kvSet('targets',targets);toast('Targets updated ✓');renderHeader();renderDiet();
+}
+let _pendingAct='moderate';
+function pickAct(a){_pendingAct=a;document.querySelectorAll('#actBtns .act-chip').forEach(b=>b.classList.toggle('on',b.dataset.act===a));haptic();}
+function recalc(){
+  const w=parseFloat(document.getElementById('rcWeight').value);
+  if(isNaN(w)||w<80||w>500){toast('Enter a valid weight');return;}
+  // Mifflin-ish bodyweight multiplier approach (lb): BMR≈ w*10 (rough), TDEE via activity factor on a per-lb basis tuned to your known 196lb→2500 anchor
+  const factors={sedentary:11.5,light:12.8,moderate:14.2,active:15.8};
+  const maint=Math.round(w*factors[_pendingAct]);
+  const cut=maint-500;
+  document.getElementById('rcResult').innerHTML=`
+    <div class="rc-out">
+      <div class="rc-line"><span>Maintenance</span><b>${maint.toLocaleString()} cal</b></div>
+      <div class="rc-line"><span>Cut (−500)</span><b style="color:var(--mint)">${cut.toLocaleString()} cal</b></div>
+      <div class="rc-line" style="font-size:10.5px;color:var(--mut);border:none">≈ ${(w*1).toFixed(0)}g protein recommended (1g/lb)</div>
+      <button class="btn btn-fire" style="margin-top:10px;padding:11px" onclick="applyRecalc(${maint},${cut},${Math.round(w)})">Apply to My Targets</button>
+    </div>`;
+  _pendingAct=_pendingAct; // keep
+}
+function applyRecalc(maint,cut,prot){
+  // keep macro structure: protein=bodyweight, fats ~25% cals, carbs fill rest
+  const fats=Math.round(cut*0.27/9);
+  const carbs=Math.round((cut-(prot*4)-(fats*9))/4);
+  targets={...targets,cal:cut,maintenance:maint,protein:prot,carbs:Math.max(0,carbs),fats,activity:_pendingAct};
+  kvSet('targets',targets);toast('Targets applied ✓');renderHeader();renderDiet();
 }
 
 /* ============ PWA ============ */
