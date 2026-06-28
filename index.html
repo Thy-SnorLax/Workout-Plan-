@@ -57,6 +57,16 @@ h1.hd-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:40px;lette
   background:linear-gradient(100deg,#fff 0%,var(--gold) 45%,var(--ember) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
 .hd-day-pill{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:7px 12px;border-radius:20px;background:var(--raised);border:1px solid var(--line2);white-space:nowrap;display:flex;align-items:center;gap:6px;flex-shrink:0;margin-top:2px;}
 .hd-day-pill .dot{width:7px;height:7px;border-radius:50%;}
+
+/* RING */
+.ring-wrap{position:relative;width:64px;height:64px;flex-shrink:0;}
+.ring-wrap svg{width:100%;height:100%;transform:rotate(-90deg);}
+.ring-track{fill:none;stroke:var(--line2);stroke-width:6;}
+.ring-fill{fill:none;stroke:var(--ember);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .6s cubic-bezier(.2,.8,.2,1),stroke .4s;filter:drop-shadow(0 0 6px rgba(255,107,26,0.5));}
+.ring-fill.complete{stroke:var(--mint);filter:drop-shadow(0 0 8px rgba(52,224,161,0.6));}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.ring-pct{font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;line-height:1;}
+.ring-pct-lbl{font-size:6.5px;color:var(--mut);letter-spacing:1px;text-transform:uppercase;margin-top:1px;}
 .stats-bar{display:flex;gap:8px;margin-top:14px;overflow-x:auto;scrollbar-width:none;}
 .stats-bar::-webkit-scrollbar{display:none;}
 .stat-chip{flex-shrink:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;min-width:74px;}
@@ -230,6 +240,52 @@ h1.hd-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:40px;lette
 .wd-c{height:13px;font-size:11px;color:var(--mint);margin-top:1px;}
 
 .streak-banner{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(255,107,26,0.1),rgba(255,77,28,0.04));border:1px solid rgba(255,107,26,0.25);border-radius:16px;padding:16px;margin-bottom:13px;}
+
+/* CALENDAR */
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.cal-nav-btn{width:32px;height:32px;border-radius:9px;background:var(--card2);border:1px solid var(--line2);color:var(--txt2);font-size:14px;cursor:pointer;}
+.cal-month{font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.cal-dow{text-align:center;font-size:8px;color:var(--mut);letter-spacing:1px;text-transform:uppercase;padding-bottom:4px;}
+.cal-cell{aspect-ratio:1;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;font-weight:600;position:relative;background:var(--card2);border:1px solid transparent;color:var(--mut2);}
+.cal-cell.blank{background:transparent;}
+.cal-cell.rest-day{opacity:0.5;}
+.cal-cell.has-day{color:var(--txt2);}
+.cal-cell.done{background:rgba(52,224,161,0.12);border-color:rgba(52,224,161,0.4);color:var(--mint);}
+.cal-cell.today{box-shadow:0 0 0 1.5px var(--ember2);}
+.cal-cell.future{opacity:0.35;}
+.cal-dot2{width:4px;height:4px;border-radius:50%;margin-top:2px;}
+.cal-legend{display:flex;gap:12px;justify-content:center;margin-top:12px;font-size:9.5px;color:var(--mut);flex-wrap:wrap;}
+.cal-legend span{display:inline-flex;align-items:center;gap:4px;}
+.cal-legend .sw{width:8px;height:8px;border-radius:2px;}
+
+/* OVERLOAD AI CARD */
+.ai-tip{display:flex;gap:10px;align-items:flex-start;background:rgba(179,136,255,0.07);border:1px solid rgba(179,136,255,0.22);border-radius:11px;padding:10px 12px;margin-top:9px;}
+.ai-tip .ai-ic{font-size:16px;flex-shrink:0;line-height:1.3;}
+.ai-tip .ai-txt{font-size:11.5px;color:var(--txt2);line-height:1.5;}
+.ai-tip .ai-txt b{color:var(--violet);}
+.ai-up{border-color:rgba(52,224,161,0.25);background:rgba(52,224,161,0.06);}
+.ai-up .ai-txt b{color:var(--mint);}
+.ai-warn{border-color:rgba(255,215,64,0.25);background:rgba(255,215,64,0.06);}
+.ai-warn .ai-txt b{color:var(--yellow);}
+
+/* REST LOCK OVERLAY */
+.rest-lock-overlay{position:fixed;inset:0;background:rgba(8,6,5,0.88);backdrop-filter:blur(6px);z-index:90;display:none;align-items:center;justify-content:center;flex-direction:column;gap:18px;}
+.rest-lock-overlay.show{display:flex;}
+.rl-ring-wrap{position:relative;width:200px;height:200px;}
+.rl-ring-wrap svg{width:100%;height:100%;transform:rotate(-90deg);}
+.rl-track{fill:none;stroke:var(--line2);stroke-width:10;}
+.rl-fill{fill:none;stroke:var(--ember);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset 1s linear;filter:drop-shadow(0 0 16px rgba(255,107,26,0.6));}
+.rl-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.rl-time{font-family:'Oswald',sans-serif;font-size:44px;font-weight:700;color:var(--ember2);}
+.rl-lbl{font-size:10px;color:var(--mut);letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
+.rl-msg{font-size:13px;color:var(--txt2);text-align:center;max-width:260px;line-height:1.5;}
+.rl-btns{display:flex;gap:10px;}
+.rl-btns button{padding:11px 18px;border-radius:11px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter Tight';}
+.rl-add{background:var(--card2);border:1px solid var(--line2);color:var(--txt2);}
+.rl-skip{background:transparent;border:1px solid var(--crimson);color:var(--crimson);}
+
+.toast{position:fixed;bottom:calc(100px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:var(--raised);border:1px solid var(--line2);color:var(--txt);padding:12px 20px;border-radius:30px;font-size:13px;font-weight:500;z-index:80;opacity:0;transition:all .3s;box-shadow:var(--shadow);pointer-events:none;white-space:nowrap;}
 .streak-flame{font-size:38px;filter:drop-shadow(0 0 14px rgba(255,107,26,0.5));}
 .streak-num{font-family:'Oswald',sans-serif;font-size:34px;font-weight:700;color:var(--ember2);line-height:1;}
 .streak-lbl{font-size:10px;color:var(--txt2);letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
@@ -282,7 +338,13 @@ h1.hd-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:40px;lette
         <div class="hd-eyebrow">Summer Cut 2026</div>
         <h1 class="hd-title">Furnace</h1>
       </div>
-      <div class="hd-day-pill" id="hdPill"><span class="dot"></span><span id="hdPillText">—</span></div>
+      <div class="ring-wrap" id="headerRing">
+        <svg viewBox="0 0 64 64">
+          <circle class="ring-track" cx="32" cy="32" r="27"/>
+          <circle class="ring-fill" id="ringFill" cx="32" cy="32" r="27" stroke-dasharray="169.6" stroke-dashoffset="169.6"/>
+        </svg>
+        <div class="ring-center"><div class="ring-pct" id="ringPct">0%</div><div class="ring-pct-lbl">Today</div></div>
+      </div>
     </div>
     <div class="stats-bar" id="statsBar"></div>
   </header>
@@ -302,6 +364,21 @@ h1.hd-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:40px;lette
     <button onclick="addRest(-15)">−15</button>
     <button onclick="addRest(15)">+15</button>
     <button onclick="stopRest()">✕</button>
+  </div>
+</div>
+
+<div class="rest-lock-overlay" id="restLock">
+  <div class="rl-ring-wrap">
+    <svg viewBox="0 0 200 200">
+      <circle class="rl-track" cx="100" cy="100" r="88"/>
+      <circle class="rl-fill" id="rlFill" cx="100" cy="100" r="88" stroke-dasharray="553" stroke-dashoffset="0"/>
+    </svg>
+    <div class="rl-center"><div class="rl-time" id="rlTime">1:30</div><div class="rl-lbl">Resting</div></div>
+  </div>
+  <div class="rl-msg">Let the muscle recover before your next set — this is where the growth signal locks in.</div>
+  <div class="rl-btns">
+    <button class="rl-add" onclick="addRest(15)">+15s</button>
+    <button class="rl-skip" onclick="skipRestLock()">Skip Rest</button>
   </div>
 </div>
 
@@ -544,13 +621,30 @@ function saveDone(){kvSet('done',doneState);}
 /* ============ HEADER ============ */
 function renderHeader(){
   const d=schedule[currentDay];
-  document.getElementById('hdPillText').textContent=d.type==='Rest'?'Rest Day':d.type+' Day';
-  document.querySelector('#hdPill .dot').style.background=HEX[d.type];
   const streak=calcStreak();
   const week=sessions.filter(s=>weekDates().includes(s.date)).length;
   const cur=weights.length?[...weights].sort((a,b)=>a.date.localeCompare(b.date)).slice(-1)[0].weight:'—';
   const stats=[['🔥 '+streak,'Day Streak'],[week+'/5','This Week'],[cur+(cur!=='—'?' lb':''),'Weight'],['1,900','Cal Target'],['185g','Protein']];
   document.getElementById('statsBar').innerHTML=stats.map(s=>`<div class="stat-chip"><div class="stat-val">${s[0]}</div><div class="stat-lbl">${s[1]}</div></div>`).join('');
+  renderRing();
+}
+function dayCompletion(type,date){
+  if(type==='Rest')return {done:1,total:1};
+  const w=workouts[type];const all=w.sections.flatMap(s=>s.exercises);
+  const done=all.filter(ex=>doneState[logKey(ex.id,date)]).length;
+  return {done,total:all.length};
+}
+function renderRing(){
+  const d=schedule[currentDay];const t=today();
+  const {done,total}=dayCompletion(d.type,t);
+  const pct=total?Math.round(done/total*100):0;
+  const C=2*Math.PI*27;
+  const fill=document.getElementById('ringFill');
+  fill.setAttribute('stroke-dasharray',C.toFixed(1));
+  fill.setAttribute('stroke-dashoffset',(C*(1-pct/100)).toFixed(1));
+  fill.style.stroke=d.type==='Rest'?'var(--mut2)':HEX[d.type];
+  fill.classList.toggle('complete',pct>=100&&d.type!=='Rest');
+  document.getElementById('ringPct').textContent=d.type==='Rest'?'😴':pct+'%';
 }
 
 /* ============ DAY STRIP ============ */
@@ -666,8 +760,60 @@ function logPanel(ex,date){
   </div>`).join('');
   let lastTxt=last?`<div class="last-time">Last time: <b>${last}</b></div>`:'';
   let prTxt=pr?`<div class="last-time">Best set: <b>${pr.w} lb × ${pr.r}</b>${pr.date?' · '+pretty(pr.date):''}</div>`:'';
-  return `<div class="set-grid">${rows}</div>${lastTxt}${prTxt}
-    <button class="timer-btn" style="width:100%;margin-top:10px;padding:10px" onclick="startRest(${restFor(ex)})">⏱ Start ${restFor(ex)}s Rest Timer</button>`;
+  const aiTip=overloadAdvice(ex,date);
+  return `<div class="set-grid">${rows}</div>${lastTxt}${prTxt}${aiTip}
+    <button class="timer-btn" style="width:100%;margin-top:10px;padding:10px" onclick="startRest(${restFor(ex)},'${ex.id}')">⏱ Start ${restFor(ex)}s Rest Timer</button>`;
+}
+
+/* ---- Adaptive Progressive Overload AI ---- */
+// Parses the target rep range from ex.detail (e.g. "4 × 8–10") and compares
+// the last 2-3 logged sessions to recommend a concrete next action.
+function repRange(ex){
+  const m=(ex.detail||'').match(/(\d+)\s*[–-]\s*(\d+)/);
+  if(m)return {lo:+m[1],hi:+m[2]};
+  const m2=(ex.detail||'').match(/×\s*(\d+)/);
+  if(m2)return {lo:+m2[1],hi:+m2[1]};
+  return null;
+}
+function sessionHistory(exId,excludeDate){
+  const keys=Object.keys(logs).filter(k=>k.endsWith('|'+exId)&&(!excludeDate||!k.startsWith(excludeDate)));
+  keys.sort().reverse();
+  return keys.map(k=>({date:k.split('|')[0],sets:logs[k].filter(s=>s.w&&s.r)})).filter(h=>h.sets.length);
+}
+function overloadAdvice(ex,date){
+  const range=repRange(ex);
+  const hist=sessionHistory(ex.id,date);
+  if(!range||hist.length===0)return '';
+  const last=hist[0];
+  const lastTopWeight=Math.max(...last.sets.map(s=>+s.w));
+  const setsAtTop=last.sets.filter(s=>+s.w===lastTopWeight);
+  const allHitTop=setsAtTop.length>=Math.min(2,setsAtTop.length)&&setsAtTop.every(s=>+s.r>=range.hi);
+  const allMissedLow=setsAtTop.every(s=>+s.r<range.lo);
+  // look back 2 sessions for a repeated "hit top" pattern -> stronger signal
+  let hitTopStreak=0;
+  for(const h of hist){
+    const topW=Math.max(...h.sets.map(s=>+s.w));
+    const topSets=h.sets.filter(s=>+s.w===topW);
+    if(topSets.every(s=>+s.r>=range.hi))hitTopStreak++;else break;
+  }
+  if(hitTopStreak>=2){
+    const next=lastTopWeight+(lastTopWeight>=135?10:5);
+    return `<div class="ai-tip ai-up"><span class="ai-ic">⚡</span><span class="ai-txt"><b>Add weight next session.</b> You've hit the top of your rep range (${range.hi}+) for ${hitTopStreak} sessions straight at ${lastTopWeight} lb. Try <b>${next} lb</b> next time.</span></div>`;
+  }
+  if(allHitTop){
+    const next=lastTopWeight+(lastTopWeight>=135?10:5);
+    return `<div class="ai-tip"><span class="ai-ic">📈</span><span class="ai-txt">Nice — you hit ${range.hi}+ reps at ${lastTopWeight} lb last time. Hit it clean again today and bump to <b>${next} lb</b> next session.</span></div>`;
+  }
+  if(allMissedLow){
+    return `<div class="ai-tip ai-warn"><span class="ai-ic">⚠️</span><span class="ai-txt">Last session you came in under ${range.lo} reps at ${lastTopWeight} lb. Repeat the same weight today and focus on hitting the range before adding more.</span></div>`;
+  }
+  // check for plateau: same weight, same rep count for 3+ sessions
+  if(hist.length>=3){
+    const w0=Math.max(...hist[0].sets.map(s=>+s.w));
+    const stuck=hist.slice(0,3).every(h=>Math.max(...h.sets.map(s=>+s.w))===w0);
+    if(stuck)return `<div class="ai-tip ai-warn"><span class="ai-ic">🧱</span><span class="ai-txt">You've been at ${w0} lb for 3 sessions in a row. Try a small jump (2.5–5 lb), an extra rep target, or swap the exercise for a fresh stimulus.</span></div>`;
+  }
+  return `<div class="ai-tip"><span class="ai-ic">🎯</span><span class="ai-txt">Last time: ${lastTopWeight} lb. Aim for ${range.lo}–${range.hi} reps each set today.</span></div>`;
 }
 function setLog(exId,date,i,field,val){
   const key=logKey(exId,date);const ex=findEx(exId);
@@ -679,10 +825,12 @@ function setSetDone(exId,date,i,btn){
   const key=logKey(exId,date);const ex=findEx(exId);
   if(!logs[key])logs[key]=Array.from({length:ex.sets},()=>({w:'',r:'',done:false}));
   logs[key][i].done=!logs[key][i].done;btn.classList.toggle('on');saveLogs();haptic();
-  // auto-start rest timer when a set is marked done
-  if(logs[key][i].done){const r=restFor(ex);startRest(r);}
+  // auto-start mandatory rest timer when a set is marked done
+  if(logs[key][i].done){const r=restFor(ex);startRest(r,exId);}
   // check PR
   checkPR(exId);
+  // refresh AI tip after a short delay so the lock UI doesn't fight focus
+  setTimeout(()=>{const host=document.getElementById('dp-'+exId);if(host&&host.querySelector('.set-grid'))host.innerHTML=logPanel(ex,date);},50);
 }
 function lastLog(exId,excludeDate){
   // find most recent dated log before today with any weight
@@ -739,6 +887,7 @@ function updateDayProgress(dayType){
   const pct=Math.round(done/all.length*100);
   const fill=document.querySelector('.day-prog-fill');if(fill)fill.style.width=pct+'%';
   const cnt=document.querySelector('.dh-count');if(cnt)cnt.textContent=done+'/'+all.length;
+  renderRing();
 }
 function toggleDrawer(exId){
   const dr=document.getElementById('dr-'+exId);
@@ -766,16 +915,49 @@ function toggleAcc(id,btn){
   document.getElementById('arr-'+id).textContent=open?'▴':'▾';
 }
 
-/* ============ REST TIMER ============ */
-function startRest(sec){
-  restRemaining=sec;showRest();
-  document.getElementById('restTimer').classList.add('show');
+/* ============ REST TIMER (mandatory soft-lock) ============ */
+let restTotal=0,restExId=null;
+function startRest(sec,exId){
+  restRemaining=sec;restTotal=sec;restExId=exId||null;
+  showRest();
+  document.getElementById('restTimer').classList.remove('show'); // floating mini timer retired in favor of lock
+  document.getElementById('restLock').classList.add('show');
+  lockSetInputs(true);
   clearInterval(restInterval);
-  restInterval=setInterval(()=>{restRemaining--;showRest();if(restRemaining<=0){stopRest();haptic();if(navigator.vibrate)navigator.vibrate([100,50,100]);toast('Rest done — next set');}},1000);
+  restInterval=setInterval(()=>{
+    restRemaining--;showRest();
+    if(restRemaining<=0){finishRest();}
+  },1000);
 }
-function showRest(){const m=Math.floor(Math.max(0,restRemaining)/60);const s=Math.max(0,restRemaining)%60;document.getElementById('rtTime').textContent=`${m}:${String(s).padStart(2,'0')}`;}
-function addRest(d){restRemaining=Math.max(5,restRemaining+d);showRest();}
-function stopRest(){clearInterval(restInterval);document.getElementById('restTimer').classList.remove('show');}
+function showRest(){
+  const m=Math.floor(Math.max(0,restRemaining)/60);const s=Math.max(0,restRemaining)%60;
+  const txt=`${m}:${String(s).padStart(2,'0')}`;
+  const a=document.getElementById('rtTime');if(a)a.textContent=txt;
+  const b=document.getElementById('rlTime');if(b)b.textContent=txt;
+  const C=553;const pct=restTotal?Math.max(0,restRemaining/restTotal):0;
+  const ring=document.getElementById('rlFill');if(ring)ring.setAttribute('stroke-dashoffset',(C*(1-pct)).toFixed(1));
+}
+function addRest(d){restRemaining=Math.max(5,restRemaining+d);restTotal=Math.max(restTotal,restRemaining);showRest();}
+function finishRest(){
+  clearInterval(restInterval);
+  document.getElementById('restLock').classList.remove('show');
+  document.getElementById('restTimer').classList.remove('show');
+  lockSetInputs(false);
+  haptic();if(navigator.vibrate)navigator.vibrate([100,50,100]);
+  toast('✅ Rest done — next set');
+}
+function skipRestLock(){
+  clearInterval(restInterval);
+  document.getElementById('restLock').classList.remove('show');
+  lockSetInputs(false);
+  toast('Rest skipped');
+}
+function stopRest(){ // legacy hook, treat as skip
+  skipRestLock();
+}
+function lockSetInputs(state){
+  document.querySelectorAll('.set-inp, .set-done-btn').forEach(el=>{el.disabled=state;el.style.opacity=state?0.35:1;});
+}
 
 /* ============ TABS ============ */
 function switchTab(tab,elm){
@@ -809,6 +991,52 @@ function calcStreak(){
     check.setDate(check.getDate()-1);
   }
   return streak;
+}
+
+/* ============ CALENDAR ============ */
+let calMonth=new Date().getMonth(),calYear=new Date().getFullYear();
+function calNav(dir){
+  calMonth+=dir;
+  if(calMonth<0){calMonth=11;calYear--;}
+  if(calMonth>11){calMonth=0;calYear++;}
+  document.getElementById('calCard').innerHTML=calendarHTML();
+}
+function calendarHTML(){
+  const first=new Date(calYear,calMonth,1);
+  const startIdx=(first.getDay()+6)%7; // Monday-first
+  const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+  const t=today();
+  const sessByDate={};sessions.forEach(s=>{sessByDate[s.date]=sessByDate[s.date]||[];sessByDate[s.date].push(s.type);});
+  const dows=['M','T','W','T','F','S','S'];
+  let cells=dows.map(d=>`<div class="cal-dow">${d}</div>`).join('');
+  for(let i=0;i<startIdx;i++)cells+=`<div class="cal-cell blank"></div>`;
+  for(let day=1;day<=daysInMonth;day++){
+    const dateStr=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const dow=(new Date(calYear,calMonth,day).getDay()+6)%7;
+    const schedType=schedule[dow].type;
+    const isRest=schedType==='Rest';
+    const done=!!sessByDate[dateStr];
+    const isToday=dateStr===t;
+    const isFuture=dateStr>t;
+    const cls=['cal-cell','has-day',isRest?'rest-day':'',done?'done':'',isToday?'today':'',isFuture&&!done?'future':''].filter(Boolean).join(' ');
+    const dotColor=done?'var(--mint)':(isRest?'var(--mut2)':HEX[schedType]);
+    cells+=`<div class="${cls}">${day}<span class="cal-dot2" style="background:${dotColor};${done?'':'opacity:.5'}"></span></div>`;
+  }
+  const monthName=new Date(calYear,calMonth,1).toLocaleString('en-US',{month:'long'});
+  return `<div id="calCard">
+    <h4>🗓️ Calendar</h4>
+    <div class="cal-nav">
+      <button class="cal-nav-btn" onclick="calNav(-1)">‹</button>
+      <div class="cal-month">${monthName} ${calYear}</div>
+      <button class="cal-nav-btn" onclick="calNav(1)">›</button>
+    </div>
+    <div class="cal-grid">${cells}</div>
+    <div class="cal-legend">
+      <span><span class="sw" style="background:var(--mint)"></span>Trained</span>
+      <span><span class="sw" style="background:var(--mut2)"></span>Rest day</span>
+      <span><span class="sw" style="background:var(--ember)"></span>Missed</span>
+    </div>
+  </div>`;
 }
 
 /* ============ PROGRESS PAGE ============ */
@@ -881,6 +1109,8 @@ function renderProgress(){
       <div class="streak-flame">🔥</div>
       <div><div class="streak-num">${streak}</div><div class="streak-lbl">Day Streak · Keep it lit</div></div>
     </div>
+
+    <div class="card">${calendarHTML()}</div>
 
     <div class="kpi-grid">
       <div class="kpi"><div class="kpi-val">${start??'—'}</div><div class="kpi-lbl">Start lb</div></div>
