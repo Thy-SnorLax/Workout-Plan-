@@ -61,6 +61,12 @@ header{
   border-bottom:1px solid var(--line);
   background:linear-gradient(180deg, rgba(255,46,151,0.04), transparent);
 }
+header::before{content:'';position:absolute;width:220px;height:220px;border-radius:50%;top:-120px;right:-60px;
+  background:radial-gradient(circle,rgba(255,46,151,0.22),transparent 65%);filter:blur(30px);animation:blob1 9s ease-in-out infinite alternate;pointer-events:none;}
+header::after{content:'';position:absolute;width:180px;height:180px;border-radius:50%;bottom:-100px;left:-40px;
+  background:radial-gradient(circle,rgba(45,226,255,0.16),transparent 65%);filter:blur(28px);animation:blob2 11s ease-in-out infinite alternate;pointer-events:none;}
+@keyframes blob1{to{transform:translate(-30px,20px) scale(1.15);}}
+@keyframes blob2{to{transform:translate(40px,-15px) scale(1.1);}}
 .hd-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
 .hd-eyebrow{font-family:'Chivo Mono',monospace;font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--ember2);display:flex;align-items:center;gap:8px;margin-bottom:5px;}
 .hd-eyebrow::before{content:'';width:14px;height:2px;background:var(--grad);}
@@ -74,7 +80,7 @@ h1.hd-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42p
 .ring-wrap{position:relative;width:64px;height:64px;flex-shrink:0;}
 .ring-wrap svg{width:100%;height:100%;transform:rotate(-90deg);}
 .ring-track{fill:none;stroke:var(--line2);stroke-width:6;}
-.ring-fill{fill:none;stroke:var(--ember);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .6s cubic-bezier(.2,.8,.2,1),stroke .4s;filter:drop-shadow(0 0 6px rgba(255,46,151,0.5));}
+.ring-fill{fill:none;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .6s cubic-bezier(.2,.8,.2,1);filter:drop-shadow(0 0 8px rgba(160,107,255,0.6));}
 .ring-fill.complete{stroke:var(--mint);filter:drop-shadow(0 0 8px rgba(155,255,61,0.6));}
 .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
 .ring-pct{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;line-height:1;}
@@ -91,7 +97,8 @@ h1.hd-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42p
   background:rgba(12,9,8,0.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border-top:1px solid var(--line);}
 .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;border-radius:var(--r2);cursor:pointer;transition:all .25s;color:var(--mut);}
-.tab.active{color:var(--ember2);background:rgba(255,46,151,0.10);}
+.tab.active{color:var(--ember2);background:rgba(255,46,151,0.10);position:relative;}
+.tab.active::after{content:'';position:absolute;top:3px;right:8px;width:5px;height:5px;border-radius:50%;background:var(--grad);box-shadow:0 0 8px rgba(255,46,151,0.8);}
 .tab svg{width:22px;height:22px;}
 .tab span{font-size:9px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;}
 
@@ -156,7 +163,8 @@ h1.hd-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42p
 .pl-rir{background:rgba(255,210,61,0.12);color:var(--yellow);}
 .pl-fail{background:rgba(255,67,101,0.16);color:var(--crimson);}
 .ex-check{width:40px;height:40px;border-radius:50%;border:2px solid var(--line2);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;color:transparent;font-size:13px;transition:all .25s;}
-.ex.done .ex-check{background:var(--mint);border-color:var(--mint);color:#04140c;box-shadow:0 0 16px rgba(155,255,61,0.4);}
+.ex.done .ex-check{background:var(--mint);border-color:var(--mint);color:#04140c;box-shadow:0 0 16px rgba(155,255,61,0.4);animation:pop .35s cubic-bezier(.2,1.6,.4,1);}
+@keyframes pop{0%{transform:scale(0.6);}60%{transform:scale(1.15);}100%{transform:scale(1);}}
 .ex-check:active{transform:scale(0.88);}
 
 /* expandable drawer */
@@ -203,7 +211,7 @@ h1.hd-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42p
 /* generic buttons */
 .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:16px;min-height:52px;border:none;border-radius:var(--r2);font-family:'Inter Tight';font-size:14px;font-weight:600;letter-spacing:0.3px;cursor:pointer;transition:transform .1s,opacity .2s;}
 .btn:active{transform:scale(0.98);}
-.btn-fire{background:var(--grad);background-size:200% auto;animation:gradShift 5s linear infinite;color:#fff;box-shadow:0 6px 24px rgba(255,46,151,0.35);font-weight:700;}
+.btn-fire{background:var(--grad);background-size:200% auto;animation:gradShift 5s linear infinite;color:#fff;box-shadow:0 6px 24px rgba(255,46,151,0.35),inset 0 1px 0 rgba(255,255,255,0.25);font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,0.2);}
 .btn-done{background:var(--card);border:1px solid var(--mint);color:var(--mint);}
 .btn-ghost{background:var(--card2);border:1px solid var(--line2);color:var(--txt2);}
 
@@ -231,7 +239,8 @@ h1.hd-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42p
 .kpi-val{font-family:'Space Grotesk',sans-serif;font-size:27px;font-weight:600;line-height:1;}
 .kpi-lbl{font-size:8px;letter-spacing:1.2px;text-transform:uppercase;color:var(--mut);margin-top:5px;}
 .kpi.down .kpi-val{color:var(--mint);} .kpi.up .kpi-val{color:var(--ember);}
-.card{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line2);border-radius:var(--r2);padding:16px;margin-bottom:13px;position:relative;}
+.card{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line2);border-radius:var(--r2);padding:16px;margin-bottom:13px;position:relative;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.03);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,107,255,0.35),transparent);}
 .card h4{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mut);margin-bottom:12px;display:flex;align-items:center;gap:7px;}
 .inrow{display:flex;gap:8px;align-items:center;}
 .in{flex:1;background:var(--bg2);border:1px solid var(--line2);border-radius:var(--r2);padding:14px;color:var(--txt);font-size:16px;font-family:'Inter Tight';-webkit-appearance:none;min-width:0;}
@@ -309,7 +318,7 @@ h1.hd-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42p
 .rl-ring-wrap{position:relative;width:200px;height:200px;}
 .rl-ring-wrap svg{width:100%;height:100%;transform:rotate(-90deg);}
 .rl-track{fill:none;stroke:var(--line2);stroke-width:10;}
-.rl-fill{fill:none;stroke:var(--ember);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset 1s linear;filter:drop-shadow(0 0 16px rgba(255,46,151,0.6));}
+.rl-fill{fill:none;stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset 1s linear;filter:drop-shadow(0 0 20px rgba(160,107,255,0.7));}
 .rl-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
 .rl-time{font-family:'Space Grotesk',sans-serif;font-size:44px;font-weight:700;color:var(--ember2);}
 .rl-lbl{font-size:10px;color:var(--mut);letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
@@ -381,8 +390,11 @@ h1.hd-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42p
       </div>
       <div class="ring-wrap" id="headerRing">
         <svg viewBox="0 0 64 64">
+          <defs><linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff2e97"/><stop offset="50%" stop-color="#a06bff"/><stop offset="100%" stop-color="#2de2ff"/>
+          </linearGradient></defs>
           <circle class="ring-track" cx="32" cy="32" r="27"/>
-          <circle class="ring-fill" id="ringFill" cx="32" cy="32" r="27" stroke-dasharray="169.6" stroke-dashoffset="169.6"/>
+          <circle class="ring-fill" id="ringFill" cx="32" cy="32" r="27" stroke="url(#ringGrad)" stroke-dasharray="169.6" stroke-dashoffset="169.6"/>
         </svg>
         <div class="ring-center"><div class="ring-pct" id="ringPct">0%</div><div class="ring-pct-lbl">Today</div></div>
       </div>
@@ -411,8 +423,11 @@ h1.hd-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42p
 <div class="rest-lock-overlay" id="restLock">
   <div class="rl-ring-wrap">
     <svg viewBox="0 0 200 200">
+      <defs><linearGradient id="rlGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ff2e97"/><stop offset="50%" stop-color="#a06bff"/><stop offset="100%" stop-color="#2de2ff"/>
+      </linearGradient></defs>
       <circle class="rl-track" cx="100" cy="100" r="88"/>
-      <circle class="rl-fill" id="rlFill" cx="100" cy="100" r="88" stroke-dasharray="553" stroke-dashoffset="0"/>
+      <circle class="rl-fill" id="rlFill" cx="100" cy="100" r="88" stroke="url(#rlGrad)" stroke-dasharray="553" stroke-dashoffset="0"/>
     </svg>
     <div class="rl-center"><div class="rl-time" id="rlTime">1:30</div><div class="rl-lbl">Resting</div></div>
   </div>
@@ -688,7 +703,7 @@ function renderRing(){
   const fill=document.getElementById('ringFill');
   fill.setAttribute('stroke-dasharray',C.toFixed(1));
   fill.setAttribute('stroke-dashoffset',(C*(1-pct/100)).toFixed(1));
-  fill.style.stroke=d.type==='Rest'?'var(--mut2)':HEX[d.type];
+  fill.style.stroke=(pct>=100&&d.type!=='Rest')?'var(--mint)':'';
   fill.classList.toggle('complete',pct>=100&&d.type!=='Rest');
   const lbl=document.getElementById('ringPct');
   if(d.type==='Rest'){lbl.textContent='😴';return;}
@@ -835,55 +850,105 @@ function sessionHistory(exId,excludeDate){
 }
 function overloadAdvice(ex,date){
   const range=repRange(ex);
+  if(!range)return '';
+  const inc=w=>w>=135?10:5;
+
+  // ===== PRIORITY 1: LIVE — react to today's completed sets first =====
+  const todaySets=(logs[logKey(ex.id,date)]||[]).filter(s=>s.done&&s.w&&s.r);
+  if(todaySets.length){
+    const lastSet=todaySets[todaySets.length-1];
+    const w=+lastSet.w,r=+lastSet.r;
+    const allDone=todaySets.length>=ex.sets;
+    if(allDone){
+      const allTop=todaySets.every(s=>+s.r>=range.hi);
+      const anyUnder=todaySets.some(s=>+s.r<range.lo);
+      if(allTop)return `<div class="ai-tip ai-up"><span class="ai-ic">🔥</span><span class="ai-txt"><b>Increase earned.</b> Every set hit ${range.hi}+ today at ${w} lb. Next session: <b>${w+inc(w)} lb</b>. The app will remind you.</span></div>`;
+      if(anyUnder)return `<div class="ai-tip ai-warn"><span class="ai-ic">⚖️</span><span class="ai-txt">Some sets came in under ${range.lo} today. <b>Repeat ${w} lb next session</b> — own the full range before loading up.</span></div>`;
+      return `<div class="ai-tip"><span class="ai-ic">✅</span><span class="ai-txt">Solid work in range at ${w} lb. Hit <b>${range.hi}+ on every set</b> next time to earn the jump to ${w+inc(w)} lb.</span></div>`;
+    }
+    // mid-exercise: coach the NEXT set right now
+    if(r>range.hi+2)return `<div class="ai-tip ai-up"><span class="ai-ic">🚀</span><span class="ai-txt"><b>${r} reps — way over range.</b> Load <b>${w+inc(w)*2} lb</b> for your next set.</span></div>`;
+    if(r>=range.hi)return `<div class="ai-tip ai-up"><span class="ai-ic">💪</span><span class="ai-txt"><b>${r} at ${w} lb — top of range.</b> Go <b>${w+inc(w)} lb</b> on the next set.</span></div>`;
+    if(r<range.lo)return `<div class="ai-tip ai-warn"><span class="ai-ic">⚖️</span><span class="ai-txt"><b>${r} reps is under the ${range.lo}–${range.hi} zone.</b> Drop ~10% for the next set and get quality reps.</span></div>`;
+    return `<div class="ai-tip"><span class="ai-ic">🎯</span><span class="ai-txt">${r} at ${w} lb — in the zone. Same weight next set, fight for ${range.hi}.</span></div>`;
+  }
+
+  // ===== PRIORITY 2: PRE-SESSION — set today's target from history =====
   const hist=sessionHistory(ex.id,date);
-  if(!range||hist.length===0)return '';
+  if(hist.length===0)return `<div class="ai-tip"><span class="ai-ic">🎯</span><span class="ai-txt">First time logging this one. Pick a weight where <b>${range.hi} reps is barely possible</b> — you'll dial it in fast.</span></div>`;
   const last=hist[0];
   const lastTopWeight=Math.max(...last.sets.map(s=>+s.w));
   const setsAtTop=last.sets.filter(s=>+s.w===lastTopWeight);
-  const allHitTop=setsAtTop.length>=Math.min(2,setsAtTop.length)&&setsAtTop.every(s=>+s.r>=range.hi);
+  const allHitTop=setsAtTop.every(s=>+s.r>=range.hi);
   const allMissedLow=setsAtTop.every(s=>+s.r<range.lo);
-  // look back 2 sessions for a repeated "hit top" pattern -> stronger signal
   let hitTopStreak=0;
   for(const h of hist){
     const topW=Math.max(...h.sets.map(s=>+s.w));
     const topSets=h.sets.filter(s=>+s.w===topW);
     if(topSets.every(s=>+s.r>=range.hi))hitTopStreak++;else break;
   }
-  if(hitTopStreak>=2){
-    const next=lastTopWeight+(lastTopWeight>=135?10:5);
-    return `<div class="ai-tip ai-up"><span class="ai-ic">⚡</span><span class="ai-txt"><b>Add weight next session.</b> You've hit the top of your rep range (${range.hi}+) for ${hitTopStreak} sessions straight at ${lastTopWeight} lb. Try <b>${next} lb</b> next time.</span></div>`;
-  }
-  if(allHitTop){
-    const next=lastTopWeight+(lastTopWeight>=135?10:5);
-    return `<div class="ai-tip"><span class="ai-ic">📈</span><span class="ai-txt">Nice — you hit ${range.hi}+ reps at ${lastTopWeight} lb last time. Hit it clean again today and bump to <b>${next} lb</b> next session.</span></div>`;
+  if(hitTopStreak>=1){
+    const next=lastTopWeight+inc(lastTopWeight);
+    return `<div class="ai-tip ai-up"><span class="ai-ic">⚡</span><span class="ai-txt"><b>Today's target: ${next} lb.</b> You maxed the range at ${lastTopWeight} lb last session${hitTopStreak>1?` (${hitTopStreak} in a row)`:''} — time to load up.</span></div>`;
   }
   if(allMissedLow){
-    return `<div class="ai-tip ai-warn"><span class="ai-ic">⚠️</span><span class="ai-txt">Last session you came in under ${range.lo} reps at ${lastTopWeight} lb. Repeat the same weight today and focus on hitting the range before adding more.</span></div>`;
+    return `<div class="ai-tip ai-warn"><span class="ai-ic">⚠️</span><span class="ai-txt"><b>Today's target: ${lastTopWeight} lb again.</b> Last time was under ${range.lo} reps — beat that rep count before adding weight.</span></div>`;
   }
-  // check for plateau: same weight, same rep count for 3+ sessions
   if(hist.length>=3){
     const w0=Math.max(...hist[0].sets.map(s=>+s.w));
     const stuck=hist.slice(0,3).every(h=>Math.max(...h.sets.map(s=>+s.w))===w0);
-    if(stuck)return `<div class="ai-tip ai-warn"><span class="ai-ic">🧱</span><span class="ai-txt">You've been at ${w0} lb for 3 sessions in a row. Try a small jump (2.5–5 lb), an extra rep target, or swap the exercise for a fresh stimulus.</span></div>`;
+    if(stuck)return `<div class="ai-tip ai-warn"><span class="ai-ic">🧱</span><span class="ai-txt"><b>3 sessions stuck at ${w0} lb.</b> Micro-jump 2.5–5 lb today, or hit Swap for a fresh stimulus. Plateaus break when you change something.</span></div>`;
   }
-  return `<div class="ai-tip"><span class="ai-ic">🎯</span><span class="ai-txt">Last time: ${lastTopWeight} lb. Aim for ${range.lo}–${range.hi} reps each set today.</span></div>`;
+  const bestReps=Math.max(...setsAtTop.map(s=>+s.r||0));
+  return `<div class="ai-tip"><span class="ai-ic">🎯</span><span class="ai-txt"><b>Today's target: ${lastTopWeight} lb, beat ${bestReps} reps.</b> One more rep than last time is a win.</span></div>`;
 }
 function setLog(exId,date,i,field,val){
   const key=logKey(exId,date);const ex=findEx(exId);
   if(!logs[key])logs[key]=Array.from({length:ex.sets},()=>({w:'',r:'',done:false}));
   logs[key][i][field]=val;saveLogs();
-  // refresh PR line subtly
+  // live-refresh the coach tip as numbers come in
+  const host=document.getElementById('dp-'+exId);
+  if(host){const tip=host.querySelector('.ai-tip');if(tip){const html=overloadAdvice(ex,date);if(html){const tmp=document.createElement('div');tmp.innerHTML=html;tip.replaceWith(tmp.firstChild);}}}
 }
 function setSetDone(exId,date,i,btn){
   const key=logKey(exId,date);const ex=findEx(exId);
   if(!logs[key])logs[key]=Array.from({length:ex.sets},()=>({w:'',r:'',done:false}));
   logs[key][i].done=!logs[key][i].done;btn.classList.toggle('on');saveLogs();haptic();
-  // auto-start mandatory rest timer when a set is marked done
-  if(logs[key][i].done){const r=restFor(ex);startRest(r,exId);}
+  // LIVE COACH: analyze this set the instant it's completed
+  if(logs[key][i].done){
+    liveCoach(ex,date,i);
+    const r=restFor(ex);startRest(r,exId);
+  }
   // check PR
   checkPR(exId);
   // refresh AI tip after a short delay so the lock UI doesn't fight focus
   setTimeout(()=>{const host=document.getElementById('dp-'+exId);if(host&&host.querySelector('.set-grid'))host.innerHTML=logPanel(ex,date);},50);
+}
+
+/* ---- LIVE COACH: instant per-set reaction ---- */
+function incFor(w){return w>=135?10:5;}
+function liveCoach(ex,date,i){
+  const range=repRange(ex);if(!range)return;
+  const sets=logs[logKey(ex.id,date)];const s=sets[i];
+  const w=parseFloat(s.w),r=parseInt(s.r);
+  if(!w||!r)return;
+  const inc=incFor(w);
+  const isLast=i>=ex.sets-1;
+  if(r>range.hi+2){
+    // blew way past the range — weight is too light right now
+    if(!isLast)toast(`🚀 ${r} reps?! Jump to ${w+inc*2} lb for set ${i+2}`);
+    else toast(`🚀 ${r} reps — start at ${w+inc*2} lb next session`);
+  } else if(r>=range.hi){
+    if(!isLast)toast(`💪 Hit ${r} — load ${w+inc} lb for set ${i+2}`);
+    else{
+      // did ALL sets hit the top? then it's an official increase
+      const allTop=sets.every(x=>x.done&&parseInt(x.r)>=range.hi);
+      toast(allTop?`🔥 Both sets at the top — ${w+inc} lb next session. Locked in.`:`🔥 Strong finish — push for ${range.hi}+ on both sets to earn ${w+inc} lb`);
+    }
+  } else if(r<range.lo){
+    if(!isLast)toast(`⚖️ ${r} reps is under range — drop ~10% for set ${i+2}`);
+    else toast(`⚖️ Under range today — repeat ${w} lb next session and own it first`);
+  }
 }
 function lastLog(exId,excludeDate){
   // find most recent dated log before today with any weight
@@ -1112,17 +1177,23 @@ function buildChart(series){
   const range=(max-min)||1;min-=range*0.12;max+=range*0.12;
   const ys=v=>PAD+(1-(v-min)/(max-min))*(H-2*PAD);
   let svg=`<svg viewBox="0 0 ${W} ${H+16}" style="width:100%;height:auto;display:block">`;
+  // gradient + glow defs per series
+  svg+=`<defs>`;
+  series.forEach((s,si)=>{
+    svg+=`<linearGradient id="area${si}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${s.color}" stop-opacity="0.35"/><stop offset="100%" stop-color="${s.color}" stop-opacity="0"/></linearGradient>`;
+  });
+  svg+=`<filter id="lglow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`;
   // gridlines
   for(let g=0;g<=3;g++){const y=PAD+g/3*(H-2*PAD);svg+=`<line x1="${PAD}" y1="${y}" x2="${W-PAD}" y2="${y}" stroke="#241c18" stroke-width="0.5"/>`;}
   // goal line
   if(hasGoal){const gy=ys(goal.weight).toFixed(1);svg+=`<line x1="${PAD}" y1="${gy}" x2="${W-PAD}" y2="${gy}" stroke="var(--mint)" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/><text x="${W-PAD}" y="${(+gy-3)}" font-size="7" fill="var(--mint)" text-anchor="end">goal ${goal.weight}</text>`;}
-  series.forEach(s=>{
+  series.forEach((s,si)=>{
     const pts=[...s.points].sort((a,b)=>a.date.localeCompare(b.date));if(pts.length<2)return;
     const d=pts.map((p,i)=>`${i?'L':'M'}${xs(p.date).toFixed(1)},${ys(p.val).toFixed(1)}`).join(' ');
-    // area
-    svg+=`<path d="${d} L${xs(pts[pts.length-1].date).toFixed(1)},${H-PAD} L${xs(pts[0].date).toFixed(1)},${H-PAD} Z" fill="${s.color}" opacity="0.08"/>`;
-    svg+=`<path d="${d}" stroke="${s.color}" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
-    pts.forEach(p=>{svg+=`<circle cx="${xs(p.date).toFixed(1)}" cy="${ys(p.val).toFixed(1)}" r="2.5" fill="${s.color}"><title>${pretty(p.date)}: ${p.val}</title></circle>`;});
+    // gradient area
+    svg+=`<path d="${d} L${xs(pts[pts.length-1].date).toFixed(1)},${H-PAD} L${xs(pts[0].date).toFixed(1)},${H-PAD} Z" fill="url(#area${si})"/>`;
+    svg+=`<path d="${d}" stroke="${s.color}" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#lglow)"/>`;
+    pts.forEach(p=>{svg+=`<circle cx="${xs(p.date).toFixed(1)}" cy="${ys(p.val).toFixed(1)}" r="2.6" fill="${s.color}"><title>${pretty(p.date)}: ${p.val}</title></circle>`;});
   });
   svg+=`<text x="${PAD}" y="${H+12}" font-size="8" fill="#6b5f57">${pretty(dates[0])}</text>`;
   svg+=`<text x="${W-PAD}" y="${H+12}" font-size="8" fill="#6b5f57" text-anchor="end">${pretty(dates[dates.length-1])}</text>`;
