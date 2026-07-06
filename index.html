@@ -96,9 +96,9 @@ h1.hd-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42p
 .tab span{font-size:9px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;}
 
 /* ── DAY SELECTOR ── */
-.day-strip{display:flex;gap:7px;padding:14px 16px 4px;overflow-x:auto;scrollbar-width:none;}
+.day-strip{display:flex;gap:7px;padding:12px 16px 10px;overflow-x:auto;scrollbar-width:none;position:sticky;top:0;z-index:40;background:rgba(11,14,26,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line);}
 .day-strip::-webkit-scrollbar{display:none;}
-.day-card{flex-shrink:0;width:62px;padding:11px 6px;border-radius:var(--r2);background:var(--card);border:1px solid var(--line);cursor:pointer;text-align:center;transition:all .25s;position:relative;overflow:hidden;}
+.day-card{flex-shrink:0;width:66px;padding:13px 6px;border-radius:var(--r2);background:var(--card);border:1px solid var(--line);cursor:pointer;text-align:center;transition:all .25s;position:relative;overflow:hidden;}
 .day-card.active{border-color:var(--c);background:linear-gradient(160deg,var(--card2),var(--card));box-shadow:0 0 0 1px var(--c), 0 6px 18px rgba(0,0,0,0.4);}
 .day-card.active::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--c);}
 .day-card.done-day::after{content:'✓';position:absolute;top:5px;right:6px;font-size:9px;color:var(--mint);font-weight:700;}
@@ -138,7 +138,7 @@ h1.hd-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42p
 /* exercise card */
 .ex{background:var(--card);border:1px solid var(--line);border-radius:var(--r2);margin-bottom:8px;overflow:hidden;transition:border-color .25s,transform .1s;}
 .ex.done{border-color:rgba(155,255,61,0.4);background:linear-gradient(160deg,rgba(155,255,61,0.05),var(--card));}
-.ex-head{display:flex;align-items:center;gap:11px;padding:13px;}
+.ex-head{display:flex;align-items:center;gap:11px;padding:15px 13px;min-height:64px;}
 .ex-idx{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:var(--mut2);width:18px;text-align:center;flex-shrink:0;transition:color .25s;}
 .ex.done .ex-idx{color:var(--mint);}
 .ex-body{flex:1;min-width:0;cursor:pointer;}
@@ -155,7 +155,7 @@ h1.hd-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42p
 .pl-variation{background:rgba(255,210,61,0.14);color:var(--yellow);}
 .pl-rir{background:rgba(255,210,61,0.12);color:var(--yellow);}
 .pl-fail{background:rgba(255,67,101,0.16);color:var(--crimson);}
-.ex-check{width:30px;height:30px;border-radius:50%;border:2px solid var(--line2);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;color:transparent;font-size:13px;transition:all .25s;}
+.ex-check{width:40px;height:40px;border-radius:50%;border:2px solid var(--line2);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;color:transparent;font-size:13px;transition:all .25s;}
 .ex.done .ex-check{background:var(--mint);border-color:var(--mint);color:#04140c;box-shadow:0 0 16px rgba(155,255,61,0.4);}
 .ex-check:active{transform:scale(0.88);}
 
@@ -163,19 +163,19 @@ h1.hd-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42p
 .ex-drawer{display:none;border-top:1px solid var(--line);padding:0 13px;}
 .ex-drawer.open{display:block;padding:12px 13px;}
 .drawer-tabs{display:flex;gap:6px;margin-bottom:11px;}
-.dtab{flex:1;text-align:center;font-size:10px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;padding:7px;border-radius:var(--r2);background:var(--card2);color:var(--mut);cursor:pointer;border:1px solid transparent;transition:all .2s;}
+.dtab{flex:1;text-align:center;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;padding:11px 7px;border-radius:var(--r2);background:var(--card2);color:var(--mut);cursor:pointer;border:1px solid transparent;transition:all .2s;}
 .dtab.active{background:var(--raised);color:var(--ember2);border-color:var(--line2);}
 .cue-box .cue-lbl{font-family:'Space Grotesk',sans-serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--ember2);font-weight:600;margin-bottom:5px;}
-.cue-box p{font-size:12px;line-height:1.55;color:var(--txt2);}
+.cue-box p{font-size:12.5px;line-height:1.65;color:var(--txt2);}.cue-box p b{color:var(--ember2);font-weight:700;}
 
 /* set logger */
 .set-grid{display:flex;flex-direction:column;gap:7px;}
 .set-row{display:flex;align-items:center;gap:8px;}
 .set-tag{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;color:var(--mut);width:42px;letter-spacing:0.5px;flex-shrink:0;}
-.set-inp{flex:1;background:var(--bg2);border:1px solid var(--line2);border-radius:var(--r2);padding:10px;color:var(--txt);font-size:15px;font-family:'Inter Tight';text-align:center;min-width:0;-webkit-appearance:none;}
+.set-inp{flex:1;background:var(--bg2);border:1px solid var(--line2);border-radius:var(--r2);padding:13px 10px;color:var(--txt);font-size:16px;font-family:'Inter Tight';text-align:center;min-width:0;-webkit-appearance:none;}
 .set-inp:focus{outline:none;border-color:var(--ember);background:#000;}
 .set-x{font-size:11px;color:var(--mut);flex-shrink:0;}
-.set-done-btn{width:34px;height:38px;border-radius:var(--r2);border:1px solid var(--line2);background:var(--card2);color:var(--mut);font-size:14px;cursor:pointer;flex-shrink:0;transition:all .2s;}
+.set-done-btn{width:46px;height:46px;border-radius:var(--r2);border:1px solid var(--line2);background:var(--card2);color:var(--mut);font-size:14px;cursor:pointer;flex-shrink:0;transition:all .2s;}
 .set-done-btn.on{background:var(--mint);border-color:var(--mint);color:#04140c;}
 .last-time{font-size:10px;color:var(--mut);margin-top:8px;text-align:center;letter-spacing:0.3px;}
 .last-time b{color:var(--ember2);}
@@ -186,12 +186,12 @@ h1.hd-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42p
 .swap-info{flex:1;min-width:0;}
 .swap-name{font-size:13px;font-weight:600;}
 .swap-why{font-size:10.5px;color:var(--mut);margin-top:2px;line-height:1.4;}
-.swap-btn{font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;padding:7px 12px;border-radius:var(--r2);border:1px solid var(--ember);background:transparent;color:var(--ember);cursor:pointer;flex-shrink:0;transition:all .2s;}
+.swap-btn{font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;padding:12px 16px;min-height:44px;border-radius:var(--r2);border:1px solid var(--ember);background:transparent;color:var(--ember);cursor:pointer;flex-shrink:0;transition:all .2s;}
 .swap-btn:active{background:var(--ember);color:#000;}
 .swapped-note{font-size:10px;color:var(--violet);margin-top:6px;letter-spacing:0.3px;}
 
 /* timer */
-.timer-btn{font-size:10px;font-weight:600;letter-spacing:0.5px;padding:6px 11px;border-radius:var(--r2);border:1px solid var(--line2);background:var(--card2);color:var(--txt2);cursor:pointer;}
+.timer-btn{font-size:12px;font-weight:600;letter-spacing:0.5px;padding:12px;min-height:46px;border-radius:var(--r2);border:1px solid var(--line2);background:var(--card2);color:var(--txt2);cursor:pointer;}
 #restTimer{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom));z-index:60;
   background:var(--raised);border:1px solid var(--ember);border-radius:var(--r2);padding:12px 18px;display:none;align-items:center;gap:14px;box-shadow:var(--glow),var(--shadow);min-width:230px;}
 #restTimer.show{display:flex;}
@@ -201,7 +201,7 @@ h1.hd-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42p
 .rt-ctrl button{width:34px;height:34px;border-radius:var(--r2);border:1px solid var(--line2);background:var(--card);color:var(--txt);font-size:14px;cursor:pointer;}
 
 /* generic buttons */
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px;border:none;border-radius:var(--r2);font-family:'Inter Tight';font-size:14px;font-weight:600;letter-spacing:0.3px;cursor:pointer;transition:transform .1s,opacity .2s;}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:16px;min-height:52px;border:none;border-radius:var(--r2);font-family:'Inter Tight';font-size:14px;font-weight:600;letter-spacing:0.3px;cursor:pointer;transition:transform .1s,opacity .2s;}
 .btn:active{transform:scale(0.98);}
 .btn-fire{background:var(--grad);background-size:200% auto;animation:gradShift 5s linear infinite;color:#fff;box-shadow:0 6px 24px rgba(255,46,151,0.35);font-weight:700;}
 .btn-done{background:var(--card);border:1px solid var(--mint);color:var(--mint);}
@@ -213,7 +213,7 @@ h1.hd-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42p
 .rest-hero p{font-size:13px;color:var(--mut);line-height:1.6;max-width:300px;margin:0 auto;}
 
 /* stretch accordion */
-.acc-btn{width:100%;display:flex;align-items:center;justify-content:space-between;padding:12px 15px;border-radius:var(--r2);background:var(--card);border:1px solid var(--line);color:var(--txt2);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'Inter Tight';margin-bottom:8px;transition:all .2s;}
+.acc-btn{width:100%;display:flex;align-items:center;justify-content:space-between;padding:15px;min-height:52px;border-radius:var(--r2);background:var(--card);border:1px solid var(--line);color:var(--txt2);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'Inter Tight';margin-bottom:8px;transition:all .2s;}
 .acc-body{display:none;background:var(--card);border:1px solid var(--line);border-radius:var(--r2);margin-bottom:12px;overflow:hidden;}
 .acc-body.open{display:block;}
 .str-row{padding:11px 14px;border-bottom:1px solid var(--line);}
@@ -234,7 +234,7 @@ h1.hd-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42p
 .card{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line2);border-radius:var(--r2);padding:16px;margin-bottom:13px;position:relative;}
 .card h4{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mut);margin-bottom:12px;display:flex;align-items:center;gap:7px;}
 .inrow{display:flex;gap:8px;align-items:center;}
-.in{flex:1;background:var(--bg2);border:1px solid var(--line2);border-radius:var(--r2);padding:12px 14px;color:var(--txt);font-size:16px;font-family:'Inter Tight';-webkit-appearance:none;min-width:0;}
+.in{flex:1;background:var(--bg2);border:1px solid var(--line2);border-radius:var(--r2);padding:14px;color:var(--txt);font-size:16px;font-family:'Inter Tight';-webkit-appearance:none;min-width:0;}
 .in:focus{outline:none;border-color:var(--ember);}
 .mini-hint{font-size:10.5px;color:var(--mut);margin-top:8px;line-height:1.5;}
 .log-list{display:flex;flex-direction:column;gap:5px;}
@@ -315,7 +315,7 @@ h1.hd-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42p
 .rl-lbl{font-size:10px;color:var(--mut);letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
 .rl-msg{font-size:13px;color:var(--txt2);text-align:center;max-width:260px;line-height:1.5;}
 .rl-btns{display:flex;gap:10px;}
-.rl-btns button{padding:11px 18px;border-radius:var(--r2);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter Tight';}
+.rl-btns button{padding:15px 22px;border-radius:var(--r2);font-size:13px;min-height:50px;font-weight:600;cursor:pointer;font-family:'Inter Tight';}
 .rl-add{background:var(--card2);border:1px solid var(--line2);color:var(--txt2);}
 .rl-skip{background:transparent;border:1px solid var(--crimson);color:var(--crimson);}
 
@@ -455,98 +455,99 @@ const schedule=[
 
 // rest defaults (seconds) parsed loosely from detail; fallback 75
 function restFor(ex){
-  const m=(ex.detail||'').match(/(\d+)\s*s/); if(m) return parseInt(m[1]);
-  if(/2 min/.test(ex.detail)) return 120;
-  if(/90s/.test(ex.detail)) return 90;
-  return 75;
+  const d=ex.detail||'';
+  if(/3 min/.test(d)) return 180;      // covers "2–3 min" and "3 min" — err toward full recovery
+  if(/2 min/.test(d)) return 120;
+  const m=d.match(/(\d+)\s*s/); if(m) return parseInt(m[1]);
+  return 90;
 }
 
 const workouts={
   Push:{sub:'CHEST · SHOULDERS · TRICEPS',
-    tip:"Take a 3-second eccentric on every press — this is where most muscle growth occurs. Chest is hit from flat and incline angles; shoulders front and side; triceps from two joint angles for complete development.",
+    tip:"New protocol: 2 sets per exercise, every set pushed to true RPE 10 — the last rep you can physically complete with good form. Fewer sets means each one counts. Warm up properly, then go to war. Control the negative on every rep.",
     cardio:"10 min treadmill brisk walk (2–3% incline) to warm up. Optional 15 min incline-walk cooldown for extra burn.",
     sections:[
       {label:'Compound Push',musc:'Chest · Front Delts · Triceps',exercises:[
-        {id:'bench',name:'Barbell Bench Press',detail:'4 × 8–10 | 90s rest',sets:4,tag:'compound',int:'rir',cue:"Drive elbows slightly in toward each other to protect the shoulder and load the chest. Pause and squeeze at the top, lower under control over 3 seconds. Feet flat, natural arch."},
-        {id:'inc_db',name:'Incline Dumbbell Press',detail:'3 × 10–12 | 75s rest',sets:3,tag:'compound',int:'rir',cue:"Bench at 30–45°. Bring dumbbells together at the top and squeeze the upper chest. Flare wide at the bottom for a full stretch every rep."},
-        {id:'db_ohp',name:'Seated Dumbbell Shoulder Press',detail:'3 × 8–10 | 90s rest',sets:3,tag:'compound',int:'rir',cue:"Press up and slightly in, lock out so the front delts fire. Brace your core — do not arch the lower back to cheat reps."}
+        {id:'bench',name:'Barbell Bench Press',detail:'2 × 5–9 | 2–3 min rest',sets:2,tag:'compound',int:'rir',cue:"<b>Setup:</b> Pinch your shoulder blades together and DOWN — like tucking them into your back pockets — and keep them pinned the whole set. This creates the arch that protects your shoulders. Feet planted, grip just outside shoulder width, wrists stacked over elbows.<br><b>Execute:</b> Lower to your lower chest with elbows ~45° from your torso, touch without bouncing, press up and slightly back. Big breath at the top, hold it down, exhale through the press.<br><b>Avoid:</b> Flaring elbows to 90° (shoulder killer), bouncing off the chest, losing the shoulder-blade pinch at lockout."},
+        {id:'inc_db',name:'Incline Dumbbell Press',detail:'2 × 5–9 | 2 min rest',sets:2,tag:'compound',int:'fail',cue:"<b>Setup:</b> Bench at 30–45°. Kick the dumbbells up with your knees as you lie back. Shoulder blades pinched and pressed into the bench.<br><b>Execute:</b> Lower deep until you feel a full upper-chest stretch, then press up and slightly together — squeeze the upper pecs hard at the top without clanging the bells.<br><b>Avoid:</b> Touching the dumbbells at the top (kills tension), flaring elbows straight out, cutting the stretch short."},
+        {id:'db_ohp',name:'Seated Dumbbell Shoulder Press',detail:'2 × 5–9 | 2 min rest',sets:2,tag:'compound',int:'fail',cue:"<b>Setup:</b> Back supported, feet planted, core braced like you're about to be punched. Dumbbells at shoulder height, forearms vertical.<br><b>Execute:</b> Press up and slightly in until arms lock out overhead, stacked over your shoulders. Control down to ear level or slightly below.<br><b>Avoid:</b> Arching your lower back off the pad to grind reps — that's your cue the weight is too heavy."}
       ]},
       {label:'Isolation & Finishers',musc:'Side Delts · Chest · Triceps',exercises:[
-        {id:'lean_lat',name:'Lean-Away Dumbbell Lateral Raise',detail:'3 × 12–15 | 60s rest',sets:3,tag:'variation',int:'fail',cue:"Hold a rack and lean away from the working arm — loads the side delt in the stretched position. Raise to shoulder height pinky-first, lower fully. Last set to failure."},
-        {id:'fly',name:'Dumbbell Chest Fly',detail:'3 × 12 | 60s rest',sets:3,tag:'isolation',int:'fail',cue:"Slight elbow bend locked throughout. Open wide for a deep stretch, then hug a tree back to the top. 3-second lowering every rep."},
-        {id:'bf_press',name:'Bowflex Cable Chest Press',detail:'3 × 12 | 60s rest',sets:3,tag:'bowflex',int:'fail',cue:"Cables keep constant tension. Cross your hands slightly at full extension for a peak pec contraction, control back. Last set to failure."},
-        {id:'pushdown',name:'Bowflex Tricep Pushdown',detail:'3 × 12–15 | 60s rest',sets:3,tag:'bowflex',int:'fail',cue:"Pin elbows to your sides — they must not move. Extend fully and squeeze 1 second at the bottom. Rope handle lets you flare the hands out."},
-        {id:'oh_ext',name:'Overhead Dumbbell Tricep Extension',detail:'3 × 12 | 60s rest',sets:3,tag:'isolation',int:'fail',cue:"The long head only fully contracts overhead. Lower behind your skull for a deep stretch, extend to lockout. Only forearms move; elbows point at the ceiling."}
+        {id:'lean_lat',name:'Lean-Away Dumbbell Lateral Raise',detail:'2 × 8–12 | 90s rest',sets:2,tag:'variation',int:'fail',cue:"<b>Setup:</b> Grip a rack or doorframe, lean your body away from the working arm — this puts the side delt under load in its stretched position, where growth happens.<br><b>Execute:</b> Raise to shoulder height leading slightly with the pinky, pause a beat, lower in 3 seconds all the way down.<br><b>Avoid:</b> Shrugging — if your traps take over, drop the weight. Height above shoulder level adds nothing."},
+        {id:'fly',name:'Dumbbell Chest Fly',detail:'2 × 8–12 | 90s rest',sets:2,tag:'isolation',int:'fail',cue:"<b>Setup:</b> Slight bend in the elbows — lock that angle for the entire set. The movement is at the shoulder only.<br><b>Execute:</b> Open wide in a big arc until you feel a deep stretch across the chest, then 'hug the tree' back up. Squeeze the pecs at the top.<br><b>Avoid:</b> Bending the elbows more as you tire (turns it into a press) and dropping too deep too fast — the stretch should be loaded, never yanked."},
+        {id:'bf_press',name:'Bowflex Cable Chest Press',detail:'2 × 8–12 | 90s rest',sets:2,tag:'bowflex',int:'fail',cue:"<b>Setup:</b> Stagger your stance for stability, brace the core. Handles at chest height.<br><b>Execute:</b> Press forward and slightly in, crossing your hands a touch at lockout for a peak pec squeeze. Return slowly — the cable pulls back constantly, fight it.<br><b>Avoid:</b> Letting the cables snap your shoulders back at the stretch. Control both directions."},
+        {id:'pushdown',name:'Bowflex Tricep Pushdown',detail:'2 × 8–12 | 90s rest',sets:2,tag:'bowflex',int:'fail',cue:"<b>Setup:</b> Elbows pinned to your sides — imagine they're bolted there. Slight forward lean, chest up.<br><b>Execute:</b> Drive down to full lockout, squeeze the triceps hard for a full second, control back up to ~90°.<br><b>Avoid:</b> Elbows drifting forward or shoulders rolling in — that shifts work off the triceps."},
+        {id:'oh_ext',name:'Overhead Dumbbell Tricep Extension',detail:'2 × 8–12 | 90s rest',sets:2,tag:'isolation',int:'fail',cue:"<b>Setup:</b> Dumbbell overhead, elbows pointing at the ceiling and squeezed narrow — they stay there the whole set.<br><b>Execute:</b> Lower behind your head until you feel a deep stretch in the back of the arm, then extend to full lockout. The long head only grows from this stretched overhead position.<br><b>Avoid:</b> Elbows flaring out, arching the lower back — brace your core."}
       ]}
     ]},
   Pull:{sub:'BACK · REAR DELTS · TRAPS · BICEPS',
-    tip:"Set your shoulder blades first, then drive with your elbows, not your hands. Covers width (lats), thickness (rows), rear delts, traps and all three bicep curl patterns.",
+    tip:"2 hard sets each. Set your shoulder blades first, drive with elbows not hands. On the deadlift and bent-over row, stop 1 rep shy — everything else goes to absolute failure. Same movements every week: your only job is beating last session's numbers.",
     cardio:"10 min treadmill warm-up. After lifting: 20 min incline walk (8–10%, 3.5 mph) — great fat burn, zero recovery cost.",
     sections:[
       {label:'Compound Pull',musc:'Full Back · Lats · Hamstrings',exercises:[
-        {id:'dead',name:'Barbell Deadlift',detail:'3 × 5–6 | 2 min rest',sets:3,tag:'compound',int:'rir',cue:"Push the floor away rather than pulling. Squeeze glutes and lats at lockout. Bar drags close to your legs the whole way. Never round the lower back."},
-        {id:'bor',name:'Barbell Bent-Over Row',detail:'4 × 8–10 | 90s rest',sets:4,tag:'compound',int:'rir',cue:"Hinge to ~45°. Pull to the lower chest, hold 1 second, drive elbows behind your body. Lead with elbows, not hands. Last set to failure."},
-        {id:'bf_pull',name:'Bowflex Lat Pulldown',detail:'3 × 10–12 | 75s rest',sets:3,tag:'bowflex',int:'rir',cue:"Chest up, lean slightly back. Pull to the upper chest driving elbows into your back pockets. Squeeze the lats 1 second at the bottom."}
+        {id:'dead',name:'Barbell Deadlift',detail:'2 × 5–8 | 3 min rest',sets:2,tag:'compound',int:'rir',cue:"<b>Setup:</b> Bar over mid-foot, shins an inch away. Hinge down and grab the bar; drop your hips until shins touch it. Chest up, back flat, and pull the slack out — squeeze your lats like you're crushing oranges in your armpits.<br><b>Execute:</b> Big breath, brace, then push the floor away. Bar drags up your legs. Lock hips and knees together at the top, squeeze glutes.<br><b>Avoid:</b> Rounding the lower back, jerking the bar off the floor, hips shooting up first. This is the one lift where ego costs you."},
+        {id:'bor',name:'Barbell Bent-Over Row',detail:'2 × 5–9 | 2 min rest',sets:2,tag:'compound',int:'rir',cue:"<b>Setup:</b> Hinge to ~45°, knees soft, back flat and rigid. The torso angle does not change during the set.<br><b>Execute:</b> Pull the bar into your lower chest/upper stomach, elbows driving behind you, squeeze the mid-back 1 second, lower with control.<br><b>Avoid:</b> Standing up as you row (hips doing the work) and letting the lower back round at the stretch."},
+        {id:'bf_pull',name:'Bowflex Lat Pulldown',detail:'2 × 5–9 | 2 min rest',sets:2,tag:'bowflex',int:'fail',cue:"<b>Setup:</b> Chest tall, slight backward lean, grip wide. Set your shoulder blades down before the first rep.<br><b>Execute:</b> Pull the bar to your upper chest by driving your elbows down into your back pockets. Squeeze the lats 1 second at the bottom, full stretch at the top — let the shoulders rise.<br><b>Avoid:</b> Rocking backward for momentum and curling with the biceps. Elbows lead, hands just hold on."}
       ]},
       {label:'Isolation & Finishers',musc:'Mid-Back · Rear Delts · Traps · Biceps',exercises:[
-        {id:'bf_row',name:'Bowflex Seated Cable Row',detail:'3 × 12 | 60s rest',sets:3,tag:'bowflex',int:'fail',cue:"Pull elbows back, pinch shoulder blades and hold 2 seconds. Let the lats stretch forward fully on every release."},
-        {id:'meadows',name:'Dumbbell Meadows Row (1-Arm)',detail:'3 × 10 each | 60s rest',sets:3,tag:'variation',int:'fail',cue:"One hand braced on a bench. Let the dumbbell hang for a deep lat stretch, then row to your hip. The extreme range builds thickness standard rows miss."},
-        {id:'face',name:'Bowflex Face Pull',detail:'3 × 15 | 45s rest',sets:3,tag:'bowflex',int:'fail',cue:"High cable, rope. Pull toward your forehead, elbows flared wide and high. Fires rear delts and external rotators — fixes posture, protects the shoulder."},
-        {id:'shrug',name:'Dumbbell Shrug',detail:'3 × 15 | 45s rest',sets:3,tag:'isolation',int:'fail',cue:"Shrug straight up toward your ears — no rolling. Hold the top 2 seconds. Traps respond to the pause, not heavy swinging."},
-        {id:'inc_curl',name:'Incline Dumbbell Curl',detail:'3 × 10–12 | 60s rest',sets:3,tag:'variation',int:'fail',cue:"Sit back on an incline so arms hang behind your body — deep bicep stretch at the bottom drives growth. Don't let elbows drift forward."},
-        {id:'african',name:'African (Drag) Curl',detail:'3 × 10–12 | 60s rest',sets:3,tag:'variation',int:'fail',cue:"Drag the dumbbells up your body, elbows back behind you — targets the long head (peak). At the top pronate and lower as a reverse curl. Light weight, total control."},
-        {id:'zottman',name:'Zottman Curl',detail:'3 × 10 | 60s rest',sets:3,tag:'variation',int:'fail',cue:"Curl up palms-up for full bicep contraction. At the top rotate palms down and lower as a reverse curl. Works bicep, brachialis and forearm in one move."}
+        {id:'bf_row',name:'Bowflex Seated Cable Row',detail:'2 × 8–12 | 90s rest',sets:2,tag:'bowflex',int:'fail',cue:"<b>Setup:</b> Sit tall, chest proud, knees soft. Shoulder blades set before pulling.<br><b>Execute:</b> Pull the handles to your lower ribs, pinch your shoulder blades together and hold 2 full seconds. Then let everything stretch forward completely.<br><b>Avoid:</b> Rounding the lower back at the stretch and shortening the hold — the 2-second squeeze IS the exercise."},
+        {id:'meadows',name:'Dumbbell Meadows Row (1-Arm)',detail:'2 × 6–10 each | 90s rest',sets:2,tag:'variation',int:'fail',cue:"<b>Setup:</b> Stand beside a bench, staggered stance, one hand braced. Let the dumbbell hang fully for a deep lat stretch.<br><b>Execute:</b> Row up and back toward your hip — not your chest — elbow tracking slightly out. Feel the lat do the pull.<br><b>Avoid:</b> Twisting your torso open to lift more. The rotation cheats the lat out of the work."},
+        {id:'face',name:'Bowflex Face Pull',detail:'2 × 10–15 | 60s rest',sets:2,tag:'bowflex',int:'fail',cue:"<b>Setup:</b> Rope at forehead height. Step back for tension, staggered stance.<br><b>Execute:</b> Pull toward your forehead with elbows HIGH and WIDE, then rotate your knuckles toward the ceiling at the end. That external rotation is the whole point.<br><b>Avoid:</b> Letting the elbows drop — that turns it into a row and skips the rear delts entirely."},
+        {id:'shrug',name:'Dumbbell Shrug',detail:'2 × 8–12 | 90s rest',sets:2,tag:'isolation',int:'fail',cue:"<b>Setup:</b> Dumbbells at your sides, slight forward lean of the torso to bias the upper traps.<br><b>Execute:</b> Shrug straight UP toward your ears, hold the top 2 full seconds, lower slow and let the traps stretch at the bottom.<br><b>Avoid:</b> Rolling the shoulders (does nothing but grind the joint) and bouncing reps with momentum."},
+        {id:'inc_curl',name:'Incline Dumbbell Curl',detail:'2 × 8–12 | 90s rest',sets:2,tag:'variation',int:'fail',cue:"<b>Setup:</b> Bench at 45–60°, sit back fully so your arms hang BEHIND your torso — that's the stretch that makes this the best curl variation.<br><b>Execute:</b> Curl up without letting your elbows drift forward, squeeze, then lower all the way to a full hang.<br><b>Avoid:</b> Cutting the bottom range short. The stretched position is where the growth is — don't skip it when it burns."},
+        {id:'african',name:'African (Drag) Curl',detail:'2 × 8–12 | 90s rest',sets:2,tag:'variation',int:'fail',cue:"<b>Setup:</b> Dumbbells at your sides, lighter than your normal curl weight — control is everything here.<br><b>Execute:</b> Drag the dumbbells UP along your torso, elbows traveling backward behind you. At the top, rotate palms down and lower in 3 slow seconds as a reverse curl.<br><b>Avoid:</b> Swinging or letting the elbows come forward — the backward elbow path is what targets the long head (your peak)."},
+        {id:'zottman',name:'Zottman Curl',detail:'2 × 8–12 | 90s rest',sets:2,tag:'variation',int:'fail',cue:"<b>Setup:</b> Standing, elbows pinned to your sides.<br><b>Execute:</b> Curl up with palms facing up (full bicep squeeze at the top), rotate palms to face DOWN, then lower in 3 seconds. The slow pronated negative builds the forearms and brachialis.<br><b>Avoid:</b> Rushing the rotation at the top or dropping the negative — the way down is half the exercise."}
       ]}
     ]},
   Legs:{sub:'QUADS · GLUTES · CALVES · ABS · OBLIQUES',
-    tip:"Quad-dominant day. Saturday hits the posterior chain. Core is trained directly — abs need loaded work to show. The treadmill incline finisher doubles as fat-burning cardio.",
+    tip:"Quad-dominant day, 2 all-out sets per movement. Squat stays 1 rep shy of failure (no spotter), everything else to RPE 10. Rest the full 2–3 minutes on compounds — the next set only counts if you can actually push it.",
     cardio:"5 min light walk warm-up. Optional 10 min walk cooldown (or the incline finisher below).",
     sections:[
       {label:'Compound Leg',musc:'Quads · Glutes',exercises:[
-        {id:'squat',name:'Barbell Back Squat',detail:'4 × 8–10 | 2 min rest',sets:4,tag:'compound',int:'rir',cue:"Feet shoulder-width, toes slightly out. Pause at the bottom, spread the floor as you drive up, squeeze at lockout. Brace the whole rep."},
-        {id:'bss',name:'Dumbbell Bulgarian Split Squat',detail:'3 × 10 each | 90s rest',sets:3,tag:'compound',int:'rir',cue:"Rear foot elevated. Lower in 3 seconds, drive through the front heel. Deep rear-hip stretch at the bottom, hard quad squeeze at the top."},
-        {id:'goblet',name:'Heel-Elevated Goblet Squat',detail:'3 × 15 | 60s rest',sets:3,tag:'variation',int:'fail',cue:"Heels on plates/wedge shifts load to the quads with a deeper stretch. Dumbbell at the chest, drop below parallel, stand and squeeze. Last set to failure."}
+        {id:'squat',name:'Barbell Back Squat',detail:'2 × 5–9 | 3 min rest',sets:2,tag:'compound',int:'rir',cue:"<b>Setup:</b> Bar on your traps (not your neck), feet shoulder-width or slightly wider, toes out 15–30°. Big breath into your belly and brace 360° — like bracing for a punch.<br><b>Execute:</b> Break at the hips and knees together, knees tracking over your toes, sit until your hip crease is at or below your knee. Drive up spreading the floor apart with your feet.<br><b>Avoid:</b> Knees caving inward, heels lifting, and losing your brace mid-rep. Re-breathe and re-brace at the top of every rep."},
+        {id:'bss',name:'Dumbbell Bulgarian Split Squat',detail:'2 × 6–10 each | 2 min rest',sets:2,tag:'compound',int:'fail',cue:"<b>Setup:</b> Rear foot laces-down on the bench, front foot far enough forward that your shin stays near vertical at the bottom.<br><b>Execute:</b> Drop straight down — think elevator, not escalator — until the rear knee nearly touches. Drive up through the front heel.<br><b>Avoid:</b> Pushing off the back foot. It's a passenger; the front leg does everything."},
+        {id:'goblet',name:'Heel-Elevated Goblet Squat',detail:'2 × 8–12 | 90s rest',sets:2,tag:'variation',int:'fail',cue:"<b>Setup:</b> Heels on plates or a wedge, dumbbell held vertically at your chest, elbows tucked.<br><b>Execute:</b> Sit straight down between your heels, elbows tracking inside your knees, as deep as you can go. Squeeze the quads hard on the way up.<br><b>Avoid:</b> Leaning forward — the heel elevation exists so you can stay upright and hammer the quads."}
       ]},
       {label:'Accessories & Core',musc:'Hamstrings · Calves · Abs · Obliques',exercises:[
-        {id:'leg_curl',name:'Bowflex Seated Leg Curl',detail:'3 × 12–15 | 60s rest',sets:3,tag:'bowflex',int:'fail',cue:"Seated (hips bent) loads the hamstring in a deeper stretch than lying. Curl to peak, hold 1 second, lower in 3."},
-        {id:'calf_st',name:'Standing Calf Raise (Dumbbell)',detail:'4 × 15–20 | 45s rest',sets:4,tag:'isolation',int:'fail',cue:"Feet on a step edge. Full pause at the top, deep stretch at the bottom — heel below the step. No bouncing. Every set to failure."},
-        {id:'crunch',name:'Weighted Dumbbell Crunch',detail:'3 × 15 | 45s rest',sets:3,tag:'core',int:'fail',cue:"Dumbbell on chest or overhead (harder). Crunch ribs to pelvis with the abs — no neck pull. Load is what makes abs visible."},
-        {id:'rus',name:'Russian Twist (Dumbbell)',detail:'3 × 20 each side | 30s rest',sets:3,tag:'core',int:'fail',cue:"Lean back ~45°, feet up for difficulty. Rotate fully side to side, touch beside each hip. Drive from the obliques, not the arms."},
+        {id:'leg_curl',name:'Bowflex Seated Leg Curl',detail:'2 × 8–12 | 90s rest',sets:2,tag:'bowflex',int:'fail',cue:"<b>Setup:</b> Hips pinned down, feet flexed (toes pulled toward shins) — this pre-loads the hamstrings.<br><b>Execute:</b> Curl to full contraction, hold the peak 1 second, lower in 3 slow seconds.<br><b>Avoid:</b> Hips rising off the pad — that's the lower back stealing the rep."},
+        {id:'calf_st',name:'Standing Calf Raise (Dumbbell)',detail:'2 × 10–15 | 90s rest',sets:2,tag:'isolation',int:'fail',cue:"<b>Setup:</b> Balls of your feet on a step edge, heels hanging free, dumbbells in hand.<br><b>Execute:</b> Sink into a full 1-second stretch at the bottom (heels below the step), then drive to full tiptoe and squeeze 1 second at the top. Every rep gets both pauses.<br><b>Avoid:</b> Bouncing. Calves grow from the loaded stretch and pause, not from rebounding reps."},
+        {id:'crunch',name:'Weighted Dumbbell Crunch',detail:'2 × 10–15 | 60s rest',sets:2,tag:'core',int:'fail',cue:"<b>Setup:</b> Lower back pressed into the floor, dumbbell held on your chest or extended overhead for more difficulty.<br><b>Execute:</b> Crunch your ribs toward your pelvis — a short, hard contraction — and exhale forcefully at the top. Lower slow.<br><b>Avoid:</b> Pulling on your neck or sitting all the way up. It's a short-range squeeze, not a sit-up."},
+        {id:'rus',name:'Russian Twist (Dumbbell)',detail:'2 × 15 each side | 60s rest',sets:2,tag:'core',int:'fail',cue:"<b>Setup:</b> Lean back to ~45°, feet elevated for more challenge, dumbbell held with both hands.<br><b>Execute:</b> Rotate from your ribs — not your arms — touching the weight beside each hip. Controlled tempo.<br><b>Avoid:</b> Just swinging the arms side to side while the torso stays still. The trunk must rotate."},
         {id:'incline_walk_l',name:'Treadmill Incline Walk',detail:'15 min | 8–10% | 3.5 mph',sets:1,tag:'cardio',int:'',cue:"Hands off the rails — glutes and core work every stride. Serious calorie burn, zero recovery cost."}
       ]}
     ]},
   Upper:{sub:'CHEST · BACK · SHOULDERS · ARMS',
-    tip:"A second upper-body hit at different angles and rep ranges — drives the full, dense look and gives each muscle two sessions a week.",
+    tip:"Second weekly hit on everything upper. 2 sets, heavier 5–9 range on compounds, 8–12 on isolation, all to failure except the barbell OHP. Beat your logged numbers — the app tells you exactly what to hit.",
     cardio:"10 min treadmill warm-up. Finish with 20 min jog (5–6 mph) or incline walk for max weekly burn.",
     sections:[
       {label:'Compound Mix',musc:'Shoulders · Back · Chest',exercises:[
-        {id:'ohp',name:'Standing Barbell Overhead Press',detail:'4 × 8–10 | 90s rest',sets:4,tag:'compound',int:'rir',cue:"Strict — brace hard, no leg drive. Press overhead and shrug slightly at lockout to engage traps and delts."},
-        {id:'cs_row',name:'Dumbbell Chest-Supported Row',detail:'3 × 12 | 60s rest',sets:3,tag:'compound',int:'rir',cue:"Chest down on an incline bench to kill momentum. Row to the hips, squeeze lats 1 second at the top."},
-        {id:'bf_press2',name:'Bowflex Cable Chest Press',detail:'3 × 12 | 60s rest',sets:3,tag:'bowflex',int:'fail',cue:"Constant tension. Cross hands slightly at lockout for a peak pec contraction. Last set to failure."}
+        {id:'ohp',name:'Standing Barbell Overhead Press',detail:'2 × 5–9 | 2–3 min rest',sets:2,tag:'compound',int:'rir',cue:"<b>Setup:</b> Grip just outside shoulders, elbows slightly in front of the bar, glutes and core squeezed HARD — your torso is a pillar.<br><b>Execute:</b> Press up and slightly back, pushing your head 'through the window' once the bar passes your face. Lock out overhead, bar stacked over mid-foot.<br><b>Avoid:</b> Leaning back and turning it into an incline press — squeeze the glutes to keep your spine honest."},
+        {id:'cs_row',name:'Dumbbell Chest-Supported Row',detail:'2 × 5–9 | 2 min rest',sets:2,tag:'compound',int:'fail',cue:"<b>Setup:</b> Chest glued to the incline pad — it stays glued the entire set.<br><b>Execute:</b> Row the dumbbells to your hips, squeezing the mid-back 1 second at the top. Full stretch and protraction at the bottom.<br><b>Avoid:</b> Lifting your chest off the pad — the pad exists to delete momentum. If you need to heave, go lighter."},
+        {id:'bf_press2',name:'Bowflex Cable Chest Press',detail:'2 × 8–12 | 90s rest',sets:2,tag:'bowflex',int:'fail',cue:"<b>Setup:</b> Stagger your stance, brace, handles at chest height.<br><b>Execute:</b> Press forward crossing hands slightly at lockout for a peak squeeze, resist the cables all the way back.<br><b>Avoid:</b> Letting the return phase happen TO you — control it or lose half the stimulus."}
       ]},
       {label:'Arms & Shoulder Finisher',musc:'Biceps · Triceps · Delts',exercises:[
-        {id:'super',name:'Incline Curl + Overhead Extension Superset',detail:'3 rounds × 12 each | 60s rest',sets:3,tag:'isolation',int:'fail',cue:"Back-to-back, no rest between. Incline curl: deep bicep stretch. Overhead extension: deep long-head tricep stretch. Rest 60s after both."},
-        {id:'face2',name:'Bowflex Face Pull',detail:'3 × 15 | 45s rest',sets:3,tag:'bowflex',int:'fail',cue:"Pull to forehead, elbows wide and high. The most important shoulder-health move in the plan — do not skip it."},
-        {id:'lat_drop',name:'Dumbbell Lateral Raise Drop Set',detail:'3 drop sets | 60s rest',sets:3,tag:'isolation',int:'fail',cue:"Go to failure, drop ~30%, keep going. Pinky leads, shoulder-height only. Three drops = massive delt pump."},
-        {id:'hammer',name:'Hammer Curl',detail:'3 × 12 | 60s rest',sets:3,tag:'isolation',int:'fail',cue:"Thumbs up the whole rep — hits the brachialis, which pushes the bicep up. Squeeze at the top, control down."}
+        {id:'super',name:'Incline Curl + Overhead Extension Superset',detail:'2 rounds × 8–12 each | 90s rest',sets:2,tag:'isolation',int:'fail',cue:"<b>Setup:</b> Incline bench for curls, one dumbbell nearby for extensions. Zero rest between the two moves.<br><b>Execute:</b> Incline curls: arms hanging behind you, full stretch every rep. Then straight into overhead extensions: deep stretch behind the head, full lockout. Rest 90s only after both.<br><b>Avoid:</b> Rushing sloppy reps because you're fatigued — the pump means nothing if the form died."},
+        {id:'face2',name:'Bowflex Face Pull',detail:'2 × 10–15 | 60s rest',sets:2,tag:'bowflex',int:'fail',cue:"<b>Setup:</b> Rope high, staggered stance, step back for tension.<br><b>Execute:</b> Pull to your forehead, elbows high and wide, knuckles rotating to the ceiling at the end.<br><b>Avoid:</b> Skipping this because it feels light — it's the insurance policy for every press in this program."},
+        {id:'lat_drop',name:'Dumbbell Lateral Raise Drop Set',detail:'2 drop sets | 90s rest',sets:2,tag:'isolation',int:'fail',cue:"<b>Setup:</b> Two or three pairs of dumbbells ready — working weight, then ~30% lighter.<br><b>Execute:</b> Raise to shoulder height to failure, immediately grab the lighter pair, keep going to failure again. That's one drop set.<br><b>Avoid:</b> Swinging as fatigue hits — shorten the range slightly instead of cheating the movement."},
+        {id:'hammer',name:'Hammer Curl',detail:'2 × 8–12 | 90s rest',sets:2,tag:'isolation',int:'fail',cue:"<b>Setup:</b> Neutral grip (thumbs up), elbows pinned to your sides.<br><b>Execute:</b> Curl up squeezing at the top, lower in control. The brachialis underneath your bicep does the work — it's what makes arms look thick from the side.<br><b>Avoid:</b> Elbows drifting forward and body English. Strict, heavy, done."}
       ]}
     ]},
   Lower:{sub:'HAMSTRINGS · GLUTES · CALVES · ABS · OBLIQUES',
-    tip:"Posterior-chain day — balances Wednesday's quads. Strong hams and glutes drive the biggest body-comp change. Calves and core get their second weekly hit.",
+    tip:"Posterior-chain day, 2 brutal sets each. Deficit RDL stays 1 rep in reserve; hip thrusts and everything after go to true failure. Long rests, heavy loads, full range — intensity does the work volume used to.",
     cardio:"5 min walk warm-up. Optional 15 min incline walk at the end if energy allows.",
     sections:[
       {label:'Compound Posterior',musc:'Hamstrings · Glutes',exercises:[
-        {id:'drdl',name:'Deficit Romanian Deadlift',detail:'4 × 10–12 | 90s rest',sets:4,tag:'variation',int:'rir',cue:"Stand on a plate — extra depth extends the hamstring stretch. Hinge at the hips, push them back, bar close, drive through and squeeze glutes at the top."},
-        {id:'thrust',name:'Barbell Hip Thrust',detail:'4 × 12 | 75s rest',sets:4,tag:'compound',int:'rir',cue:"Upper back on a bench, padded bar on the hip crease. Drive to a straight knees-to-shoulders line, chin tucked, squeeze 2 seconds. Last set to failure."},
-        {id:'sumo',name:'Dumbbell Sumo Squat',detail:'3 × 12–15 | 60s rest',sets:3,tag:'compound',int:'fail',cue:"Wide stance, toes out 45°. Drive knees out as you lower, push through heels, squeeze inner thighs and glutes at the top."}
+        {id:'drdl',name:'Deficit Romanian Deadlift',detail:'2 × 5–9 | 2–3 min rest',sets:2,tag:'variation',int:'rir',cue:"<b>Setup:</b> Stand on a plate or low step. Bar or dumbbells against your thighs, knees soft (slightly bent, locked at that angle).<br><b>Execute:</b> Push your hips straight BACK — not down — letting the weight slide down your legs until the hamstring stretch peaks. Drive hips forward and squeeze the glutes at the top.<br><b>Avoid:</b> Bending the knees more as you descend (that's a squat) and rounding your back to chase depth."},
+        {id:'thrust',name:'Barbell Hip Thrust',detail:'2 × 6–10 | 2 min rest',sets:2,tag:'compound',int:'fail',cue:"<b>Setup:</b> Shoulder blades on the bench edge, padded bar across your hip crease, feet positioned so your shins are vertical at the top.<br><b>Execute:</b> Drive through your heels to a straight line from knees to shoulders, chin tucked, and tilt your pelvis under at the top (think 'tail between legs'). Squeeze 2 full seconds.<br><b>Avoid:</b> Arching your lower back at lockout — the finish is a glute squeeze and pelvic tuck, not a back bend."},
+        {id:'sumo',name:'Dumbbell Sumo Squat',detail:'2 × 8–12 | 90s rest',sets:2,tag:'compound',int:'fail',cue:"<b>Setup:</b> Wide stance, toes out ~45°, dumbbell hanging between your legs.<br><b>Execute:</b> Sit down driving your knees OUT over your toes, deep stretch through the inner thighs, then push through your heels and squeeze glutes and inner thighs at the top.<br><b>Avoid:</b> Knees caving inward — actively push them out for the entire rep."}
       ]},
       {label:'Accessories & Core',musc:'Hamstrings · Glutes · Calves · Abs',exercises:[
-        {id:'lying_curl',name:'Bowflex Lying Leg Curl',detail:'3 × 12–15 | 60s rest',sets:3,tag:'bowflex',int:'fail',cue:"Flex your feet before curling to pre-load the hamstrings. Curl, hold 2 seconds, lower in 3 — the negative grows the muscle."},
-        {id:'sl_rdl',name:'Dumbbell Single-Leg RDL',detail:'3 × 10 each | 60s rest',sets:3,tag:'compound',int:'fail',cue:"Balance on one leg, hinge to parallel (deep stretch), drive through the heel and squeeze the glute. Builds the glute-ham tie-in and balance."},
-        {id:'seated_calf',name:'Seated Calf Raise (Dumbbell)',detail:'4 × 15–20 | 45s rest',sets:4,tag:'isolation',int:'fail',cue:"Dumbbell on each knee, raise heels. Bent knee targets the soleus. Full pause top, deep stretch bottom. Every set to failure."},
-        {id:'crunch2',name:'Weighted Dumbbell Crunch',detail:'3 × 15 | 45s rest',sets:3,tag:'core',int:'fail',cue:"Second weekly hit. Dumbbell overhead for max difficulty. Crunch ribs to pelvis, squeeze, lower slowly."},
-        {id:'chop',name:'Dumbbell Woodchopper',detail:'3 × 15 each side | 30s rest',sets:3,tag:'core',int:'fail',cue:"Dumbbell in both hands, chop diagonally shoulder to opposite hip, back foot pivots. Power from trunk rotation."},
-        {id:'side_bend',name:'Dumbbell Side Bend',detail:'3 × 15 each side | 30s rest',sets:3,tag:'core',int:'fail',cue:"One dumbbell, bend sideways letting it slide down the thigh, contract the opposite oblique to return. No swinging."},
+        {id:'lying_curl',name:'Bowflex Lying Leg Curl',detail:'2 × 8–12 | 90s rest',sets:2,tag:'bowflex',int:'fail',cue:"<b>Setup:</b> Hips pressed down, feet flexed toward your shins before the first rep.<br><b>Execute:</b> Curl to full contraction, hold 2 seconds at the peak, lower in 3 slow seconds — the negative is where hamstrings grow.<br><b>Avoid:</b> Hips popping up to help. If they rise, the weight is too heavy."},
+        {id:'sl_rdl',name:'Dumbbell Single-Leg RDL',detail:'2 × 6–10 each | 90s rest',sets:2,tag:'compound',int:'fail',cue:"<b>Setup:</b> Balance on one leg, soft knee, dumbbell in the opposite hand.<br><b>Execute:</b> Hinge forward keeping your hips SQUARE — imagine headlights on your hip bones pointing at the floor — until the hamstring stretch peaks. Drive through the heel and squeeze the glute to stand.<br><b>Avoid:</b> Rotating your hips open toward the ceiling. Square hips or it's a different (worse) exercise."},
+        {id:'seated_calf',name:'Seated Calf Raise (Dumbbell)',detail:'2 × 10–15 | 90s rest',sets:2,tag:'isolation',int:'fail',cue:"<b>Setup:</b> Seated, balls of feet on a step or plate, heavy dumbbells resting on your knees.<br><b>Execute:</b> Full stretch at the bottom with a 1-second pause, drive up to a full squeeze with another pause. The bent knee targets the soleus — the deep calf muscle.<br><b>Avoid:</b> Short bouncy pulses. Full range, both pauses, every rep."},
+        {id:'crunch2',name:'Weighted Dumbbell Crunch',detail:'2 × 10–15 | 60s rest',sets:2,tag:'core',int:'fail',cue:"<b>Setup:</b> Dumbbell held at arms' length overhead for maximum difficulty, lower back pressed down.<br><b>Execute:</b> Crunch ribs to pelvis with a hard exhale at the top, lower slow and controlled.<br><b>Avoid:</b> Letting the weight drift forward over your face — keep it stacked over your chest line."},
+        {id:'chop',name:'Dumbbell Woodchopper',detail:'2 × 12 each side | 60s rest',sets:2,tag:'core',int:'fail',cue:"<b>Setup:</b> Dumbbell in both hands at one shoulder, feet shoulder-width.<br><b>Execute:</b> Chop diagonally down to the opposite hip, pivoting your back foot and rotating from the trunk. Control the return along the same path.<br><b>Avoid:</b> Arms doing all the work while your torso stays frozen — the power comes from the rotation."},
+        {id:'side_bend',name:'Dumbbell Side Bend',detail:'2 × 12 each side | 60s rest',sets:2,tag:'core',int:'fail',cue:"<b>Setup:</b> One dumbbell in one hand, other hand behind your head or at your side.<br><b>Execute:</b> Bend sideways letting the weight slide down your thigh, then contract the OPPOSITE oblique to pull yourself upright. All reps one side, then switch.<br><b>Avoid:</b> Leaning forward or backward — the movement is pure side-to-side in one plane."},
         {id:'incline_walk_lo',name:'Treadmill Incline Walk',detail:'15 min optional | 10% | 3.5 mph',sets:1,tag:'cardio',int:'',cue:"Hands-free walk fires glutes and core. Perfect fat-burning cooldown."}
       ]}
     ]}
@@ -951,7 +952,12 @@ function logSession(type){
   const t=today();
   const i=sessions.findIndex(s=>s.date===t&&s.type===type);
   if(i>=0){sessions.splice(i,1);toast('Session unlogged');}
-  else{sessions.push({date:t,type});toast('🔥 Session logged — nice work');}
+  else{
+    let note='';
+    try{note=(prompt('Session note? (optional — energy, PRs, how it felt)')||'').slice(0,120);}catch(e){}
+    sessions.push({date:t,type,note});
+    toast('🔥 Session logged — nice work');
+  }
   kvSet('sessions',sessions);haptic();
   renderHeader();renderDayStrip();renderTrain();
 }
@@ -1199,6 +1205,10 @@ function renderProgress(){
       <div class="week-row">${week}</div>
     </div>
 
+    <div class="card"><h4>📚 Workout History · ${sessions.length} Sessions</h4>
+      <div class="log-list">${historyHTML()}</div>
+    </div>
+
     <div class="card" style="border-color:rgba(45,226,255,0.22)"><h4 style="color:var(--ice)">📸 Progress Photos</h4>
       <input class="in" id="phLabel" placeholder="Label (optional) — e.g. Side · Week 4" style="margin-bottom:9px">
       <label class="btn btn-ghost file-btn">+ Add Photo(s)<input type="file" accept="image/*" multiple onchange="uploadPhoto(event)" style="display:none"></label>
@@ -1249,6 +1259,41 @@ async function importData(e){
     toast('Backup restored ✓');renderHeader();renderDayStrip();renderProgress();
   }catch(err){toast('Invalid backup file');}
   e.target.value='';
+}
+
+/* ============ WORKOUT HISTORY ============ */
+function historyHTML(){
+  if(!sessions.length)return '<div class="empty">Log your first session on the Train tab and it shows up here</div>';
+  const sorted=[...sessions].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,20);
+  return sorted.map((s,i)=>{
+    const note=s.note?`<div style="font-size:10.5px;color:var(--amber);margin-top:3px">📝 ${s.note}</div>`:'';
+    return `<div class="hist-item" onclick="toggleHist(${i})" style="cursor:pointer">
+      <div class="log-row" style="flex-direction:column;align-items:stretch">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-weight:600;font-size:13px;color:${HEX[s.type]||'var(--txt)'}">${s.type} Day</span>
+          <span class="lr-date">${pretty(s.date)} <span style="color:var(--mut2)">▾</span></span>
+        </div>
+        ${note}
+        <div id="hist-${i}" style="display:none;margin-top:9px;border-top:1px solid var(--line);padding-top:9px">${histDetail(s)}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function histDetail(s){
+  const w=workouts[s.type];if(!w)return '<div class="empty" style="padding:8px">No detail</div>';
+  const rows=[];
+  for(const sec of w.sections)for(const ex of sec.exercises){
+    const l=logs[s.date+'|'+ex.id];
+    if(l&&l.some(x=>x.w||x.r)){
+      const sets=l.filter(x=>x.w||x.r).map(x=>`${x.w||'?'}×${x.r||'?'}`).join(', ');
+      rows.push(`<div style="display:flex;justify-content:space-between;font-size:11px;padding:3px 0"><span style="color:var(--txt2)">${effectiveName(ex)}</span><span style="font-family:'Chivo Mono';color:var(--ice)">${sets}</span></div>`);
+    }
+  }
+  return rows.length?rows.join(''):'<div style="font-size:11px;color:var(--mut);padding:4px 0">Quick-checked — no sets logged this day</div>';
+}
+function toggleHist(i){
+  const el=document.getElementById('hist-'+i);
+  if(el)el.style.display=el.style.display==='none'?'block':'none';
 }
 
 /* ============ GOAL & PROJECTION ============ */
